@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Deck {
+class Deck: Encodable, Decodable {
     var cards: [Card] = []
     var currentIdx = -1
     
@@ -30,16 +30,29 @@ class Deck {
         }
         return nil
     }
+    
+    func save() {
+        let encoder = JSONEncoder()
+        let jsonData = try! encoder.encode(self)
+
+        // Write the JSON data to a file
+        let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("data.json")
+        try! jsonData.write(to: fileURL)
+    }
 }
 
 var defaultDeck = load()
 
 func load() -> Deck {
-    var cards: [Card] = []
-    cards.append(Card(frontText: "ऊपर", backText: "up"))
-    cards.append(Card(frontText: "आगे", backText: "ahead"))
-    cards.append(Card(frontText: "पीछे", backText: "behind"))
-    return Deck(cards: cards)
+    let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("data.json")
+    if let jsonData = try? Data(contentsOf: fileURL) {
+        // Decode the JSON data into the structure
+        let decoder = JSONDecoder()
+        let deck = try! decoder.decode(Deck.self, from: jsonData)
+        return deck
+    } else {
+        return Deck(cards: [])
+    }
 }
 
 enum Difficulty {

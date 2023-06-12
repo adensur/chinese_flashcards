@@ -17,6 +17,7 @@
 		09156D842A31C43B00BA2D89 /* ExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09156D832A31C43B00BA2D89 /* ExerciseView.swift */; };
 		09156D872A31C46100BA2D89 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09156D862A31C46100BA2D89 /* Card.swift */; };
 		09156D8A2A31C86800BA2D89 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09156D892A31C86800BA2D89 /* Deck.swift */; };
+		096D8FDF2A3724F800E402B5 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D8FDE2A3724F800E402B5 /* AddCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		09156D832A31C43B00BA2D89 /* ExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseView.swift; sourceTree = "<group>"; };
 		09156D862A31C46100BA2D89 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		09156D892A31C86800BA2D89 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		096D8FDE2A3724F800E402B5 /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 		09156D852A31C44900BA2D89 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				096D8FDE2A3724F800E402B5 /* AddCardView.swift */,
 				09156D5B2A31C3AF00BA2D89 /* ContentView.swift */,
 				09156D832A31C43B00BA2D89 /* ExerciseView.swift */,
 			);
@@ -284,6 +287,7 @@
 			files = (
 				09156D842A31C43B00BA2D89 /* ExerciseView.swift in Sources */,
 				09156D872A31C46100BA2D89 /* Card.swift in Sources */,
+				096D8FDF2A3724F800E402B5 /* AddCardView.swift in Sources */,
 				09156D8A2A31C86800BA2D89 /* Deck.swift in Sources */,
 				09156D5C2A31C3AF00BA2D89 /* ContentView.swift in Sources */,
 				09156D5A2A31C3AF00BA2D89 /* Flashcards_AppApp.swift in Sources */,

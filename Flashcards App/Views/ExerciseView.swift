@@ -16,13 +16,21 @@ struct ExerciseView: View {
         self.deck = deck
     }
     var body: some View {
-        Group {
-            if isLoading {
-                Text("").onAppear {
+        NavigationView {
+            VStack {
+                GroupBox {
+                    HStack {
+                        Spacer()
+                        NavigationLink {
+                            AddCardView()
+                        } label: {
+                            Text("add")
+                        }
+                    }
+                }.onAppear {
                     currentCard = deck.nextCard()
                     isLoading = false
                 }
-            } else {
                 if let currentCard = currentCard {
                     Text(currentCard.frontText)
                         .onTapGesture {
@@ -47,21 +55,23 @@ struct ExerciseView: View {
                                 Button("Easy") {
                                     nextCard(currentCard: currentCard, difficulty: .Easy)
                                 }
-                                
                             }
                         }
                     }
                 } else {
+                    Spacer()
                     Text("Out of cards for now!")
+                    Spacer()
                 }
-            }
-        }.animation(.easeIn, value: reveal)
+            }.animation(.easeIn, value: reveal)
+        }
     }
     
     func nextCard(currentCard: Card, difficulty: Difficulty) {
         reveal = false
         currentCard.consumeAnswer(difficulty: difficulty)
         self.currentCard = deck.nextCard()
+        deck.save()
     }
 }
 

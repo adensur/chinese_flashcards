@@ -8,7 +8,7 @@
 import Foundation
 
 // simple exercise. Front and back text, no value checking - just turning the card over
-class Card {
+class Card: Encodable, Decodable {
     var frontText: String
     var backText: String
     var lastRepetition: Date = Date(timeIntervalSince1970: 0)
@@ -99,6 +99,8 @@ class Card {
     func isReady() -> Bool {
         let interval = Card.getRepetitionInterval(learningStage: self.learningStage)
         print("Calculated card interval for \(frontText): \(interval) seconds")
+        let nextRepetition: Date = lastRepetition + interval
+        print("Next repetition in : \(nextRepetition.timeIntervalSince(Date()))")
         if lastRepetition + interval <= Date() {
             return true
         }
@@ -143,7 +145,7 @@ class Card {
 // Repeating - typically going from one to many days or even months. Going through all the levels brings the card to "Learned" and moves out of the deck. Making a mistake moves it to "RepeatingAfterMistake"
 // RepeatingAfterMistake - repeating from minutes to hours. Clicking "easy" or going through all the levels brings the card back on the first level of "Repeating"
 // Learned - the card is finished and is effectively moved out of the deck, though still available for stats
-enum LearningStage {
+enum LearningStage: Encodable, Decodable {
 case New
 case Learning(Int)
 case Repeating(Int)
