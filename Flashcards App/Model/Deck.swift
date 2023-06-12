@@ -36,9 +36,9 @@ var defaultDeck = load()
 
 func load() -> Deck {
     var cards: [Card] = []
-    cards.append(Card(FrontText: "ऊपर", BackText: "up"))
-    cards.append(Card(FrontText: "आगे", BackText: "ahead"))
-    cards.append(Card(FrontText: "पीछे", BackText: "behind"))
+    cards.append(Card(frontText: "ऊपर", backText: "up"))
+    cards.append(Card(frontText: "आगे", backText: "ahead"))
+    cards.append(Card(frontText: "पीछे", backText: "behind"))
     return Deck(cards: cards)
 }
 

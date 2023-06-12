@@ -24,7 +24,7 @@ struct ExerciseView: View {
                 }
             } else {
                 if let currentCard = currentCard {
-                    Text(currentCard.FrontText)
+                    Text(currentCard.frontText)
                         .onTapGesture {
                             reveal = true
                         }
@@ -32,7 +32,7 @@ struct ExerciseView: View {
                     if reveal {
                         VStack {
                             Divider()
-                            Text(currentCard.BackText)
+                            Text(currentCard.backText)
                             Spacer()
                             HStack {
                                 Button("Again") {
