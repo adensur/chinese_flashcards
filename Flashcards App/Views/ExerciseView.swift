@@ -21,6 +21,13 @@ struct ExerciseView: View {
                 GroupBox {
                     HStack {
                         Spacer()
+                        if let currentCard = currentCard {
+                            NavigationLink {
+                                EditCardView(card: currentCard)
+                            } label: {
+                                Text("edit")
+                            }
+                        }
                         NavigationLink {
                             AddCardView()
                         } label: {

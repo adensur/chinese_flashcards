@@ -31,6 +31,10 @@ class Deck: Encodable, Decodable {
         return nil
     }
     
+    func deleteCurrentCard() {
+        cards.remove(at: currentIdx)
+    }
+    
     func save() {
         let encoder = JSONEncoder()
         let jsonData = try! encoder.encode(self)
