@@ -39,11 +39,17 @@ struct ExerciseView: View {
                     isLoading = false
                 }
                 if let currentCard = currentCard {
-                    Text(currentCard.frontText)
-                        .onTapGesture {
-                            reveal = true
+                    VStack {
+                        HStack{
+                            Spacer()
+                            Text(currentCard.frontText)
+                            Spacer()
                         }
-                    Spacer()
+                        Spacer()
+                    } .contentShape(Rectangle())
+                    .onTapGesture {
+                        reveal = true
+                    }
                     if reveal {
                         VStack {
                             Divider()

@@ -124,6 +124,22 @@ class Card: Encodable, Decodable {
         return value * unit
     }
     
+    static func encodeTimeInterval(timeInterval: TimeInterval) -> String {
+        if timeInterval < 60.0 {
+            return "\(timeInterval)s"
+        }
+        let timeIntervalMinutes = timeInterval / 60
+        if timeIntervalMinutes < 60 {
+            return "\(timeIntervalMinutes)m"
+        }
+        let timeIntervalHours = timeIntervalMinutes / 60
+        if timeIntervalHours < 24 {
+            return "\(timeIntervalHours)h"
+        }
+        let timeIntervalDays = timeIntervalHours / 24
+        return "\(timeIntervalDays)d"
+    }
+    
     static func getRepetitionInterval(learningStage: LearningStage) -> TimeInterval {
         switch learningStage {
         case .New:
