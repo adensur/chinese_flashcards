@@ -90,6 +90,6 @@ struct ExerciseView: View {
 
 struct ExerciseView_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseView(deck: defaultDeck)
+        ExerciseView(deck: previewDeck)
     }
 }

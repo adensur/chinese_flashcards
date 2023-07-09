@@ -59,6 +59,15 @@ func load() -> Deck {
     }
 }
 
+var previewDeck = simulatedLoad()
+
+func simulatedLoad() -> Deck {
+    return Deck(cards: [
+        Card(frontText: "आगे ", backText: "ahead"),
+        Card(frontText: "पीछे", backText: "behind")
+    ])
+}
+
 enum Difficulty {
 case Again
 case Hard
