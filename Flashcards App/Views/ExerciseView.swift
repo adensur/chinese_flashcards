@@ -56,18 +56,23 @@ struct ExerciseView: View {
                             Text(currentCard.backText)
                             Spacer()
                             HStack {
-                                Button("Again") {
+                                Spacer()
+                                Button("\(currentCard.getNextRepetitionTooltip(difficulty:.Again))\nAgain") {
                                     nextCard(currentCard: currentCard, difficulty: .Again)
                                 }
-                                Button("Hard") {
+                                Spacer()
+                                Button("\(currentCard.getNextRepetitionTooltip(difficulty:.Hard))\nHard") {
                                     nextCard(currentCard: currentCard, difficulty: .Hard)
                                 }
-                                Button("Good") {
+                                Spacer()
+                                Button("\(currentCard.getNextRepetitionTooltip(difficulty:.Good))\nGood") {
                                     nextCard(currentCard: currentCard, difficulty: .Good)
                                 }
-                                Button("Easy") {
+                                Spacer()
+                                Button("\(currentCard.getNextRepetitionTooltip(difficulty:.Easy))\nEasy") {
                                     nextCard(currentCard: currentCard, difficulty: .Easy)
                                 }
+                                Spacer()
                             }
                         }
                     }
