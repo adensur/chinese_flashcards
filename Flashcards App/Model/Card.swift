@@ -27,20 +27,19 @@ class Card: Encodable, Decodable {
         lastRepetition = Date()
     }
     
+    // when would the next repetition be if we press a button with certain difficulty
     func getNextRepetitionTooltip(difficulty: Difficulty) -> String{
         let nextStage = getNextStage(learningStage: self.learningStage, difficulty: difficulty)
         return encodeTimeInterval(timeInterval: getRepetitionInterval(learningStage: nextStage))
     }
     
-    func isReady() -> Bool {
+    // when will the next repetition be for current card level
+    func getNextRepetition() -> Date {
         let interval = getRepetitionInterval(learningStage: self.learningStage)
         print("Calculated card interval for \(frontText): \(interval) seconds")
         let nextRepetition: Date = lastRepetition + interval
         print("Next repetition in : \(nextRepetition.timeIntervalSince(Date()))")
-        if lastRepetition + interval <= Date() {
-            return true
-        }
-        return false
+        return nextRepetition
     }
     
     
@@ -149,18 +148,18 @@ func getRepetitionInterval(learningStage: LearningStage) -> TimeInterval {
 
 func encodeTimeInterval(timeInterval: TimeInterval) -> String {
     if timeInterval < 60.0 {
-        return "\(timeInterval)s"
+        return "\(Int(timeInterval))s"
     }
     let timeIntervalMinutes = timeInterval / 60
     if timeIntervalMinutes < 60 {
-        return "\(timeIntervalMinutes)m"
+        return "\(Int(timeIntervalMinutes))m"
     }
     let timeIntervalHours = timeIntervalMinutes / 60
     if timeIntervalHours < 24 {
-        return "\(timeIntervalHours)h"
+        return "\(Int(timeIntervalHours))h"
     }
     let timeIntervalDays = timeIntervalHours / 24
-    return "\(timeIntervalDays)d"
+    return "\(Int(timeIntervalDays))d"
 }
 
 func parseTimeInterval(timeInterval: String) throws -> TimeInterval {
