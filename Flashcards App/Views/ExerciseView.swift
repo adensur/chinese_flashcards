@@ -88,6 +88,9 @@ struct ExerciseView: View {
                     Text("Out of cards for now! Next repetition in: \(encodeTimeInterval(timeInterval: self.nextInterval))")
                         .onReceive(timer) { _ in
                             self.nextInterval = self.nextDate.timeIntervalSinceNow
+                            if self.nextInterval < 0 {
+                                (self.currentCard, self.nextDate) = deck.nextCardAndDate()
+                            }
                         }
                     Spacer()
                 }
