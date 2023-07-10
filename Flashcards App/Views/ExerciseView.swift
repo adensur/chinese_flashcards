@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct ExerciseView: View {
     var deck: Deck
     @State var currentCard: Card? = nil
-    @State var nextDate: Date = Date()
+    @State var nextInterval: TimeInterval = 0
     @State var isLoading = true
     @State var reveal = false
+    
+    // timer to do periodic refreshes when the user doesn't do anything
+    let timer = Timer.publish(every: 1, tolerance: 0.5, on: .main, in: .common).autoconnect()
     init(deck: Deck) {
         self.deck = deck
     }
@@ -36,7 +40,7 @@ struct ExerciseView: View {
                         }
                     }
                 }.onAppear {
-                    (currentCard, nextDate) = deck.nextCardAndDate()
+                    (currentCard, nextInterval) = deck.nextCardAndInterval()
                     isLoading = false
                 }
                 if let currentCard = currentCard {
@@ -79,7 +83,10 @@ struct ExerciseView: View {
                     }
                 } else {
                     Spacer()
-                    Text("Out of cards for now! Next repetition in: \(encodeTimeInterval(timeInterval: self.nextDate.timeIntervalSince(Date())))")
+                    Text("Out of cards for now! Next repetition in: \(encodeTimeInterval(timeInterval: self.nextInterval))")
+                        .onReceive(timer) { time in
+                            (self.currentCard, self.nextInterval) = deck.nextCardAndInterval()
+                        }
                     Spacer()
                 }
             }.animation(.easeIn, value: reveal)
@@ -89,7 +96,7 @@ struct ExerciseView: View {
     func nextCard(currentCard: Card, difficulty: Difficulty) {
         reveal = false
         currentCard.consumeAnswer(difficulty: difficulty)
-        (self.currentCard, self.nextDate) = deck.nextCardAndDate()
+        (self.currentCard, self.nextInterval) = deck.nextCardAndInterval()
         deck.save()
     }
 }

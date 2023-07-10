@@ -172,6 +172,8 @@ func parseTimeInterval(timeInterval: String) throws -> TimeInterval {
         unit = 3600.0
     } else if suffix == "d" {
         unit = 86400.0
+    } else if suffix == "s" {
+        unit = 1.0
     } else {
         throw fatalError("Unexpected timeinterval suffix: \(suffix)")
     }
