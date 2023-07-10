@@ -15,9 +15,9 @@ class Deck: Encodable, Decodable {
         self.cards = cards
     }
     
-    func nextCardAndInterval() -> (Card?, TimeInterval) {
+    func nextCardAndDate() -> (Card?, Date) {
         if cards.isEmpty {
-            return (nil, 0)
+            return (nil, Date())
         }
         // circle from next card in the deck until the current card, inclusive, until we find something ready to review
         // this might show current card again!
@@ -28,13 +28,13 @@ class Deck: Encodable, Decodable {
             let nextRepetition = cards[i].getNextRepetition()
             if nextRepetition <= now {
                 currentIdx = i
-                return (cards[i], nextRepetition.timeIntervalSince(now))
+                return (cards[i], nextRepetition)
             }
             if nextRepetition < minNextRepetition {
                 minNextRepetition = nextRepetition
             }
         }
-        return (nil, minNextRepetition.timeIntervalSince(now))
+        return (nil, minNextRepetition)
     }
     
     func deleteCurrentCard() {

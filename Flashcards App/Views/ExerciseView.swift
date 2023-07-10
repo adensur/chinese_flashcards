@@ -11,6 +11,7 @@ import Foundation
 struct ExerciseView: View {
     var deck: Deck
     @State var currentCard: Card? = nil
+    @State var nextDate = Date()
     @State var nextInterval: TimeInterval = 0
     @State var isLoading = true
     @State var reveal = false
@@ -40,7 +41,8 @@ struct ExerciseView: View {
                         }
                     }
                 }.onAppear {
-                    (currentCard, nextInterval) = deck.nextCardAndInterval()
+                    (currentCard, nextDate) = deck.nextCardAndDate()
+                    self.nextInterval = self.nextDate.timeIntervalSinceNow
                     isLoading = false
                 }
                 if let currentCard = currentCard {
@@ -84,8 +86,8 @@ struct ExerciseView: View {
                 } else {
                     Spacer()
                     Text("Out of cards for now! Next repetition in: \(encodeTimeInterval(timeInterval: self.nextInterval))")
-                        .onReceive(timer) { time in
-                            (self.currentCard, self.nextInterval) = deck.nextCardAndInterval()
+                        .onReceive(timer) { _ in
+                            self.nextInterval = self.nextDate.timeIntervalSinceNow
                         }
                     Spacer()
                 }
@@ -96,7 +98,8 @@ struct ExerciseView: View {
     func nextCard(currentCard: Card, difficulty: Difficulty) {
         reveal = false
         currentCard.consumeAnswer(difficulty: difficulty)
-        (self.currentCard, self.nextInterval) = deck.nextCardAndInterval()
+        (self.currentCard, self.nextDate) = deck.nextCardAndDate()
+        self.nextInterval = self.nextDate.timeIntervalSinceNow
         deck.save()
     }
 }
