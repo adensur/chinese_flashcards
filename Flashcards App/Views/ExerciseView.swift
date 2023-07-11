@@ -12,12 +12,9 @@ struct ExerciseView: View {
     var deck: Deck
     @State var currentCard: Card? = nil
     @State var nextDate = Date()
-    @State var nextInterval: TimeInterval = 0
-    @State var isLoading = true
+    @State private var isLoading = true
     @State var reveal = false
     
-    // timer to do periodic refreshes when the user doesn't do anything
-    let timer = Timer.publish(every: 1, tolerance: 0.5, on: .main, in: .common).autoconnect()
     init(deck: Deck) {
         self.deck = deck
     }
@@ -42,7 +39,6 @@ struct ExerciseView: View {
                     }
                 }.onAppear {
                     (currentCard, nextDate) = deck.nextCardAndDate()
-                    self.nextInterval = self.nextDate.timeIntervalSinceNow
                     isLoading = false
                 }
                 if let currentCard = currentCard {
@@ -53,15 +49,9 @@ struct ExerciseView: View {
                         }
                     }
                 } else {
-                    Spacer()
-                    Text("Out of cards for now! Next repetition in: \(encodeTimeInterval(timeInterval: self.nextInterval))")
-                        .onReceive(timer) { _ in
-                            self.nextInterval = self.nextDate.timeIntervalSinceNow
-                            if self.nextInterval < 0 {
-                                (self.currentCard, self.nextDate) = deck.nextCardAndDate()
-                            }
-                        }
-                    Spacer()
+                    OutOfCardsView(nextDate: $nextDate) {
+                        (self.currentCard, self.nextDate) = deck.nextCardAndDate()
+                    }
                 }
             }.animation(.easeIn, value: reveal)
         }
@@ -71,7 +61,6 @@ struct ExerciseView: View {
         reveal = false
         currentCard.consumeAnswer(difficulty: difficulty)
         (self.currentCard, self.nextDate) = deck.nextCardAndDate()
-        self.nextInterval = self.nextDate.timeIntervalSinceNow
         deck.save()
     }
 }
