@@ -48,29 +48,8 @@ struct ExerciseView: View {
                 if let currentCard = currentCard {
                     FrontCardView(reveal: $reveal, card: currentCard)
                     if reveal {
-                        VStack {
-                            Divider()
-                            Text(currentCard.backText)
-                            Spacer()
-                            HStack {
-                                Spacer()
-                                Button("\(currentCard.getNextRepetitionTooltip(difficulty:.Again))\nAgain") {
-                                    nextCard(currentCard: currentCard, difficulty: .Again)
-                                }
-                                Spacer()
-                                Button("\(currentCard.getNextRepetitionTooltip(difficulty:.Hard))\nHard") {
-                                    nextCard(currentCard: currentCard, difficulty: .Hard)
-                                }
-                                Spacer()
-                                Button("\(currentCard.getNextRepetitionTooltip(difficulty:.Good))\nGood") {
-                                    nextCard(currentCard: currentCard, difficulty: .Good)
-                                }
-                                Spacer()
-                                Button("\(currentCard.getNextRepetitionTooltip(difficulty:.Easy))\nEasy") {
-                                    nextCard(currentCard: currentCard, difficulty: .Easy)
-                                }
-                                Spacer()
-                            }
+                        RevealCardView(card: currentCard) {difficulty in
+                            nextCard(currentCard: currentCard, difficulty: difficulty)
                         }
                     }
                 } else {
