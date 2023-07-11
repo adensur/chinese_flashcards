@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OutOfCardsView: View {
-    @Binding var nextDate: Date
+    var nextDate: Date
     var callback: () -> Void
     @State private var nextInterval: TimeInterval = 0
     // timer to do periodic refreshes when the user doesn't do anything
@@ -39,6 +39,6 @@ func TomorrowDate() -> Date {
 
 struct OutOfCardsView_Previews: PreviewProvider {
     static var previews: some View {
-        OutOfCardsView(nextDate: .constant(TomorrowDate())) {}
+        OutOfCardsView(nextDate: TomorrowDate()) {}
     }
 }

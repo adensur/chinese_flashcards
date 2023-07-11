@@ -49,7 +49,7 @@ struct ExerciseView: View {
                         }
                     }
                 } else {
-                    OutOfCardsView(nextDate: $nextDate) {
+                    OutOfCardsView(nextDate: nextDate) {
                         (self.currentCard, self.nextDate) = deck.nextCardAndDate()
                     }
                 }
