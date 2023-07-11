@@ -21,23 +21,7 @@ struct ExerciseView: View {
     var body: some View {
         NavigationView {
             VStack {
-                GroupBox {
-                    HStack {
-                        Spacer()
-                        if let currentCard = currentCard {
-                            NavigationLink {
-                                EditCardView(card: currentCard)
-                            } label: {
-                                Text("edit")
-                            }
-                        }
-                        NavigationLink {
-                            AddCardView()
-                        } label: {
-                            Text("add")
-                        }
-                    }
-                }.onAppear {
+                ExerciseHeaderView(currentCard: currentCard).onAppear {
                     (currentCard, nextDate) = deck.nextCardAndDate()
                     isLoading = false
                 }
