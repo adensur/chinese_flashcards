@@ -22,7 +22,10 @@ struct ExerciseView: View {
         NavigationView {
             VStack {
                 ExerciseHeaderView(currentCard: currentCard).onAppear {
-                    (currentCard, nextDate) = deck.nextCardAndDate()
+                    if currentCard == nil {
+                        (currentCard, nextDate) = deck.nextCardAndDate()
+                        reveal = false
+                    }
                     isLoading = false
                 }
                 if let currentCard = currentCard {
