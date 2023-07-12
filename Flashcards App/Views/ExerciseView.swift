@@ -12,7 +12,6 @@ struct ExerciseView: View {
     var deck: Deck
     @State var currentCard: Card? = nil
     @State var nextDate = Date()
-    @State private var isLoading = true
     @State var reveal = false
     
     init(deck: Deck) {
@@ -26,7 +25,6 @@ struct ExerciseView: View {
                         (currentCard, nextDate) = deck.nextCardAndDate()
                         reveal = false
                     }
-                    isLoading = false
                 }
                 if let currentCard = currentCard {
                     FrontCardView(reveal: $reveal, card: currentCard)
