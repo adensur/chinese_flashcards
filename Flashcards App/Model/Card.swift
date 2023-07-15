@@ -12,14 +12,33 @@ let repeatingLevels = ["1d", "2d", "3d", "4d", "6d", "8d", "12d", "18d", "24d", 
 let repeatingAfterMistakeLevels = ["1m", "6m", "12m", "16m", "20m", "30m", "1h", "2h", "3h", "4h"]
 
 // simple exercise. Front and back text, no value checking - just turning the card over
-class Card: Encodable, Decodable {
-    var frontText: String
-    var backText: String
+class Card: Codable, ObservableObject {
+    @Published var frontText: String
+    @Published var backText: String
     var lastRepetition: Date = Date(timeIntervalSince1970: 0)
     var learningStage: LearningStage = .New
     init(frontText: String, backText: String) {
         self.frontText = frontText
         self.backText = backText
+    }
+    enum CodingKeys: CodingKey {
+        case frontText, backText, lastRepetition, learningStage
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(frontText, forKey: .frontText)
+        try container.encode(backText, forKey: .backText)
+        try container.encode(lastRepetition, forKey: .lastRepetition)
+        try container.encode(learningStage, forKey: .learningStage)
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        frontText = try container.decode(String.self, forKey: .frontText)
+        backText = try container.decode(String.self, forKey: .backText)
+        lastRepetition = try container.decode(Date.self, forKey: .lastRepetition)
+        learningStage = try container.decode(LearningStage.self, forKey: .learningStage)
     }
     
     func consumeAnswer(difficulty: Difficulty) {
@@ -36,9 +55,9 @@ class Card: Encodable, Decodable {
     // when will the next repetition be for current card level
     func getNextRepetition() -> Date {
         let interval = getRepetitionInterval(learningStage: self.learningStage)
-        print("Calculated card interval for \(frontText): \(interval) seconds")
+        // print("Calculated card interval for \(frontText): \(interval) seconds")
         let nextRepetition: Date = lastRepetition + interval
-        print("Next repetition in : \(nextRepetition.timeIntervalSince(Date()))")
+        // print("Next repetition in : \(nextRepetition.timeIntervalSince(Date()))")
         return nextRepetition
     }
     

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RevealCardView: View {
-    var card: Card
+    @StateObject var card: Card
     var callback: (_: Difficulty) -> Void
     var body: some View {
         VStack {

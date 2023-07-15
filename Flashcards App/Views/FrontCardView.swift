@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FrontCardView: View {
     @Binding var reveal: Bool
-    var card: Card
+    @StateObject var card: Card
     var body: some View {
         VStack {
             HStack{
