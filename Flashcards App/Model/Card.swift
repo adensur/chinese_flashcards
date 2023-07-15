@@ -12,31 +12,39 @@ let repeatingLevels = ["1d", "2d", "3d", "4d", "6d", "8d", "12d", "18d", "24d", 
 let repeatingAfterMistakeLevels = ["1m", "6m", "12m", "16m", "20m", "30m", "1h", "2h", "3h", "4h"]
 
 // simple exercise. Front and back text, no value checking - just turning the card over
-class Card: Codable, ObservableObject {
+class Card: Codable, ObservableObject, Identifiable {
+    let id: Int
     @Published var frontText: String
     @Published var backText: String
+    var creationDate: Date
     var lastRepetition: Date = Date(timeIntervalSince1970: 0)
     var learningStage: LearningStage = .New
-    init(frontText: String, backText: String) {
+    init(frontText: String, backText: String, id: Int, creationDate: Date) {
         self.frontText = frontText
         self.backText = backText
+        self.id = id
+        self.creationDate = creationDate
     }
     enum CodingKeys: CodingKey {
-        case frontText, backText, lastRepetition, learningStage
+        case id, frontText, backText, creationDate, lastRepetition, learningStage
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(id, forKey: .id)
         try container.encode(frontText, forKey: .frontText)
         try container.encode(backText, forKey: .backText)
+        try container.encode(creationDate, forKey: .creationDate)
         try container.encode(lastRepetition, forKey: .lastRepetition)
         try container.encode(learningStage, forKey: .learningStage)
     }
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(Int.self, forKey: .id)
         frontText = try container.decode(String.self, forKey: .frontText)
         backText = try container.decode(String.self, forKey: .backText)
+        creationDate = try container.decode(Date.self, forKey: .creationDate)
         lastRepetition = try container.decode(Date.self, forKey: .lastRepetition)
         learningStage = try container.decode(LearningStage.self, forKey: .learningStage)
     }
@@ -61,7 +69,14 @@ class Card: Codable, ObservableObject {
         return nextRepetition
     }
     
-    
+    func formattedCreationDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+
+        let formattedDate = dateFormatter.string(from: creationDate)
+
+        return formattedDate
+    }
     
 }
 

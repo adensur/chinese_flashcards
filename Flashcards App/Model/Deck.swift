@@ -10,9 +10,15 @@ import Foundation
 class Deck: Encodable, Decodable {
     var cards: [Card] = []
     var currentIdx = -1
+    var maxIdx = 0
     
     init(cards: [Card]) {
         self.cards = cards
+    }
+    
+    func addCard(frontText: String, backText: String) {
+        self.cards.append(Card(frontText: frontText, backText: backText, id: maxIdx, creationDate: Date()))
+        maxIdx += 1
     }
     
     func nextCardAndDate() -> (Card?, Date) {
@@ -68,10 +74,10 @@ func load() -> Deck {
 var previewDeck = simulatedLoad()
 
 func simulatedLoad() -> Deck {
-    return Deck(cards: [
-        Card(frontText: "आगे ", backText: "ahead"),
-        Card(frontText: "पीछे", backText: "behind")
-    ])
+    let deck = Deck(cards: [])
+    deck.addCard(frontText: "आगे", backText: "ahead")
+    deck.addCard(frontText: "पीछे", backText: "behind")
+    return deck
 }
 
 enum Difficulty {

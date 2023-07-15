@@ -29,7 +29,7 @@ struct AddCardView: View {
                 },
                 trailing: Button("Save") {
                     // Perform save action here
-                    defaultDeck.cards.append(Card(frontText: frontText, backText: backText))
+                    defaultDeck.addCard(frontText: frontText, backText: backText)
                     presentationMode.wrappedValue.dismiss()
                 }
             )
