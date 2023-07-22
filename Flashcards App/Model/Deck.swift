@@ -57,7 +57,7 @@ class Deck: Encodable, Decodable {
     }
 }
 
-var defaultDeck = load()
+var defaultDeck: Deck = load()
 
 func load() -> Deck {
     let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("data.json")
