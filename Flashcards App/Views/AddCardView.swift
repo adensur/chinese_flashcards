@@ -27,7 +27,7 @@ extension View {
     }
 }
 
-struct MyForm<Content: View>: View {
+struct MyForm2<Content: View>: View {
     @ViewBuilder var content: Content
     var body: some View {
         HStack {
@@ -56,9 +56,8 @@ struct AddCardView: View {
     var body: some View {
         NavigationView {
             MyForm {
-                Section {
+                MySection {
                     TextField("Front Text", text: $frontText)
-                        .myFormStyle()
                         .focused($isFocused)
                         .onChange(of: isFocused) {_ in
                             showSuggestions = false
@@ -72,19 +71,23 @@ struct AddCardView: View {
                             }
                             showSuggestions2 = true
                         }
-                        .zIndex(1)
                         .overlay(alignment: .top) {
                             if showSuggestions {
                                 SuggestView(editing: $showSuggestions, editing2: $showSuggestions2, inputText:$frontText) {vocabCard in
                                     backText = vocabCard.backText
                                 }
-                                .offset(y: 60)
+                                .offset(y: 30)
+                                .zIndex(100)
                             }
                         }
-                }
-                Section(header: Text("Back Text")) {
+                } header: {
+                    Text("FrontText")
+                }.zIndex(1)
+                MySection {
                     TextField("Back Text", text: $backText)
-                        .myFormStyle()
+                        .zIndex(0)
+                } header: {
+                    Text("Back Text")
                         .zIndex(0)
                 }
             }

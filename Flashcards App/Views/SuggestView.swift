@@ -23,10 +23,9 @@ struct SuggestView: View {
         ScrollView {
             LazyVStack(spacing: 0) {
                 ForEach(filteredTexts.wrappedValue, id: \.self) { textSearched in
-                    
                     Text(textSearched)
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 15)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 20)
                         .frame(minWidth: 0,
                                maxWidth: .infinity,
                                minHeight: 0,
@@ -50,7 +49,7 @@ struct SuggestView: View {
         .foregroundColor(Color(.black))
         .ignoresSafeArea()
         .frame(maxWidth: .infinity)
-        .frame(height: 30 * CGFloat( (filteredTexts.wrappedValue.count > 10 ? 10: filteredTexts.wrappedValue.count)))
+        .frame(height: 40 * CGFloat( (filteredTexts.wrappedValue.count > 10 ? 10: filteredTexts.wrappedValue.count)))
         .shadow(radius: 4)
         .padding(.horizontal, 25)
     }
