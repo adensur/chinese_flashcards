@@ -49,8 +49,7 @@ struct AddCardView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var frontText: String = ""
     @State private var backText: String = ""
-    @State var showSuggestions: Bool = false
-    @State var showSuggestions2: Bool = false
+    @State var showSuggestionsSemafor = 0
     @FocusState private var isFocused: Bool
     
     var body: some View {
@@ -60,21 +59,20 @@ struct AddCardView: View {
                     TextField("Front Text", text: $frontText)
                         .focused($isFocused)
                         .onChange(of: isFocused) {_ in
-                            showSuggestions = false
-                            showSuggestions2 = true
-                            print("focus changed! show suggestions is ", showSuggestions)
+                            showSuggestionsSemafor = 0
+                            print("focus changed! show suggestions is ", showSuggestionsSemafor)
                         }
                         .onChange(of: frontText) { _ in
                             print("onChange processing! ", Date())
-                            if showSuggestions2 {
-                                showSuggestions = true
-                            }
-                            showSuggestions2 = true
+                            showSuggestionsSemafor += 1
                         }
                         .overlay(alignment: .top) {
-                            if showSuggestions {
-                                SuggestView(editing: $showSuggestions, editing2: $showSuggestions2, inputText:$frontText) {vocabCard in
+                            if showSuggestionsSemafor > 0 {
+                                SuggestView(inputText:$frontText) {vocabCard in
                                     backText = vocabCard.backText
+                                    print("Setting editing to false", Date())
+                                    showSuggestionsSemafor = -1
+                                    print("Done setting editing to false", Date())
                                 }
                                 .offset(y: 30)
                             }

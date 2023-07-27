@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct SuggestView: View {
-    @Binding var editing: Bool
-    @Binding var editing2: Bool
     @Binding var inputText: String
     let callback: (VocabCard) -> Void
     
@@ -34,10 +32,6 @@ struct SuggestView: View {
                         .contentShape(Rectangle())
                         .onTapGesture(perform: {
                             inputText = textSearched
-                            print("Setting editing to false", Date())
-                            editing = false
-                            editing2 = false
-                            print("Done setting editing to false", Date())
                             self.callback(defaultVocab.cards[textSearched]!)
                         })
                     Divider()
@@ -60,7 +54,7 @@ struct SuggestView_Previews: PreviewProvider {
         StatefulPreviewWrapper("आ") {text in
             VStack {
                 TextField("Title", text: text)
-                SuggestView(editing: .constant(true), editing2: .constant(true), inputText: text) { vocabCard in
+                SuggestView(inputText: text) { vocabCard in
                     print("Matched vocab card: ", vocabCard)
                 }
             }
