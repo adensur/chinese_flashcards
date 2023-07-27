@@ -77,7 +77,6 @@ struct AddCardView: View {
                                     backText = vocabCard.backText
                                 }
                                 .offset(y: 30)
-                                .zIndex(100)
                             }
                         }
                 } header: {
@@ -85,10 +84,8 @@ struct AddCardView: View {
                 }.zIndex(1)
                 MySection {
                     TextField("Back Text", text: $backText)
-                        .zIndex(0)
                 } header: {
                     Text("Back Text")
-                        .zIndex(0)
                 }
             }
             .onTapGesture {

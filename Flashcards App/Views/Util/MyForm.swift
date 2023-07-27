@@ -166,30 +166,6 @@ struct MyForm: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .background(grey)
     }
-//    var body: some View {
-//        VStack {
-//            ForEach(0..<content.sections.count, id: \.self) {idx in
-//                let section = content.sections[idx]
-//                VStack(alignment: .leading, spacing: 0) {
-//                    if let header = section.header {
-//                        header
-//                            .textCase(.uppercase)
-//                            .padding(10)
-//                            .foregroundColor(Color.gray)
-//                    }
-//                    VStack(alignment: .leading, spacing: 0) {
-//                        section.content[0]
-//                    }
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-//                        .background(Color.white.cornerRadius(10))
-////
-//                }
-//            }.padding(20)
-//            Spacer()
-//        }
-//        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-//        .background(grey)
-//    }
 }
 
 struct MyForm_Previews: PreviewProvider {
@@ -204,25 +180,20 @@ struct MyForm_Previews: PreviewProvider {
                             .background(Color.blue)
                             .offset(x: 60, y: 220)
                     }
-//                Text("SectionText2")
+                Text("SectionText2")
             } header:  {
                 Text("Section header")
             }.zIndex(1)
             Text("Text ouside of section")
             
-//            MyGroup {
-//                Text("Text in group1")
-//                Text("Text in group2")
-//            }
-//            MySection {
-//                Text("new section")
-//                    .overlay {
-//                        Text("OverlayContent1\nOverlayContent2\nOverlayContent3")
-//                            .offset(x: 60, y: 50)
-//                            .frame(height: 200)
-//                    }
-//            }
-//            Text("Text ouside of section again")
+            MyGroup {
+                Text("Text in group1")
+                Text("Text in group2")
+            }
+            MySection {
+                Text("new section")
+            }
+            Text("Text ouside of section again")
         }
     }
 }
