@@ -7,13 +7,40 @@
 
 import SwiftUI
 
+extension String {
+    func hasUnicodePrefx(_ prefix: String) -> Bool {
+        // Get the Unicode scalar views of both strings
+        let prefixScalars = prefix.unicodeScalars
+        let stringScalars = self.unicodeScalars
+        
+        // Check if the prefix is longer than the original string
+        if prefixScalars.count > stringScalars.count {
+            return false
+        }
+        
+        // Iterate through both scalars to check for the prefix
+        for (prefixScalar, stringScalar) in zip(prefixScalars, stringScalars) {
+            // If any pair of code points is not equal, it's not a prefix
+            if prefixScalar != stringScalar {
+                return false
+            }
+        }
+        
+        // If we reach this point, the prefix is a valid prefix of the string
+        return true
+    }
+}
+
 struct SuggestView: View {
     @Binding var inputText: String
     let callback: (VocabCard) -> Void
     
     private var filteredTexts: Binding<[String]> { Binding (
         get: {
-            return defaultVocab.cards.keys.filter { $0.contains(inputText) && $0.prefix(1) == inputText.prefix(1) } },
+            return defaultVocab.cards.keys.filter {vocabString in
+                vocabString.hasUnicodePrefx(inputText)
+            }
+        },
         set: { _ in })
     }
     
