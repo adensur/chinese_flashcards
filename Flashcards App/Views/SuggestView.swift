@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 extension String {
     func hasUnicodePrefx(_ prefix: String) -> Bool {
@@ -31,6 +32,51 @@ extension String {
     }
 }
 
+extension Publishers {
+    // 1.
+    static var keyboardHeight: AnyPublisher<CGFloat, Never> {
+        // 2.
+        let willShow = NotificationCenter.default.publisher(for: UIApplication.keyboardWillShowNotification)
+            .map {
+                print("willShow! height: \($0.keyboardHeight)")
+                return $0.keyboardHeight
+            }
+        
+        let willHide = NotificationCenter.default.publisher(for: UIApplication.keyboardWillHideNotification)
+            .map { _ in CGFloat(0) }
+        
+        // 3.
+        return MergeMany(willShow, willHide)
+            .eraseToAnyPublisher()
+    }
+}
+
+extension Notification {
+    var keyboardHeight: CGFloat {
+        return (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height ?? 0
+    }
+}
+
+struct KeyboardAdaptive: ViewModifier {
+    @State private var keyboardHeight: CGFloat = 0
+
+    func body(content: Content) -> some View {
+        content
+            .padding(.bottom, keyboardHeight)
+            .onReceive(Publishers.keyboardHeight) {
+                self.keyboardHeight = $0
+                print("Keyboard height: \(keyboardHeight)")
+            }
+    }
+}
+
+extension View {
+    func keyboardAdaptive() -> some View {
+        ModifiedContent(content: self, modifier: KeyboardAdaptive())
+    }
+}
+
+
 struct SuggestView: View {
     @Binding var inputText: String
     let callback: (VocabCard) -> Void
@@ -48,8 +94,12 @@ struct SuggestView: View {
         ScrollView {
             LazyVStack(spacing: 0) {
                 ForEach(filteredTexts.wrappedValue, id: \.self) { textSearched in
-                    Text(textSearched)
-                        .padding(.horizontal, 20)
+                    HStack {
+                        Text(textSearched)
+                        Spacer()
+                        Text(defaultVocab.cards[textSearched]!.backText)
+                    }
+//                        .padding(.horizontal, 20)
                         .padding(.vertical, 20)
                         .frame(minWidth: 0,
                                maxWidth: .infinity,
@@ -65,13 +115,13 @@ struct SuggestView: View {
                         .padding(.horizontal, 10)
                 }
             }
-        }.background(Color.white)
-        .cornerRadius(15)
-        .foregroundColor(Color(.black))
-        .ignoresSafeArea()
-        .frame(maxWidth: .infinity)
-        .frame(height: 40 * CGFloat( (filteredTexts.wrappedValue.count > 10 ? 10: filteredTexts.wrappedValue.count)))
-        .shadow(radius: 4)
+        }
+//        .background(Color.white)
+//        .cornerRadius(15)
+//        .foregroundColor(Color(.black))
+//        .frame(maxWidth: .infinity)
+        .frame(maxHeight: 40 * CGFloat( (filteredTexts.wrappedValue.count > 10 ? 10: filteredTexts.wrappedValue.count)))
+//        .shadow(radius: 4)
         .padding(.horizontal, 25)
     }
 }

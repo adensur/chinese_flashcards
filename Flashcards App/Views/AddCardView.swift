@@ -44,7 +44,6 @@ struct MyForm2<Content: View>: View {
 
 
 
-
 struct AddCardView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var frontText: String = ""
@@ -66,20 +65,19 @@ struct AddCardView: View {
                             print("onChange processing! ", Date())
                             showSuggestionsSemafor += 1
                         }
-                        .overlay(alignment: .top) {
-                            if showSuggestionsSemafor > 0 {
-                                SuggestView(inputText:$frontText) {vocabCard in
-                                    backText = vocabCard.backText
-                                    print("Setting editing to false", Date())
-                                    showSuggestionsSemafor = -1
-                                    print("Done setting editing to false", Date())
-                                }
-                                .offset(y: 30)
+                    Group {
+                        if showSuggestionsSemafor > 0 {
+                            SuggestView(inputText:$frontText) {vocabCard in
+                                backText = vocabCard.backText
+                                print("Setting editing to false", Date())
+                                showSuggestionsSemafor = -1
+                                print("Done setting editing to false", Date())
                             }
                         }
+                    }
                 } header: {
                     Text("FrontText")
-                }.zIndex(1)
+                }
                 MySection {
                     TextField("Back Text", text: $backText)
                 } header: {
