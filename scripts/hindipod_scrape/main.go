@@ -61,7 +61,10 @@ func newResult() Result {
 
 func printResult() {
 	examples := strings.Join(result.Examples, "; ")
-	fmt.Printf("%v,%v,%v,%v,%v,%v,%v,%v,%v\n", result.HindiWord, result.EnglishWord, result.Type, result.Gender,
+	if strings.Contains(examples, "\t") {
+		panic("Examples contain tab!")
+	}
+	fmt.Printf("%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\t%v\n", result.HindiWord, result.EnglishWord, result.Type, result.Gender,
 		examples, result.Image, result.Audio, result.Category, result.SubCategory)
 }
 
