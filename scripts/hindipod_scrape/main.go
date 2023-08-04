@@ -35,6 +35,8 @@ func convertWordType(t string) string {
 		return "noun"
 	} else if t == "(v)" {
 		return "verb"
+	} else if t == "(adv)" {
+		return "adverb"
 	} else {
 		panic(fmt.Sprintf("Unknown word type: %v", t))
 	}
@@ -129,7 +131,8 @@ func Process(n *html.Node, prefix string) {
 		// fmt.Printf("RESULT::english_example: %v\n", n.FirstChild.Data)
 	}
 	// audio
-	if n.Data == "audio" && strings.HasPrefix(prefix, "/[2]/[2]/html[25]/body[1]/div[7]/div[3]/div") && strings.HasSuffix(prefix, "/div[1]/div[5]/div[1]/div[1]/div[3]/div") {
+	if n.Data == "audio" && (strings.HasPrefix(prefix, "/[2]/[2]/html[25]/body[1]/div[7]/div[3]/div") ||
+		strings.HasPrefix(prefix, "/[2]/[2]/html[26]/body[1]/div[7]/div[3]/div")) && strings.HasSuffix(prefix, "/div[1]/div[5]/div[1]/div[1]/div[3]/div") {
 		result.Audio = node.Attrs["src"]
 		// fmt.Printf("RESULT::audio %v\n", node.Attrs["src"])
 	}

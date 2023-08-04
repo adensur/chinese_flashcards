@@ -19,7 +19,7 @@ func downloadFile(url, targetFile string) {
 	// Make the HTTP GET request to fetch the image.
 	resp, err := http.Get(url)
 	if err != nil {
-		panic(err)
+		panic(fmt.Errorf("Error fetching file %v: %v", url, err))
 	}
 	defer resp.Body.Close()
 
@@ -61,6 +61,12 @@ func main() {
 		values := strings.Split(line, "\t")
 		image := values[5]
 		audio := values[6]
+		if len(image) == 0 {
+			panic("Error in string - empty image : " + line)
+		}
+		if len(audio) == 0 {
+			panic("Error in string - empty audio : " + line)
+		}
 		//fmt.Printf("Image: %s\n", image)
 		//fmt.Printf("Audio: %s\n", audio)
 		// download image to a file image_<idx>.jpeg
