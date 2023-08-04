@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    var vocab = defaultVocab
     var body: some View {
         ExerciseView(deck: defaultDeck)
         .padding()

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Zip
 
 class VocabCard {
     let frontText: String
@@ -27,15 +28,49 @@ class Vocab {
 
 func load() -> Vocab {
     let vocab = Vocab(cards: [])
-    let fileURL = Bundle.main.url(forResource: "vocabData", withExtension: "csv")!
-    let content = try! String(contentsOf: fileURL)
-    let lines = content.split(separator: "\n")
-    for line in lines {
-        let values = line.split(separator: ",")
-        let frontText = String(values[0])
-        let backText = String(values[1])
-        vocab.cards[frontText] = VocabCard(frontText: frontText, backText: backText)
+    for archive in ["hindipod_rich_2k", "hindi_duolinguo_400"] {
+        print("Processing archive: \(archive)")
+        // check if it was unzipped before
+        let unzipPath = try! FileManager.default.url(
+            for: .documentDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: false
+        ).appendingPathComponent(archive).appendingPathComponent(archive)
+        if !FileManager.default.fileExists(atPath: unzipPath.relativePath) {
+            let filePath = Bundle.main.url(forResource: archive, withExtension: "zip")!
+            let unzipDirectory = try! Zip.quickUnzipFile(filePath).appendingPathComponent(archive) // Unzip
+            print("Unzipped! ", unzipDirectory)
+        }
+        
+        
+        // works: try! FileManager.default.removeItem(at: unzipDirectory)
+//        let items = try! FileManager.default.contentsOfDirectory(atPath: unzipDirectory.relativePath)
+//        print("Len of items: ", items.count)
+//        for item in items {
+//            print("Found \(item)")
+//        }
+        let content = try! String(contentsOf: unzipPath.appendingPathComponent("vocab.tsv"))
+        let lines = content.split(separator: "\n")
+        // split the header of lines
+        for line in lines.dropFirst(1) {
+            let values = line.split(separator: "\t")
+            let frontText = String(values[0])
+            let backText = String(values[1])
+            vocab.cards[frontText] = VocabCard(frontText: frontText, backText: backText)
+        }
     }
+    
+//    let fileURL = Bundle.main.url(forResource: "hindipod_2k", withExtension: "tsv")!
+//    let content = try! String(contentsOf: fileURL)
+//    let lines = content.split(separator: "\n")
+//    // split the header of lines
+//    for line in lines.dropFirst(1) {
+//        let values = line.split(separator: "\t")
+//        let frontText = String(values[0])
+//        let backText = String(values[1])
+//        vocab.cards[frontText] = VocabCard(frontText: frontText, backText: backText)
+//    }
 //    let vocab = Vocab(cards: [
 ////        .init(frontText: "a", backText: "b"),
 ////        .init(frontText: "ab", backText: "bb"),
