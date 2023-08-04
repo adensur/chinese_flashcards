@@ -16,8 +16,8 @@ class Deck: Encodable, Decodable {
         self.cards = cards
     }
     
-    func addCard(frontText: String, backText: String) {
-        self.cards.append(Card(frontText: frontText, backText: backText, id: maxIdx, creationDate: Date()))
+    func addCard(frontText: String, backText: String, audioData: Data? = nil) {
+        self.cards.append(Card(frontText: frontText, backText: backText, id: maxIdx, creationDate: Date(), audioData: audioData))
         maxIdx += 1
     }
     
@@ -32,7 +32,7 @@ class Deck: Encodable, Decodable {
         for idx in currentIdx + 1 ... currentIdx + cards.count {
             let i = idx % cards.count
             let nextRepetition = cards[i].getNextRepetition()
-            if nextRepetition <= now {
+            if nextRepetition.addingTimeInterval(-30 * 60) <= now {
                 currentIdx = i
                 return (cards[i], nextRepetition)
             }

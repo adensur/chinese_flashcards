@@ -42,11 +42,11 @@ func download() {
 	for scanner.Scan() {
 		for {
 			line := scanner.Text()
-			parts := strings.Split(line, ",")
+			parts := strings.Split(line, "\t")
 			hindiWord := parts[0]
-			audioId := parts[5]
+			audioId := parts[6]
 			fmt.Printf("Downloading %s: %s\n", audioId, hindiWord)
-			cmd := exec.Command("gtts-cli", hindiWord, "--output", fmt.Sprintf("audio_output/%s.mp3", audioId), "--lang", "en")
+			cmd := exec.Command("gtts-cli", hindiWord, "--output", fmt.Sprintf("audio_output/%s", audioId), "--lang", "hi")
 			time.Sleep(backoff)
 			// Set the working directory if needed
 			// cmd.Dir = "/path/to/working/directory"

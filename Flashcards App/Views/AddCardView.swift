@@ -7,47 +7,12 @@
 
 import SwiftUI
 
-private let grey = Color(red: 0.95, green: 0.95, blue: 0.96)
-
-struct MyFormModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .frame(maxWidth: .infinity)
-            .padding(20)
-            .background(Color.white)
-            .padding(10)
-            .cornerRadius(15)
-            .background(grey)
-    }
-}
-
-extension View {
-    func myFormStyle() -> some View {
-        modifier(MyFormModifier())
-    }
-}
-
-struct MyForm2<Content: View>: View {
-    @ViewBuilder var content: Content
-    var body: some View {
-        HStack {
-            Spacer()
-            VStack {
-                content
-                Spacer()
-            }
-            Spacer()
-        }
-        .background(grey)
-    }
-}
-
-
 
 struct AddCardView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var frontText: String = ""
     @State private var backText: String = ""
+    @State private var audioData: Data? = nil
     @State var showSuggestionsSemafor = 0
     @FocusState private var isFocused: Bool
     
@@ -69,6 +34,7 @@ struct AddCardView: View {
                         if showSuggestionsSemafor > 0 {
                             SuggestView(inputText:$frontText) {vocabCard in
                                 backText = vocabCard.backText
+                                audioData = vocabCard.audioData
                                 print("Setting editing to false", Date())
                                 showSuggestionsSemafor = -1
                                 print("Done setting editing to false", Date())
@@ -83,6 +49,13 @@ struct AddCardView: View {
                 } header: {
                     Text("Back Text")
                 }
+                Group {
+                    if let data = audioData {
+                        PlaySoundButton(audioData: data) {
+                            Image(systemName: "play")
+                        }
+                    }
+                }
             }
             .onTapGesture {
                 print("OnTapGesture! Disabling focus. Was: ", isFocused)
@@ -95,7 +68,7 @@ struct AddCardView: View {
                 },
                 trailing: Button("Save") {
                     // Perform save action here
-                    defaultDeck.addCard(frontText: frontText, backText: backText)
+                    defaultDeck.addCard(frontText: frontText, backText: backText, audioData: audioData)
                     presentationMode.wrappedValue.dismiss()
                 }
             )

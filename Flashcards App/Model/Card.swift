@@ -12,21 +12,24 @@ let repeatingLevels = ["1d", "2d", "3d", "4d", "6d", "8d", "12d", "18d", "24d", 
 let repeatingAfterMistakeLevels = ["1m", "6m", "12m", "16m", "20m", "30m", "1h", "2h", "3h", "4h"]
 
 // simple exercise. Front and back text, no value checking - just turning the card over
-class Card: Codable, ObservableObject, Identifiable {
+class Card: Codable, ObservableObject, Identifiable, Equatable {
     let id: Int
     @Published var frontText: String
     @Published var backText: String
     var creationDate: Date
     var lastRepetition: Date = Date(timeIntervalSince1970: 0)
     var learningStage: LearningStage = .New
-    init(frontText: String, backText: String, id: Int, creationDate: Date) {
+    var audioData: Data? = nil
+    
+    init(frontText: String, backText: String, id: Int, creationDate: Date, audioData: Data? = nil) {
         self.frontText = frontText
         self.backText = backText
         self.id = id
         self.creationDate = creationDate
+        self.audioData = audioData
     }
     enum CodingKeys: CodingKey {
-        case id, frontText, backText, creationDate, lastRepetition, learningStage
+        case id, frontText, backText, creationDate, lastRepetition, learningStage, audioData
     }
     
     func encode(to encoder: Encoder) throws {
@@ -37,6 +40,7 @@ class Card: Codable, ObservableObject, Identifiable {
         try container.encode(creationDate, forKey: .creationDate)
         try container.encode(lastRepetition, forKey: .lastRepetition)
         try container.encode(learningStage, forKey: .learningStage)
+        try container.encode(audioData, forKey: .audioData)
     }
     
     required init(from decoder: Decoder) throws {
@@ -47,6 +51,11 @@ class Card: Codable, ObservableObject, Identifiable {
         creationDate = try container.decode(Date.self, forKey: .creationDate)
         lastRepetition = try container.decode(Date.self, forKey: .lastRepetition)
         learningStage = try container.decode(LearningStage.self, forKey: .learningStage)
+        audioData = try container.decode(Data.self, forKey: .audioData)
+    }
+    
+    static func ==(lhs: Card, rhs: Card) -> Bool {
+        return lhs.frontText == rhs.frontText && lhs.backText == rhs.backText
     }
     
     func consumeAnswer(difficulty: Difficulty) {

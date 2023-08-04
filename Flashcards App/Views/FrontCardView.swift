@@ -15,10 +15,24 @@ struct FrontCardView: View {
             HStack{
                 Spacer()
                 Text(card.frontText)
+                    .onChange(of: card) {card in
+                        print("Card on appear!", Date())
+                        card.playSound()
+                    }
+                    .onAppear {
+                        card.playSound()
+                    }
+                    
                 Spacer()
             }
+            if let data = card.audioData {
+                PlaySoundButton(audioData: data) {
+                    Image(systemName: "play")
+                }
+            }
             Spacer()
-        } .contentShape(Rectangle())
+        }
+        .contentShape(Rectangle())
         .onTapGesture {
             reveal = true
         }

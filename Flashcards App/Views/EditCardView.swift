@@ -33,6 +33,7 @@ struct EditCardView: View {
                 Spacer()
                 Button("Delete") {
                     // Perform save action here
+                    // hack to update the parent view
                     defaultDeck.deleteCurrentCard()
                     presentationMode.wrappedValue.dismiss()
                 }
