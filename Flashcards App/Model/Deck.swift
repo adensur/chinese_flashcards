@@ -148,7 +148,7 @@ func simulatedLoad() -> Deck {
     return deck
 }
 
-enum Difficulty {
+enum Difficulty: String, CaseIterable {
 case Again
 case Hard
 case Good

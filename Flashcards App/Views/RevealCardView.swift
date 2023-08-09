@@ -16,21 +16,11 @@ struct RevealCardView: View {
             Text(card.backText)
             Spacer()
             HStack {
-                Spacer()
-                Button("\(card.getNextRepetitionTooltip(difficulty:.Again))\nAgain") {
-                    callback(.Again)
-                }
-                Spacer()
-                Button("\(card.getNextRepetitionTooltip(difficulty:.Hard))\nHard") {
-                    callback(.Hard)
-                }
-                Spacer()
-                Button("\(card.getNextRepetitionTooltip(difficulty:.Good))\nGood") {
-                    callback(.Good)
-                }
-                Spacer()
-                Button("\(card.getNextRepetitionTooltip(difficulty:.Easy))\nEasy") {
-                    callback(.Easy)
+                ForEach(Difficulty.allCases, id: \.self) {difficulty in
+                    Spacer()
+                    Button("\(card.getNextRepetitionTooltip(difficulty: difficulty))\n\(difficulty.rawValue)") {
+                        callback(difficulty)
+                    }
                 }
                 Spacer()
             }
