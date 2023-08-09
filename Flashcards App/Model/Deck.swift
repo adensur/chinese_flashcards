@@ -45,6 +45,8 @@ class Deck: Codable, ObservableObject {
         currentIdx = try container.decode((Int?).self, forKey: .currentIdx)
         if let idx = currentIdx {
             nextRepetitionDate = cards[idx].getNextRepetition()
+        } else {
+            nextCardAndDate()
         }
     }
     
