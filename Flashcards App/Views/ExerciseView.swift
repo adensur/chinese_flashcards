@@ -9,9 +9,7 @@ import SwiftUI
 import Foundation
 
 struct ExerciseView: View {
-    var deck: Deck
-    @State var currentCard: Card? = nil
-    @State var nextDate = Date()
+    @ObservedObject var deck: Deck
     @State var reveal = false
     
     init(deck: Deck) {
@@ -20,22 +18,22 @@ struct ExerciseView: View {
     var body: some View {
         NavigationView {
             VStack {
-                ExerciseHeaderView(deck: deck, currentCard: currentCard).onAppear {
-                    if currentCard == nil {
-                        (currentCard, nextDate) = deck.nextCardAndDate()
-                        reveal = false
-                    }
-                }
-                if let currentCard = currentCard {
-                    FrontCardView(reveal: $reveal, card: currentCard)
+                ExerciseHeaderView(deck: deck)
+                if let currentCard = deck.currentCard {
+                    FrontCardView(reveal: $reveal, deck: deck)
                     if reveal {
                         RevealCardView(card: currentCard) {difficulty in
                             nextCard(currentCard: currentCard, difficulty: difficulty)
                         }
                     }
                 } else {
-                    OutOfCardsView(nextDate: nextDate) {
-                        (self.currentCard, self.nextDate) = deck.nextCardAndDate()
+                    if let nextDate = deck.nextRepetitionDate {
+                        OutOfCardsView(nextDate: nextDate) {
+                            deck.nextCardAndDate()
+                        }
+                    } else {
+                        Text("No cards added yet!")
+                        Spacer()
                     }
                 }
             }.animation(.easeIn, value: reveal)
@@ -44,9 +42,10 @@ struct ExerciseView: View {
     
     func nextCard(currentCard: Card, difficulty: Difficulty) {
         reveal = false
-        currentCard.consumeAnswer(difficulty: difficulty)
-        (self.currentCard, self.nextDate) = deck.nextCardAndDate()
-        deck.save()
+        deck.consumeAnswer(difficulty: difficulty)
+        if let card = deck.currentCard {
+            card.playSound()
+        }
     }
 }
 

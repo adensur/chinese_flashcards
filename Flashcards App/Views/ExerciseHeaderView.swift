@@ -8,21 +8,20 @@
 import SwiftUI
 
 struct ExerciseHeaderView: View {
-    var deck: Deck
-    let currentCard: Card?
+    @ObservedObject var deck: Deck
     var body: some View {
         GroupBox {
             HStack {
                 Spacer()
-                if let currentCard = currentCard {
+                if let currentCard = deck.currentCard {
                     NavigationLink {
-                        EditCardView(card: currentCard)
+                        EditCardView(deck: deck)
                     } label: {
                         Text("edit")
                     }
                 }
                 NavigationLink {
-                    AddCardView()
+                    AddCardView(deck: deck)
                 } label: {
                     Text("add")
                 }
@@ -38,6 +37,6 @@ struct ExerciseHeaderView: View {
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseHeaderView(deck: previewDeck, currentCard: previewDeck.cards[0])
+        ExerciseHeaderView(deck: previewDeck)
     }
 }

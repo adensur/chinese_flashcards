@@ -55,7 +55,7 @@ class Card: Codable, ObservableObject, Identifiable, Equatable {
     }
     
     static func ==(lhs: Card, rhs: Card) -> Bool {
-        return lhs.frontText == rhs.frontText && lhs.backText == rhs.backText
+        return lhs.id == rhs.id
     }
     
     func consumeAnswer(difficulty: Difficulty) {

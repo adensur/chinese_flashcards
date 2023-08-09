@@ -9,6 +9,7 @@ import SwiftUI
 
 
 struct AddCardView: View {
+    var deck: Deck
     @Environment(\.presentationMode) var presentationMode
     @State private var frontText: String = ""
     @State private var backText: String = ""
@@ -67,8 +68,7 @@ struct AddCardView: View {
                     presentationMode.wrappedValue.dismiss()
                 },
                 trailing: Button("Save") {
-                    // Perform save action here
-                    defaultDeck.addCard(frontText: frontText, backText: backText, audioData: audioData)
+                    deck.addCard(frontText: frontText, backText: backText, audioData: audioData)
                     presentationMode.wrappedValue.dismiss()
                 }
             )
@@ -77,6 +77,6 @@ struct AddCardView: View {
 
 struct AddCardView_Previews: PreviewProvider {
     static var previews: some View {
-        AddCardView()
+        AddCardView(deck: previewDeck)
     }
 }
