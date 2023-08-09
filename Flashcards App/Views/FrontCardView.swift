@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FrontCardView: View {
     @Binding var reveal: Bool
+    @ObservedObject var card: Card
     @ObservedObject var deck: Deck
     var body: some View {
         VStack {
@@ -16,14 +17,12 @@ struct FrontCardView: View {
                 Spacer()
                 // we have to do this extra check because of SwiftUI bug calling this even when it doesn't need to be displayed
                 // https://stackoverflow.com/questions/76846330/swiftui-calls-onappear-for-views-that-should-not-exist
-                if let currentCard = deck.currentCard {
-                    Text(deck.currentCard!.frontText)
+                    Text(card.frontText)
                     .onAppear {
                         print("FrontCardView on appear!", Date())
                         if let currentCard = deck.currentCard {
                             currentCard.playSound()
                         }
-                    }
                 }
                 Spacer()
             }
@@ -43,6 +42,6 @@ struct FrontCardView: View {
 
 struct FrontCardView_Previews: PreviewProvider {
     static var previews: some View {
-        FrontCardView(reveal: .constant(false), deck: previewDeck)
+        FrontCardView(reveal: .constant(false), card: previewDeck.cards[0], deck: previewDeck)
     }
 }

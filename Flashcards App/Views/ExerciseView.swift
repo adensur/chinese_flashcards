@@ -20,7 +20,7 @@ struct ExerciseView: View {
             VStack {
                 ExerciseHeaderView(deck: deck)
                 if let currentCard = deck.currentCard {
-                    FrontCardView(reveal: $reveal, deck: deck)
+                    FrontCardView(reveal: $reveal, card: currentCard, deck: deck)
                     if reveal {
                         RevealCardView(card: currentCard) {difficulty in
                             nextCard(currentCard: currentCard, difficulty: difficulty)

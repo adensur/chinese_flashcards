@@ -15,7 +15,7 @@ struct ExerciseHeaderView: View {
                 Spacer()
                 if let currentCard = deck.currentCard {
                     NavigationLink {
-                        EditCardView(deck: deck)
+                        EditCardView(card: currentCard, deck: deck)
                     } label: {
                         Text("edit")
                     }

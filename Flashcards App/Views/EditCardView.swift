@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EditCardView: View {
+    @ObservedObject var card: Card
     @ObservedObject var deck: Deck
     @Environment(\.presentationMode) var presentationMode
     @State private var frontText: String = ""
@@ -24,8 +25,8 @@ struct EditCardView: View {
                         TextField("Back Text", text: $backText)
                     }
                 }.onAppear {
-                    self.frontText = deck.currentCard!.frontText
-                    self.backText = deck.currentCard!.backText
+                    self.frontText = card.frontText
+                    self.backText = card.backText
                 }
                 Spacer()
                 Button("Delete") {
@@ -43,8 +44,8 @@ struct EditCardView: View {
             trailing:
                 Button("Save") {
                     // Perform save action here
-                    deck.currentCard!.frontText = frontText
-                    deck.currentCard!.backText = backText
+                    card.frontText = frontText
+                    card.backText = backText
                     presentationMode.wrappedValue.dismiss()
                 }
         )
@@ -53,6 +54,6 @@ struct EditCardView: View {
 
 struct EditCardView_Previews: PreviewProvider {
     static var previews: some View {
-        EditCardView(deck: previewDeck)
+        EditCardView(card: previewDeck.cards[0], deck: previewDeck)
     }
 }

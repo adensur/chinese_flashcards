@@ -9,9 +9,9 @@ import Foundation
 
 class Deck: Codable, ObservableObject {
     @Published var cards: [Card] = []
-    //
-    @Published var nextRepetitionDate: Date? = nil
     @Published var currentIdx: Int? = nil
+    @Published var nextRepetitionDate: Date? = nil
+    
     var currentCard: Card? {
         if let idx = currentIdx {
             return self.cards[idx]
