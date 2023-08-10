@@ -17,16 +17,17 @@ struct FrontCardView: View {
                 Spacer()
                 // we have to do this extra check because of SwiftUI bug calling this even when it doesn't need to be displayed
                 // https://stackoverflow.com/questions/76846330/swiftui-calls-onappear-for-views-that-should-not-exist
-                    Text(card.frontText)
-                    .onAppear {
-                        print("FrontCardView on appear!", Date())
-                        if let currentCard = deck.currentCard {
+                Text(card.frontText)
+                .onAppear {
+                    if let currentCard = deck.currentCard {
+                        if currentCard.isFrontSideUp {
                             currentCard.playSound()
                         }
+                    }
                 }
                 Spacer()
             }
-            if let data = deck.currentCard?.audioData {
+            if let data = card.audioData {
                 PlaySoundButton(audioData: data) {
                     Image(systemName: "play")
                 }

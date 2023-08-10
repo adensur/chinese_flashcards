@@ -16,6 +16,7 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     let id: Int
     @Published var frontText: String
     @Published var backText: String
+    @Published var isFrontSideUp: Bool = true
     var creationDate: Date
     var lastRepetition: Date = Date(timeIntervalSince1970: 0)
     var learningStage: LearningStage = .New
@@ -29,7 +30,7 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         self.audioData = audioData
     }
     enum CodingKeys: CodingKey {
-        case id, frontText, backText, creationDate, lastRepetition, learningStage, audioData
+        case id, frontText, backText, creationDate, lastRepetition, learningStage, audioData, isFrontSideUp
     }
     
     func encode(to encoder: Encoder) throws {
@@ -41,6 +42,7 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         try container.encode(lastRepetition, forKey: .lastRepetition)
         try container.encode(learningStage, forKey: .learningStage)
         try container.encode(audioData, forKey: .audioData)
+        try container.encode(isFrontSideUp, forKey: .isFrontSideUp)
     }
     
     required init(from decoder: Decoder) throws {
@@ -52,6 +54,9 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         lastRepetition = try container.decode(Date.self, forKey: .lastRepetition)
         learningStage = try container.decode(LearningStage.self, forKey: .learningStage)
         audioData = try container.decode(Data?.self, forKey: .audioData)
+        if let val = try? container.decode(Bool.self, forKey: .isFrontSideUp) {
+            isFrontSideUp = val
+        }
     }
     
     static func ==(lhs: Card, rhs: Card) -> Bool {
@@ -65,7 +70,8 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     
     func consumeAnswer(difficulty: Difficulty) {
         self.learningStage = getNextStage(learningStage: self.learningStage, difficulty: difficulty)
-        lastRepetition = Date()
+        self.lastRepetition = Date()
+        self.isFrontSideUp.toggle()
     }
     
     // when would the next repetition be if we press a button with certain difficulty

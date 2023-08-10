@@ -158,9 +158,9 @@ class Deck: Codable, ObservableObject {
             nextRepetitionDate = cards[currentIdx!].getNextRepetition()
         }
         // no unseen cards - let's show at least something!
-        newAvailableOtherCards.append(contentsOf: newAvailableLearningCards)
-        newAvailableOtherCards.shuffle()
-        currentIdx = newAvailableOtherCards.first
+        availableOtherCards.append(contentsOf: availableLearningCards)
+        availableOtherCards.shuffle()
+        currentIdx = availableOtherCards.first
         nextRepetitionDate = cards[currentIdx!].getNextRepetition()
     }
     

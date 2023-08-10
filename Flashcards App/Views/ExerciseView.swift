@@ -20,10 +20,19 @@ struct ExerciseView: View {
             VStack {
                 ExerciseHeaderView(deck: deck)
                 if let currentCard = deck.currentCard {
-                    FrontCardView(reveal: $reveal, card: currentCard, deck: deck)
-                    if reveal {
-                        RevealCardView(card: currentCard) {difficulty in
-                            nextCard(currentCard: currentCard, difficulty: difficulty)
+                    if currentCard.isFrontSideUp {
+                        FrontCardView(reveal: $reveal, card: currentCard, deck: deck)
+                        if reveal {
+                            RevealCardView(card: currentCard) {difficulty in
+                                nextCard(currentCard: currentCard, difficulty: difficulty)
+                            }
+                        }
+                    } else {
+                        BackCardView(reveal: $reveal, card: currentCard, deck: deck)
+                        if reveal {
+                            BackRevealCardView(card: currentCard, deck: deck) {difficulty in
+                                nextCard(currentCard: currentCard, difficulty: difficulty)
+                            }
                         }
                     }
                 } else {
@@ -44,7 +53,9 @@ struct ExerciseView: View {
         reveal = false
         deck.consumeAnswer(difficulty: difficulty)
         if let card = deck.currentCard {
-            card.playSound()
+            if card.isFrontSideUp {
+                card.playSound()
+            }
         }
     }
 }
