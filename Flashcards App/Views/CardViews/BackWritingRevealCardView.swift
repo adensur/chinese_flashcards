@@ -19,18 +19,10 @@ struct BackWritingRevealCardView: View {
                 Text("You are correct!")
                 Text(card.frontText)
                     .background(Color.green)
-                    .onAppear {
-                        if let currentCard = deck.currentCard {
-                            currentCard.playSound()
-                        }
-                    }
+                    
             } else {
                 Text("Incorrect")
-                Text(textInput)
-                    .background(Color.red)
-                Image(systemName: "arrow.down")
-                Text(card.frontText)
-                    .background(Color.green)
+                CorrectedTextView(text: textInput, correctText: card.frontText)
             }
             if let data = card.audioData {
                 PlaySoundButton(audioData: data) {
@@ -46,6 +38,10 @@ struct BackWritingRevealCardView: View {
                     }
                 }
                 Spacer()
+            }
+        }.onAppear {
+            if let currentCard = deck.currentCard {
+                currentCard.playSound()
             }
         }
     }
