@@ -13,6 +13,7 @@ struct AddCardView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var frontText: String = ""
     @State private var backText: String = ""
+    @State private var enableTextInputExercise: Bool = true
     @State private var audioData: Data? = nil
     @State var showSuggestionsSemafor = 0
     @FocusState private var isFocused: Bool
@@ -57,6 +58,13 @@ struct AddCardView: View {
                         }
                     }
                 }
+                MySection {
+                    Toggle(isOn: $enableTextInputExercise) {
+                        Text("Enable text input exercise")
+                    }
+                } header: {
+                    Text("Exercise options")
+                }
             }
             .onTapGesture {
                 print("OnTapGesture! Disabling focus. Was: ", isFocused)
@@ -68,7 +76,7 @@ struct AddCardView: View {
                     presentationMode.wrappedValue.dismiss()
                 },
                 trailing: Button("Save") {
-                    deck.addCard(frontText: frontText, backText: backText, audioData: audioData)
+                    deck.addCard(frontText: frontText, backText: backText, audioData: audioData, enableTextInputExercise: enableTextInputExercise)
                     presentationMode.wrappedValue.dismiss()
                 }
             )

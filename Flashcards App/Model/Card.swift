@@ -17,20 +17,23 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     @Published var frontText: String
     @Published var backText: String
     @Published var isFrontSideUp: Bool = true
+    // Option. Whether or not to show text input exercises sometimes when enabled in deck and when it is backSideUp currently
+    @Published var enableTextInputExercise: Bool = true
     var creationDate: Date
     var lastRepetition: Date = Date(timeIntervalSince1970: 0)
     var learningStage: LearningStage = .New
     var audioData: Data? = nil
     
-    init(frontText: String, backText: String, id: Int, creationDate: Date, audioData: Data? = nil) {
+    init(frontText: String, backText: String, id: Int, creationDate: Date, audioData: Data? = nil, enableTextInputExercise: Bool) {
         self.frontText = frontText
         self.backText = backText
         self.id = id
         self.creationDate = creationDate
         self.audioData = audioData
+        self.enableTextInputExercise = enableTextInputExercise
     }
     enum CodingKeys: CodingKey {
-        case id, frontText, backText, creationDate, lastRepetition, learningStage, audioData, isFrontSideUp
+        case id, frontText, backText, creationDate, lastRepetition, learningStage, audioData, isFrontSideUp, enableTextInputExercise
     }
     
     func encode(to encoder: Encoder) throws {
@@ -43,6 +46,7 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         try container.encode(learningStage, forKey: .learningStage)
         try container.encode(audioData, forKey: .audioData)
         try container.encode(isFrontSideUp, forKey: .isFrontSideUp)
+        try container.encode(enableTextInputExercise, forKey: .enableTextInputExercise)
     }
     
     required init(from decoder: Decoder) throws {
@@ -54,8 +58,9 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         lastRepetition = try container.decode(Date.self, forKey: .lastRepetition)
         learningStage = try container.decode(LearningStage.self, forKey: .learningStage)
         audioData = try container.decode(Data?.self, forKey: .audioData)
-        if let val = try? container.decode(Bool.self, forKey: .isFrontSideUp) {
-            isFrontSideUp = val
+        isFrontSideUp = try container.decode(Bool.self, forKey: .isFrontSideUp)
+        if let val = try? container.decode(Bool.self, forKey: .enableTextInputExercise) {
+            enableTextInputExercise = val
         }
     }
     

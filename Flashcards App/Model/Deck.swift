@@ -23,6 +23,13 @@ class Deck: Codable, ObservableObject {
             save()
         }
     }
+    // Option
+    // Disables all writing exercises for all cards, despite card options
+    @Published var disableAllTextInputExercises: Bool = false {
+        didSet {
+            save()
+        }
+    }
     // global counter used to generate unique id to every added card
     var maxId = 0
     // non-persistent data
@@ -44,7 +51,7 @@ class Deck: Codable, ObservableObject {
     }
     
     enum CodingKeys: CodingKey {
-        case cards, currentIdx, shuffle, maxId
+        case cards, currentIdx, shuffle, maxId, disableAllTextInputExercises
     }
     
     func encode(to encoder: Encoder) throws {
@@ -53,6 +60,7 @@ class Deck: Codable, ObservableObject {
         try container.encode(currentIdx, forKey: .currentIdx)
         try container.encode(shuffle, forKey: .shuffle)
         try container.encode(maxId, forKey: .maxId)
+        try container.encode(disableAllTextInputExercises, forKey: .disableAllTextInputExercises)
     }
     
     required init(from decoder: Decoder) throws {
@@ -65,13 +73,14 @@ class Deck: Codable, ObservableObject {
         } else {
             nextCard()
         }
-        if let shuffle = try? container.decode(Bool.self, forKey: .shuffle) {
-            self.shuffle = shuffle
+        shuffle = try container.decode(Bool.self, forKey: .shuffle)
+        if let val = try? container.decode(Bool.self, forKey: .disableAllTextInputExercises) {
+            disableAllTextInputExercises = val
         }
     }
     
-    func addCard(frontText: String, backText: String, audioData: Data? = nil) {
-        self.cards.append(Card(frontText: frontText, backText: backText, id: maxId, creationDate: Date(), audioData: audioData))
+    func addCard(frontText: String, backText: String, audioData: Data? = nil, enableTextInputExercise: Bool = true) {
+        self.cards.append(Card(frontText: frontText, backText: backText, id: maxId, creationDate: Date(), audioData: audioData, enableTextInputExercise: enableTextInputExercise))
         maxId += 1
         // we had no card before, but now we have a card. Need to trigger the repetition update
         if currentIdx == nil {

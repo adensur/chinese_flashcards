@@ -13,6 +13,7 @@ struct EditCardView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var frontText: String = ""
     @State private var backText: String = ""
+    @State private var enableTextInputExercise: Bool = false
     var body: some View {
         NavigationView {
             VStack {
@@ -23,6 +24,16 @@ struct EditCardView: View {
                     
                     Section(header: Text("Back Text")) {
                         TextField("Back Text", text: $backText)
+                    }
+                    
+                    Section {
+                        Toggle(isOn: $enableTextInputExercise) {
+                            Text("Enable text input exercise")
+                        }.onAppear {
+                            enableTextInputExercise = card.enableTextInputExercise
+                        }
+                    } header: {
+                        Text("Exercise Options")
                     }
                 }.onAppear {
                     self.frontText = card.frontText
@@ -46,6 +57,7 @@ struct EditCardView: View {
                     // Perform save action here
                     card.frontText = frontText
                     card.backText = backText
+                    card.enableTextInputExercise = enableTextInputExercise
                     presentationMode.wrappedValue.dismiss()
                 }
         )

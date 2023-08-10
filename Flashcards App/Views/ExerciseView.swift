@@ -11,6 +11,7 @@ import Foundation
 struct ExerciseView: View {
     @ObservedObject var deck: Deck
     @State var reveal = false
+    @State var textInput = ""
     
     init(deck: Deck) {
         self.deck = deck
@@ -28,11 +29,21 @@ struct ExerciseView: View {
                             }
                         }
                     } else {
-                        BackCardView(reveal: $reveal, card: currentCard, deck: deck)
-                        if reveal {
-                            BackRevealCardView(card: currentCard, deck: deck) {difficulty in
-                                nextCard(currentCard: currentCard, difficulty: difficulty)
+                        if deck.disableAllTextInputExercises || !currentCard.enableTextInputExercise {
+                            BackCardView(reveal: $reveal, card: currentCard, deck: deck)
+                            if reveal {
+                                BackRevealCardView(card: currentCard, deck: deck) {difficulty in
+                                    nextCard(currentCard: currentCard, difficulty: difficulty)
+                                }
                             }
+                        } else {
+                            BackWritingCardView(reveal: $reveal, textInput: $textInput, card: currentCard, deck: deck)
+                            if reveal {
+                                BackWritingRevealCardView(card: currentCard, deck: deck, textInput: textInput) {difficulty in
+                                    nextCard(currentCard: currentCard, difficulty: difficulty)
+                                }
+                            }
+                            Spacer()
                         }
                     }
                 } else {
@@ -51,6 +62,7 @@ struct ExerciseView: View {
     
     func nextCard(currentCard: Card, difficulty: Difficulty) {
         reveal = false
+        textInput = ""
         deck.consumeAnswer(difficulty: difficulty)
         if let card = deck.currentCard {
             if card.isFrontSideUp {

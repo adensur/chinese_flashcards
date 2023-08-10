@@ -13,6 +13,7 @@ struct DeckSettingsView: View {
         Form {
             Section {
                 Toggle("Shuffle cards?", isOn: $deck.shuffle)
+                Toggle("Disable all writing exercises", isOn: $deck.disableAllTextInputExercises)
             }
         }
     }
