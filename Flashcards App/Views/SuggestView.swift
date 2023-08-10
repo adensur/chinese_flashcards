@@ -38,9 +38,10 @@ struct SuggestView: View {
     
     private var filteredTexts: Binding<[String]> { Binding (
         get: {
-            return defaultVocab.cards.keys.filter {vocabString in
+            let filteredTexts = defaultVocab.cards.keys.filter {vocabString in
                 vocabString.hasUnicodePrefx(inputText)
             }
+            return filteredTexts
         },
         set: { _ in })
     }
@@ -75,7 +76,7 @@ struct SuggestView: View {
 //        .cornerRadius(15)
 //        .foregroundColor(Color(.black))
 //        .frame(maxWidth: .infinity)
-        .frame(maxHeight: 40 * CGFloat( (filteredTexts.wrappedValue.count > 10 ? 10: filteredTexts.wrappedValue.count)))
+        .frame(maxHeight: 30 * CGFloat( (filteredTexts.wrappedValue.count > 5 ? 5: filteredTexts.wrappedValue.count)))
 //        .shadow(radius: 4)
         .padding(.horizontal, 25)
     }

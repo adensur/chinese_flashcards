@@ -20,8 +20,8 @@ struct AddCardView: View {
     
     var body: some View {
         NavigationView {
-            MyForm {
-                MySection {
+            Form {
+                Section {
                     TextField("Front Text", text: $frontText)
                         .focused($isFocused)
                         .onChange(of: isFocused) {_ in
@@ -32,33 +32,29 @@ struct AddCardView: View {
                             print("onChange processing! ", Date())
                             showSuggestionsSemafor += 1
                         }
-                    Group {
-                        if showSuggestionsSemafor > 0 {
-                            SuggestView(inputText:$frontText) {vocabCard in
-                                backText = vocabCard.backText
-                                audioData = vocabCard.audioData
-                                print("Setting editing to false", Date())
-                                showSuggestionsSemafor = -1
-                                print("Done setting editing to false", Date())
-                            }
+                    if showSuggestionsSemafor > 0 {
+                        SuggestView(inputText:$frontText) {vocabCard in
+                            backText = vocabCard.backText
+                            audioData = vocabCard.audioData
+                            print("Setting editing to false", Date())
+                            showSuggestionsSemafor = -1
+                            print("Done setting editing to false", Date())
                         }
                     }
                 } header: {
                     Text("FrontText")
                 }
-                MySection {
+                Section {
                     TextField("Back Text", text: $backText)
                 } header: {
                     Text("Back Text")
                 }
-                Group {
-                    if let data = audioData {
-                        PlaySoundButton(audioData: data) {
-                            Image(systemName: "play")
-                        }
+                if let data = audioData {
+                    PlaySoundButton(audioData: data) {
+                        Image(systemName: "play")
                     }
                 }
-                MySection {
+                Section {
                     Toggle(isOn: $enableTextInputExercise) {
                         Text("Enable text input exercise")
                     }
