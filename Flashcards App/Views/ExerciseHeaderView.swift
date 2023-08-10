@@ -21,6 +21,11 @@ struct ExerciseHeaderView: View {
                     }
                 }
                 NavigationLink {
+                    DeckSettingsView(deck: deck)
+                } label: {
+                    Text("settings")
+                }
+                NavigationLink {
                     AddCardView(deck: deck)
                 } label: {
                     Text("add")

@@ -29,7 +29,7 @@ struct ExerciseView: View {
                 } else {
                     if let nextDate = deck.nextRepetitionDate {
                         OutOfCardsView(nextDate: nextDate) {
-                            deck.nextCardAndDate()
+                            deck.nextCard()
                         }
                     } else {
                         Text("No cards added yet!")

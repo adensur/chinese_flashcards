@@ -12,11 +12,15 @@ struct BrowseDeckView: View {
     var body: some View {
         List {
             ForEach(deck.cards) {card in
-                HStack{
-                    Text(card.frontText)
-                    Text(card.backText)
-                    Spacer()
-                    Text("\(card.formattedCreationDate())")
+                NavigationLink {
+                    EditCardView(card: card, deck: deck)
+                } label: {
+                    HStack{
+                        Text(card.frontText)
+                        Text(card.backText)
+                        Spacer()
+                        Text("\(card.formattedCreationDate())")
+                    }
                 }
             }
         }

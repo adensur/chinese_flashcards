@@ -32,7 +32,7 @@ struct EditCardView: View {
                 Button("Delete") {
                     // Perform save action here
                     // hack to update the parent view
-                    deck.deleteCurrentCard()
+                    deck.deleteCard(id: card.id)
                     presentationMode.wrappedValue.dismiss()
                 }
             }

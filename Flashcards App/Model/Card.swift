@@ -12,7 +12,7 @@ let repeatingLevels = ["1d", "2d", "3d", "4d", "6d", "8d", "12d", "18d", "24d", 
 let repeatingAfterMistakeLevels = ["1m", "6m", "12m", "16m", "20m", "30m", "1h", "2h", "3h", "4h"]
 
 // simple exercise. Front and back text, no value checking - just turning the card over
-class Card: Codable, ObservableObject, Identifiable, Equatable {
+class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     let id: Int
     @Published var frontText: String
     @Published var backText: String
@@ -51,11 +51,16 @@ class Card: Codable, ObservableObject, Identifiable, Equatable {
         creationDate = try container.decode(Date.self, forKey: .creationDate)
         lastRepetition = try container.decode(Date.self, forKey: .lastRepetition)
         learningStage = try container.decode(LearningStage.self, forKey: .learningStage)
-        audioData = try container.decode(Data.self, forKey: .audioData)
+        audioData = try container.decode(Data?.self, forKey: .audioData)
     }
     
     static func ==(lhs: Card, rhs: Card) -> Bool {
         return lhs.id == rhs.id
+    }
+    
+    // for Hashable protocol
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
     
     func consumeAnswer(difficulty: Difficulty) {

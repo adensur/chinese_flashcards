@@ -6,11 +6,28 @@
 //
 
 import Foundation
+import DequeModule
 
 class Deck: Codable, ObservableObject {
+    // Main information about all cards and repetitions
     @Published var cards: [Card] = []
-    @Published var currentIdx: Int? = nil
-    @Published var nextRepetitionDate: Date? = nil
+    // Updated each time nextCard is called
+    // Persisted through app restarts
+    @Published private var currentIdx: Int? = nil
+    // Updated each time nextCard is called
+    @Published private(set) var nextRepetitionDate: Date? = nil
+    // Option
+    // Whether or not next card will always be deterministic, by date added, or random
+    @Published var shuffle: Bool = false {
+        didSet {
+            save()
+        }
+    }
+    // global counter used to generate unique id to every added card
+    var maxId = 0
+    // non-persistent data
+    // contains up to 5 last cards, to do advanced shuffling to avoid repetitions
+    var lastCards: Deque<Card> = []
     
     var currentCard: Card? {
         if let idx = currentIdx {
@@ -22,31 +39,34 @@ class Deck: Codable, ObservableObject {
     // instantly make cards with up to this time interval "trainable"
     private static let minTimeInterval = TimeInterval(20 * 60) // 20 minutes
     
-    // global counter used to generate unique id to every added card
-    var maxId = 0
-    
     init(cards: [Card]) {
         self.cards = cards
     }
     
     enum CodingKeys: CodingKey {
-        case cards, currentIdx
+        case cards, currentIdx, shuffle, maxId
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(cards, forKey: .cards)
         try container.encode(currentIdx, forKey: .currentIdx)
+        try container.encode(shuffle, forKey: .shuffle)
+        try container.encode(maxId, forKey: .maxId)
     }
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         cards = try container.decode([Card].self, forKey: .cards)
-        currentIdx = try container.decode((Int?).self, forKey: .currentIdx)
+        maxId = try container.decode(Int.self, forKey: .maxId)
+        currentIdx = try? container.decode((Int?).self, forKey: .currentIdx)
         if let idx = currentIdx {
             nextRepetitionDate = cards[idx].getNextRepetition()
         } else {
-            nextCardAndDate()
+            nextCard()
+        }
+        if let shuffle = try? container.decode(Bool.self, forKey: .shuffle) {
+            self.shuffle = shuffle
         }
     }
     
@@ -55,13 +75,13 @@ class Deck: Codable, ObservableObject {
         maxId += 1
         // we had no card before, but now we have a card. Need to trigger the repetition update
         if currentIdx == nil {
-            self.nextCardAndDate()
+            self.nextCard()
         } else {
             self.save()
         }
     }
     
-    func nextCardAndDate() {
+    func nextCard() {
         if cards.isEmpty {
             return
         }
@@ -78,41 +98,101 @@ class Deck: Codable, ObservableObject {
         } else {
             startIdx = -1
         }
+        // Learning and recently mistaken cards have priority
+        var availableLearningCards: [Int] = []
+        // other cards
+        var availableOtherCards: [Int] = []
         for idx in startIdx + 1 ... startIdx + cards.count {
             let i = idx % cards.count
-            let nextRepetition = cards[i].getNextRepetition()
+            let card = self.cards[i]
+            let nextRepetition = card.getNextRepetition()
             if nextRepetition.addingTimeInterval(-Self.minTimeInterval) <= now {
-                currentIdx = i
-                nextRepetitionDate = nextRepetition
-                return
+                if !shuffle {
+                    currentIdx = i
+                    nextRepetitionDate = nextRepetition
+                    return
+                }
+                switch card.learningStage {
+                case .RepeatingAfterMistake(_), .Learning:
+                    availableLearningCards.append(i)
+                default:
+                    availableOtherCards.append(i)
+                }
             }
             if nextRepetition < minNextRepetition {
                 minNextRepetition = nextRepetition
             }
         }
-        // out of cards-to-review
-        currentIdx = nil
-        nextRepetitionDate = minNextRepetition
+        if availableOtherCards.isEmpty && availableLearningCards.isEmpty {
+            // out of cards-to-review
+            currentIdx = nil
+            nextRepetitionDate = minNextRepetition
+            return
+        }
+        // First, try to show random learning cards, if they weren't present in the last 5 repetitions
+        let recentlySeenCards = Set(lastCards)
+        var newAvailableLearningCards: [Int] = []
+        for idx in availableLearningCards {
+            let card = cards[idx]
+            if !recentlySeenCards.contains(card) {
+                newAvailableLearningCards.append(idx)
+            }
+        }
+        if !newAvailableLearningCards.isEmpty {
+            newAvailableLearningCards.shuffle()
+            currentIdx = newAvailableLearningCards.first
+            nextRepetitionDate = cards[currentIdx!].getNextRepetition()
+            return
+        }
+        // no learning cards that we haven't seen - try to get other cards
+        var newAvailableOtherCards: [Int] = []
+        for idx in availableOtherCards {
+            let card = cards[idx]
+            if !recentlySeenCards.contains(card) {
+                newAvailableOtherCards.append(idx)
+            }
+        }
+        if !newAvailableOtherCards.isEmpty {
+            newAvailableOtherCards.shuffle()
+            currentIdx = newAvailableOtherCards.first
+            nextRepetitionDate = cards[currentIdx!].getNextRepetition()
+        }
+        // no unseen cards - let's show at least something!
+        newAvailableOtherCards.append(contentsOf: newAvailableLearningCards)
+        newAvailableOtherCards.shuffle()
+        currentIdx = newAvailableOtherCards.first
+        nextRepetitionDate = cards[currentIdx!].getNextRepetition()
     }
     
     func consumeAnswer(difficulty: Difficulty) {
-        self.currentCard!.consumeAnswer(difficulty: difficulty)
-        self.nextCardAndDate()
+        if let card = self.currentCard {
+            self.currentCard!.consumeAnswer(difficulty: difficulty)
+            self.lastCards.append(card)
+            if self.lastCards.count > 5 {
+                let _ = self.lastCards.popFirst()
+            }
+        } else {
+            print("Unexpected error in consume answer - currentCard is nil!")
+        }
+        self.nextCard()
     }
     
-    func deleteCurrentCard() {
-        let idx = currentIdx!
-        cards.remove(at: idx)
+    func deleteCard(id: Int) {
+        cards.removeAll {card in
+            card.id == id
+        }
         if self.cards.isEmpty {
             currentIdx = nil
             nextRepetitionDate = nil
             self.save()
             return
         }
-        // currentIdx now points to the next card, unless current card was last
-        // we have to "wrap it around" the array
-        currentIdx = idx % cards.count
-        self.nextCardAndDate()
+        if let idx = currentIdx {
+            // currentIdx now points to the next card, unless current card was last
+            // we have to "wrap it around" the array
+            currentIdx = idx % cards.count
+        }
+        self.nextCard()
     }
     
     func save() {
@@ -130,7 +210,9 @@ var defaultDeck: Deck = load()
 
 func load() -> Deck {
     let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("data.json")
+//    let fileURL = Bundle.main.url(forResource: "data", withExtension: "json")!
     if let jsonData = try? Data(contentsOf: fileURL) {
+        print(fileURL)
         // Decode the JSON data into the structure
         let decoder = JSONDecoder()
         let deck = try! decoder.decode(Deck.self, from: jsonData)
@@ -146,7 +228,7 @@ func simulatedLoad() -> Deck {
     let deck = Deck(cards: [])
     deck.addCard(frontText: "आगे", backText: "ahead")
     deck.addCard(frontText: "पीछे", backText: "behind")
-    deck.nextCardAndDate()
+    deck.nextCard()
     return deck
 }
 
