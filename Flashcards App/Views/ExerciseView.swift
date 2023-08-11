@@ -12,6 +12,7 @@ struct ExerciseView: View {
     @ObservedObject var deck: Deck
     @State var reveal = false
     @State var textInput = ""
+    @FocusState var textInputFocus
     
     init(deck: Deck) {
         self.deck = deck
@@ -37,7 +38,7 @@ struct ExerciseView: View {
                                 }
                             }
                         } else {
-                            BackWritingCardView(reveal: $reveal, textInput: $textInput, card: currentCard, deck: deck)
+                            BackWritingCardView(reveal: $reveal, textInput: $textInput, card: currentCard, deck: deck, focused: $textInputFocus)
                             if reveal {
                                 BackWritingRevealCardView(card: currentCard, deck: deck, textInput: textInput) {difficulty in
                                     nextCard(currentCard: currentCard, difficulty: difficulty)
@@ -63,6 +64,7 @@ struct ExerciseView: View {
     func nextCard(currentCard: Card, difficulty: Difficulty) {
         reveal = false
         textInput = ""
+        textInputFocus = true
         deck.consumeAnswer(difficulty: difficulty)
         if let card = deck.currentCard {
             if card.isFrontSideUp {

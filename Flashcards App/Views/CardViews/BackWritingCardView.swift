@@ -12,7 +12,7 @@ struct BackWritingCardView: View {
     @Binding var textInput: String
     @ObservedObject var card: Card
     @ObservedObject var deck: Deck
-    @FocusState private var focused: Bool
+    var focused: FocusState<Bool>.Binding
     var body: some View {
         VStack {
             HStack{
@@ -22,9 +22,9 @@ struct BackWritingCardView: View {
             }
             TextField("Enter translation", text: $textInput)
                 .onAppear {
-                    self.focused = true
+                    self.focused.wrappedValue = true
                 }
-                .focused(self.$focused)
+                .focused(focused)
                 .autocorrectionDisabled(true)
                 .padding(5)
                 .border(Color.black, width: 1)
@@ -37,5 +37,5 @@ struct BackWritingCardView: View {
 }
 
 #Preview {
-    BackWritingCardView(reveal: .constant(false), textInput: .constant("asd"), card: previewDeck.cards[0], deck: previewDeck)
+    BackWritingCardView(reveal: .constant(false), textInput: .constant("asd"), card: previewDeck.cards[0], deck: previewDeck, focused: FocusState<Bool>().projectedValue)
 }
