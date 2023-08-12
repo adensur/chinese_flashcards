@@ -55,6 +55,22 @@ struct AddCardView: View {
                     }
                 }
                 Section {
+                    Button("Get Sound!") {
+                        Task {
+                            print("Started getting sound!", Date())
+                            audioData = await getSound(for: frontText, lang: "hi")
+                            print("Got sound!", Date())
+                            if audioData != nil {
+                                print("Get sound success!")
+                            } else {
+                                print("Failed to get sound")
+                            }
+                        }
+                    }.buttonStyle(BorderlessButtonStyle())
+                } header: {
+                    Text("Sound")
+                }
+                Section {
                     Toggle(isOn: $enableTextInputExercise) {
                         Text("Enable text input exercise")
                     }
