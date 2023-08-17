@@ -39,7 +39,9 @@ struct BackRevealCardView: View {
     }
 }
 
-#Preview {
-    BackRevealCardView(card: previewDeck.cards[0], deck: previewDeck) {_ in
+struct BackRevealCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        BackRevealCardView(card: previewDeck.cards[0], deck: previewDeck) {_ in
+        }
     }
 }

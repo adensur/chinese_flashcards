@@ -73,6 +73,8 @@ struct CorrectedTextView: View {
     }
 }
 
-#Preview {
-    CorrectedTextView(text: "प्रेमीका", correctText: "प्रेमिका")
+struct CorrectedTextView_Previews: PreviewProvider {
+    static var previews: some View {
+        CorrectedTextView(text: "प्रेमीका", correctText: "प्रेमिका")
+    }
 }

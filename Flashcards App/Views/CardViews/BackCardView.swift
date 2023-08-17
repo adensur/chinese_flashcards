@@ -27,6 +27,8 @@ struct BackCardView: View {
     }
 }
 
-#Preview {
-    BackCardView(reveal: .constant(false), card: previewDeck.cards[0], deck: previewDeck)
+struct BackCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        BackCardView(reveal: .constant(false), card: previewDeck.cards[0], deck: previewDeck)
+    }
 }

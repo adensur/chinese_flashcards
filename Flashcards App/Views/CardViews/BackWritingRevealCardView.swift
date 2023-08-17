@@ -47,7 +47,9 @@ struct BackWritingRevealCardView: View {
     }
 }
 
-#Preview {
-    BackWritingRevealCardView(card: previewDeck.cards[0], deck: previewDeck, textInput: "asd") {_ in
+struct BackWritingRevealCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        BackWritingRevealCardView(card: previewDeck.cards[0], deck: previewDeck, textInput: "asd") {_ in
+        }
     }
 }

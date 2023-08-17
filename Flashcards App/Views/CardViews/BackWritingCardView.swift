@@ -36,6 +36,8 @@ struct BackWritingCardView: View {
     }
 }
 
-#Preview {
-    BackWritingCardView(reveal: .constant(false), textInput: .constant("asd"), card: previewDeck.cards[0], deck: previewDeck, focused: FocusState<Bool>().projectedValue)
+struct BackWritingCardView_Previews: PreviewProvider {
+    static var previews: some View {
+        BackWritingCardView(reveal: .constant(false), textInput: .constant("asd"), card: previewDeck.cards[0], deck: previewDeck, focused: FocusState<Bool>().projectedValue)
+    }
 }

@@ -23,6 +23,7 @@ struct AddCardView: View {
             Form {
                 Section {
                     TextField("Front Text", text: $frontText)
+                        .autocapitalization(.none)
                         .focused($isFocused)
                         .onChange(of: isFocused) {_ in
                             showSuggestionsSemafor = 0
@@ -46,6 +47,7 @@ struct AddCardView: View {
                 }
                 Section {
                     TextField("Back Text", text: $backText)
+                        .autocapitalization(.none)
                 } header: {
                     Text("Back Text")
                 }
