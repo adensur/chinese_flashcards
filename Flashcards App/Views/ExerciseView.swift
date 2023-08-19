@@ -65,7 +65,9 @@ struct ExerciseView: View {
         reveal = false
         textInput = ""
         textInputFocus = true
-        deck.consumeAnswer(difficulty: difficulty)
+        withAnimation {
+            deck.consumeAnswer(difficulty: difficulty)
+        }
         if let card = deck.currentCard {
             if card.isFrontSideUp {
                 card.playSound()

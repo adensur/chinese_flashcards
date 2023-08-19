@@ -16,7 +16,9 @@ struct AddCardView: View {
     @State private var enableTextInputExercise: Bool = true
     @State private var audioData: Data? = nil
     @State var showSuggestionsSemafor = 0
+    @State private var translations: [Detail] = []
     @FocusState private var isFocused: Bool
+    @State private var selectedDetail: Detail = Detail()
     
     var body: some View {
         NavigationView {
@@ -44,6 +46,15 @@ struct AddCardView: View {
                     }
                 } header: {
                     Text("FrontText")
+                }
+                Section {
+                    NavigationLink {
+                        WordTranslationLookupView(word: frontText) {detail in
+                            backText = detail.word
+                        }
+                    } label: {
+                        Text("Lookup word translation")
+                    }
                 }
                 Section {
                     TextField("Back Text", text: $backText)
@@ -80,10 +91,10 @@ struct AddCardView: View {
                     Text("Exercise options")
                 }
             }
-            .onTapGesture {
-                print("OnTapGesture! Disabling focus. Was: ", isFocused)
-                isFocused = false
-            }
+//            .onTapGesture {
+//                print("OnTapGesture! Disabling focus. Was: ", isFocused)
+//                isFocused = false
+//            }
         }.navigationTitle("Add Flashcard")
             .navigationBarItems(
                 leading: Button("Cancel") {
