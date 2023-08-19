@@ -18,7 +18,6 @@ struct AddCardView: View {
     @State var showSuggestionsSemafor = 0
     @State private var translations: [Detail] = []
     @FocusState private var isFocused: Bool
-    @State private var selectedDetail: Detail = Detail()
     
     var body: some View {
         NavigationView {
@@ -48,17 +47,7 @@ struct AddCardView: View {
                     Text("FrontText")
                 }
                 Section {
-                    NavigationLink {
-                        WordTranslationLookupView(word: frontText) {detail in
-                            backText = detail.word
-                        }
-                    } label: {
-                        Text("Lookup word translation")
-                    }
-                }
-                Section {
-                    TextField("Back Text", text: $backText)
-                        .autocapitalization(.none)
+                    TextFieldLookupView(text: $backText, lookupText: frontText)
                 } header: {
                     Text("Back Text")
                 }

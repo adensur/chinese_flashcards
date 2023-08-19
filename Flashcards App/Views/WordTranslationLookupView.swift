@@ -8,40 +8,23 @@
 import SwiftUI
 
 struct WordTranslationLookupView: View {
-    var word: String
-    @State private var translations: [Detail] = []
-    @State private var doneLoading = false
+    var translations: [Detail]
     var callback: (Detail) -> Void
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
-        Group {
-            if !doneLoading {
-                Text("Loading...")
-                Spacer()
-            } else if translations.isEmpty {
-                Text("No entries found for \(word)")
-                Spacer()
-            } else {
-                List {
-                    ForEach(translations, id: \.self.word) {detail in
-                        HStack {
-                            Text("\(detail.word)")
-                            Text("\(detail.type.toString())")
-                            Text("\(detail.freq)")
-                        }
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            print("WordTranslationLookupView onTapGesture!")
-                            callback(detail)
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                    }
+        List {
+            ForEach(translations, id: \.self.word) {detail in
+                HStack {
+                    Text("\(detail.word)")
+                    Text("\(detail.type.toString())")
+                    Text("\(detail.freq)")
                 }
-            }
-        }.onAppear {
-            Task {
-                translations = await getTranslation(for: word, lang: "hi")
-                doneLoading = true
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    print("WordTranslationLookupView onTapGesture!")
+                    callback(detail)
+                    presentationMode.wrappedValue.dismiss()
+                }
             }
         }
     }
@@ -49,6 +32,10 @@ struct WordTranslationLookupView: View {
 
 struct WordTranslationLookupView_Previews: PreviewProvider {
     static var previews: some View {
-        WordTranslationLookupView(word: "चश्मा") {_ in}
+        WordTranslationLookupView(translations: [Detail](arrayLiteral:
+            .init(word: "word1", freq: 1, type: .noun),
+            .init(word: "word2", freq: 2, type: .verb),
+            .init(word: "word3", freq: 3, type: .adjective)
+        )) {_ in}
     }
 }

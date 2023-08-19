@@ -18,7 +18,7 @@ struct ExerciseView: View {
         self.deck = deck
     }
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 ExerciseHeaderView(deck: deck)
                 if let currentCard = deck.currentCard {

@@ -32,18 +32,6 @@ struct Detail {
     let word: String
     let freq: Int
     let type: EWordType
-    
-    init(word: String, freq: Int, type: EWordType) {
-        self.word = word
-        self.freq = freq
-        self.type = type
-    }
-    
-    init() {
-        self.word = ""
-        self.freq = 1
-        self.type = .unknown
-    }
 }
 
 enum EWordType: Int {
