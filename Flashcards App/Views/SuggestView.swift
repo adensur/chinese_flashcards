@@ -34,21 +34,12 @@ extension String {
 struct SuggestView: View {
     @Binding var inputText: String
     let callback: (VocabCard) -> Void
-    
-    private var filteredTexts: Binding<[String]> { Binding (
-        get: {
-            let filteredTexts = defaultVocab.cards.keys.filter {vocabString in
-                vocabString.hasUnicodePrefx(inputText.precomposedStringWithCanonicalMapping)
-            }
-            return filteredTexts
-        },
-        set: { _ in })
-    }
+    @State private var filteredTexts: [String] = []
     
     public var body: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
-                ForEach(filteredTexts.wrappedValue, id: \.self) { textSearched in
+                ForEach(filteredTexts, id: \.self) { textSearched in
                     HStack {
                         Text(textSearched)
                         Spacer()
@@ -71,11 +62,23 @@ struct SuggestView: View {
                 }
             }
         }
+        .onChange(of: inputText) {inputText in
+            print("Computing filtered texts!")
+            filteredTexts = defaultVocab.cards.keys.filter {vocabString in
+                vocabString.hasUnicodePrefx(inputText.precomposedStringWithCanonicalMapping)
+            }
+        }
+        .onAppear {
+            print("Initialising filtered texts!")
+            filteredTexts = defaultVocab.cards.keys.filter {vocabString in
+                vocabString.hasUnicodePrefx(inputText.precomposedStringWithCanonicalMapping)
+            }
+        }
 //        .background(Color.white)
 //        .cornerRadius(15)
 //        .foregroundColor(Color(.black))
 //        .frame(maxWidth: .infinity)
-        .frame(maxHeight: 30 * CGFloat( (filteredTexts.wrappedValue.count > 5 ? 5: filteredTexts.wrappedValue.count)))
+        .frame(maxHeight: 30 * CGFloat( (filteredTexts.count > 5 ? 5: filteredTexts.count)))
 //        .shadow(radius: 4)
         .padding(.horizontal, 25)
     }

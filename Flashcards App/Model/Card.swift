@@ -16,12 +16,20 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     let id: Int
     @Published var frontText: String {
         didSet {
-            self.frontText = frontText.precomposedStringWithCanonicalMapping
+            let normalisedText = frontText.precomposedStringWithCanonicalMapping
+            // avoid infinite recursion here!
+            if normalisedText != frontText {
+                frontText = frontText.precomposedStringWithCanonicalMapping
+            }
         }
     }
     @Published var backText: String {
         didSet {
-            self.backText = backText.precomposedStringWithCanonicalMapping
+            let normalisedText = backText.precomposedStringWithCanonicalMapping
+            // avoid infinite recursion here!
+            if normalisedText != backText {
+                self.backText = backText.precomposedStringWithCanonicalMapping
+            }
         }
     }
     @Published var isFrontSideUp: Bool = true
