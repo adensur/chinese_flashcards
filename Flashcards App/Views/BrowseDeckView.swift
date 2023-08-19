@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BrowseDeckView: View {
-    var deck: Deck
+    @ObservedObject var deck: Deck
     var body: some View {
         List {
             ForEach(deck.cards) {card in
