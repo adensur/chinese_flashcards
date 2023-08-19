@@ -12,7 +12,6 @@ extension String {
         // Get the Unicode scalar views of both strings
         let prefixScalars = prefix.unicodeScalars
         let stringScalars = self.unicodeScalars
-        
         // Check if the prefix is longer than the original string
         if prefixScalars.count > stringScalars.count {
             return false
@@ -39,7 +38,7 @@ struct SuggestView: View {
     private var filteredTexts: Binding<[String]> { Binding (
         get: {
             let filteredTexts = defaultVocab.cards.keys.filter {vocabString in
-                vocabString.hasUnicodePrefx(inputText)
+                vocabString.hasUnicodePrefx(inputText.precomposedStringWithCanonicalMapping)
             }
             return filteredTexts
         },

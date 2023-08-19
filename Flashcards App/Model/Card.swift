@@ -14,8 +14,16 @@ let repeatingAfterMistakeLevels = ["1m", "6m", "12m", "16m", "20m", "30m", "1h",
 // simple exercise. Front and back text, no value checking - just turning the card over
 class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     let id: Int
-    @Published var frontText: String
-    @Published var backText: String
+    @Published var frontText: String {
+        didSet {
+            self.frontText = frontText.precomposedStringWithCanonicalMapping
+        }
+    }
+    @Published var backText: String {
+        didSet {
+            self.backText = backText.precomposedStringWithCanonicalMapping
+        }
+    }
     @Published var isFrontSideUp: Bool = true
     // Option. Whether or not to show text input exercises sometimes when enabled in deck and when it is backSideUp currently
     @Published var enableTextInputExercise: Bool = true
@@ -52,8 +60,8 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(Int.self, forKey: .id)
-        frontText = try container.decode(String.self, forKey: .frontText)
-        backText = try container.decode(String.self, forKey: .backText)
+        frontText = try container.decode(String.self, forKey: .frontText).precomposedStringWithCanonicalMapping
+        backText = try container.decode(String.self, forKey: .backText).precomposedStringWithCanonicalMapping
         creationDate = try container.decode(Date.self, forKey: .creationDate)
         lastRepetition = try container.decode(Date.self, forKey: .lastRepetition)
         learningStage = try container.decode(LearningStage.self, forKey: .learningStage)
