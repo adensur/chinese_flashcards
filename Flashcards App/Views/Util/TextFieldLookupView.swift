@@ -19,6 +19,7 @@ struct TextFieldLookupView: View {
     @State var detailsPresented = false
     @State var errorPresented = false
     @State private var translations: [Detail] = []
+    var translateFromLanguage: ELanguage
     var translateToLanguage: ELanguage
     var body: some View {
         HStack {
@@ -40,7 +41,7 @@ struct TextFieldLookupView: View {
                     }
                     loading = true
                     Task {
-                        let translations = await getTranslation(for: lookupText, lang: translateToLanguage.rawValue)
+                        let translations = await getTranslation(for: lookupText, langFrom: translateFromLanguage.rawValue, langTo: translateToLanguage.rawValue)
                         if let translations = translations {
                             self.translations = translations
                             detailsPresented = true
@@ -62,6 +63,6 @@ struct TextFieldLookupView: View {
 
 struct TextFieldLookupView_Previews: PreviewProvider {
     static var previews: some View {
-        TextFieldLookupView(text: .constant(""), lookupText: "मछली", translateToLanguage: .Hindi)
+        TextFieldLookupView(text: .constant(""), lookupText: "मछली", translateFromLanguage: .Hindi, translateToLanguage: .English)
     }
 }

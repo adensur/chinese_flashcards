@@ -47,12 +47,12 @@ struct AddCardView: View {
                     Text("FrontText")
                 }
                 Section {
-                    TextFieldLookupView(text: $backText, lookupText: frontText, translateToLanguage: deck.deckMetadata.frontLanguage)
+                    TextFieldLookupView(text: $backText, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
                 } header: {
                     Text("Back Text")
                 }
                 Section {
-                    SoundLookupView(lookupText: frontText, audioData: $audioData)
+                    SoundLookupView(lookupText: frontText, audioData: $audioData, languageToGetSoundFor: deck.deckMetadata.frontLanguage)
                 } header: {
                     Text("Sound")
                 }

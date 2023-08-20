@@ -17,6 +17,7 @@ struct SoundLookupView: View {
         }
     }
     @State var errorPresented = false
+    var languageToGetSoundFor: ELanguage
     var body: some View {
         HStack {
             Image(systemName: "play")
@@ -43,7 +44,7 @@ struct SoundLookupView: View {
                     loading = true
                     Task {
                         print("Started getting sound!", Date())
-                        audioData = await getSound(for: lookupText, lang: "hi")
+                        audioData = await getSound(for: lookupText, lang: languageToGetSoundFor.rawValue)
                         print("Got sound!", Date())
                         if audioData == nil {
                             errorPresented = true
@@ -58,6 +59,6 @@ struct SoundLookupView: View {
 
 struct SoundLookupView_Previews: PreviewProvider {
     static var previews: some View {
-        SoundLookupView(lookupText: "मछली", audioData: .constant(nil))
+        SoundLookupView(lookupText: "मछली", audioData: .constant(nil), languageToGetSoundFor: .Hindi)
     }
 }
