@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct AddCardView: View {
-    var deck: Deck
+    @ObservedObject var deck: Deck
     @Environment(\.presentationMode) var presentationMode
     @State private var frontText: String = ""
     @State private var backText: String = ""
@@ -47,7 +47,7 @@ struct AddCardView: View {
                     Text("FrontText")
                 }
                 Section {
-                    TextFieldLookupView(text: $backText, lookupText: frontText)
+                    TextFieldLookupView(text: $backText, lookupText: frontText, translateToLanguage: deck.deckMetadata.frontLanguage)
                 } header: {
                     Text("Back Text")
                 }
