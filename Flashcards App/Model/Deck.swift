@@ -71,11 +71,7 @@ class Deck: Codable, ObservableObject {
         cards = try container.decode([Card].self, forKey: .cards)
         maxId = try container.decode(Int.self, forKey: .maxId)
         currentIdx = try? container.decode((Int?).self, forKey: .currentIdx)
-        if let metadata = try? container.decode(DeckMetadata.self, forKey: .deckMetadata) {
-            deckMetadata = metadata
-        } else {
-            deckMetadata = DeckMetadata(name: "oops", frontLanguage: .Hindi, backLanguage: .English)
-        }
+        deckMetadata = try container.decode(DeckMetadata.self, forKey: .deckMetadata)
         if let idx = currentIdx {
             nextRepetitionDate = cards[idx].getNextRepetition()
         } else {
@@ -231,7 +227,7 @@ class Deck: Codable, ObservableObject {
         let jsonData = try! encoder.encode(self)
 
         // Write the JSON data to a file
-        let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("data.json")
+        let fileURL = deckMetadata.savePath
         try! jsonData.write(to: fileURL)
     }
 }
