@@ -17,6 +17,7 @@ struct TextFieldLookupView: View {
     }
     @State private var loading = false
     @State var detailsPresented = false
+    @State var errorPresented = false
     @State private var translations: [Detail] = []
     var body: some View {
         HStack {
@@ -25,13 +26,12 @@ struct TextFieldLookupView: View {
             Spacer()
             if loading {
                 ProgressView()
-            }
-            else {
+            } else {
                 Group {
-                    Text("lookup ")
+                    Text((errorPresented && lookupAvailable) ? "retry": "lookup")
                     Image(systemName: "chevron.right.2")
                 }
-                .foregroundColor(lookupAvailable ? .accentColor : .secondary)
+                .foregroundColor(lookupAvailable ? (errorPresented ? .red : .accentColor) : .secondary)
                 .contentShape(Rectangle())
                 .onTapGesture {
                     if !lookupAvailable {
@@ -39,9 +39,14 @@ struct TextFieldLookupView: View {
                     }
                     loading = true
                     Task {
-                        translations = await getTranslation(for: lookupText, lang: "hi")
+                        let translations = await getTranslation(for: lookupText, lang: "hi")
+                        if let translations = translations {
+                            self.translations = translations
+                            detailsPresented = true
+                        } else {
+                            errorPresented = true
+                        }
                         loading = false
-                        detailsPresented = true
                     }
                 }
             }

@@ -19,13 +19,25 @@ func getSound(for word: String, lang: String) async -> Data?  {
     request.setValue("\(contentLength)", forHTTPHeaderField: "Content-Length")
     request.httpMethod = "POST"
     let body = Data("f.req=%5B%5B%5B%22jQ1olc%22%2C%22%5B%5C%22\(encodedWord)%5C%22%2C%5C%22\(lang)%5C%22%2Cnull%2C%5C%22null%5C%22%5D%22%2Cnull%2C%22generic%22%5D%5D%5D&".utf8)
-    let (data, _) = try! await URLSession.shared.upload(for: request, from: body)
-    let str = data.split(separator: Character(",").asciiValue!)[2]
-    print(str.count)
-//    doesn't work for some reason:
-//    let str2 = str[4..<str.count - 4]
-    let str2 = str.subdata(in: str.startIndex + 4 ..< str.endIndex - 4)
-    return Data(base64Encoded: str2)
+    do {
+        let (data, _) = try await URLSession.shared.upload(for: request, from: body)
+        let values = data.split(separator: UInt8(ascii: ","))
+        if values.count <= 2 {
+            print("transient error in getSound")
+            return nil
+        }
+        let str = values[2]
+        if str.count < 10 {
+            print("transient error in getSound")
+            return nil
+        }
+        //    doesn't work for some reason:
+        //    let str2 = str[4..<str.count - 4]
+        let str2 = str.subdata(in: str.startIndex + 4 ..< str.endIndex - 4)
+        return Data(base64Encoded: str2)
+    } catch {
+        return nil
+    }
 }
 
 struct Detail {
@@ -87,7 +99,7 @@ enum EWordType: Int {
     }
 }
 
-func getTranslation(for word: String, lang: String) async -> [Detail] {
+func getTranslation(for word: String, lang: String) async -> [Detail]? {
     let url = URL(string: "https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=rPsWke%2CHGRyXb%2CV11VDb&source-path=%2Fdetails&f.sid=94628587805217822&bl=boq_translate-webserver_20230813.08_p0&hl=en&soc-app=1&soc-platform=1&soc-device=1&_reqid=1262696&rt=c")!
     var request = URLRequest(url: url)
     request.setValue("http://translate.google.com/", forHTTPHeaderField: "Referer")
@@ -127,32 +139,105 @@ func getTranslation(for word: String, lang: String) async -> [Detail] {
     request.httpMethod = "POST"
     let encodedWord = word.addingPercentEncoding(withAllowedCharacters: .alphanumerics)!
     let body = Data("f.req=%5B%5B%5B%22rPsWke%22%2C%22%5B%5B%5C%22\(encodedWord)%5C%22%2C%5C%22\(lang)%5C%22%2C%5C%22en%5C%22%5D%2C1%5D%22%2Cnull%2C%221%22%5D%2C%5B%22HGRyXb%22%2C%22%5B%5C%22\(lang)%5C%22%2C%5C%22en%5C%22%5D%22%2Cnull%2C%229%22%5D%2C%5B%22V11VDb%22%2C%22%5B%5C%22\(lang)%5C%22%2C%5C%22en%5C%22%5D%22%2Cnull%2C%2212%22%5D%5D%5D&at=AFS6QyhTMeUWg72pSEGCg2YaZYOw%3A1692203095521&".utf8)
-    let (data, _) = try! await URLSession.shared.upload(for: request, from: body)
+    guard let (data, _) = try? await URLSession.shared.upload(for: request, from: body) else {
+        print("translate api http request failed")
+        return nil
+    }
     var result: [Detail] = []
-    for line in data.split(separator: UInt8(ascii: "\n")) {
-        if line.contains("rPsWke".utf8) {
-            let jsonObject = try! JSONSerialization.jsonObject(with: line, options: []) as! [[Any]]
-            let str = jsonObject[0][2] as! String
-            let subobj = try! JSONSerialization.jsonObject(with: str.data(using: .utf8)!, options: []) as! [Any]
-            guard let subobj2 = subobj[0] as? [Any] else {
-                return result
-            }
-            let subobj3 = subobj2[5] as! [Any]
-            let subobj4 = subobj3[0] as! [Any]
-            for component in subobj4 {
-                let subobj5 = component as! [Any]
-                let wordType = subobj5[4] as! Int
-                print("wordType: ", wordType)
-                let subobj6 = subobj5[1] as! [[Any]]
-                for subcomponent in subobj6 {
-                    let translation = subcomponent[0] as! String
-                    let freq = subcomponent[3] as! Int
-                    let detail = Detail(word: translation, freq: freq, type: EWordType(rawValue: wordType)!)
-                    result.append(detail)
+    do {
+        for line in data.split(separator: UInt8(ascii: "\n")) {
+            if line.contains("rPsWke".utf8) {
+                guard let jsonObject = try JSONSerialization.jsonObject(with: line, options: []) as? [[Any]] else {
+                    return result
                 }
-                
+                if jsonObject.isEmpty || jsonObject[0].count <= 2 {
+                    print("non-transient error in parsing translate details response")
+                    return result
+                }
+                guard let str = jsonObject[0][2] as? String else {
+                    print("non-transient error in parsing translate details response")
+                    return result
+                }
+                guard let subobj = try JSONSerialization.jsonObject(with: str.data(using: .utf8)!, options: []) as? [Any] else {
+                    print("non-transient error in parsing translate details response")
+                    return result
+                }
+                if subobj.isEmpty {
+                    print("non-transient error in parsing translate details response")
+                    return result
+                }
+                guard let subobj2 = subobj[0] as? [Any] else {
+                    print("non-transient error in parsing translate details response")
+                    return result
+                }
+                if subobj2.count <= 5 {
+                    print("transient error in parsing translate details response #2")
+                    return nil
+                }
+                guard let subobj3 = subobj2[5] as? [Any] else {
+                    print("non-transient error in parsing translate details response")
+                    return result
+                }
+                if subobj3.isEmpty {
+                    print("non-transient error in parsing translate details response")
+                    return result
+                }
+                guard let subobj4 = subobj3[0] as? [Any] else {
+                    print("non-transient error in parsing translate details response")
+                    return result
+                }
+                for component in subobj4 {
+                    guard let subobj5 = component as? [Any] else {
+                        print("non-transient error in parsing translate details response")
+                        return result
+                    }
+                    if subobj5.count <= 4 {
+                        print("non-transient error in parsing translate details response")
+                        return result
+                    }
+                    guard let wordType = subobj5[4] as? Int else {
+                        print("non-transient error in parsing translate details response")
+                        return result
+                    }
+                    print("wordType: ", wordType)
+                    if subobj5.count <= 1 {
+                        print("non-transient error in parsing translate details response")
+                        return result
+                    }
+                    guard let subobj6 = subobj5[1] as? [[Any]] else {
+                        print("non-transient error in parsing translate details response")
+                        return result
+                    }
+                    for subcomponent in subobj6 {
+                        if subcomponent.isEmpty {
+                            print("non-transient error in parsing translate details response")
+                            return result
+                        }
+                        guard let translation = subcomponent[0] as? String else {
+                            print("non-transient error in parsing translate details response")
+                            return result
+                        }
+                        if subcomponent.count <= 3 {
+                            print("non-transient error in parsing translate details response")
+                            return result
+                        }
+                        guard let freq = subcomponent[3] as? Int else {
+                            print("non-transient error in parsing translate details response")
+                            return result
+                        }
+                        guard let wType = EWordType(rawValue: wordType) else {
+                            print("non-transient error in parsing translate details response")
+                            return result
+                        }
+                        let detail = Detail(word: translation, freq: freq, type: wType)
+                        result.append(detail)
+                    }
+                    
+                }
             }
         }
+    } catch {
+        print("non-transient error in google translate api parsing")
     }
     return result
 }
