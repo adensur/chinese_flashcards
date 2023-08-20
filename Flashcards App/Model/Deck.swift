@@ -30,6 +30,7 @@ class Deck: Codable, ObservableObject {
             save()
         }
     }
+    @Published var deckMetadata: DeckMetadata
     // global counter used to generate unique id to every added card
     var maxId = 0
     // non-persistent data
@@ -46,12 +47,13 @@ class Deck: Codable, ObservableObject {
     // instantly make cards with up to this time interval "trainable"
     static let minTimeInterval = TimeInterval(20 * 60) // 20 minutes
     
-    init(cards: [Card]) {
+    init(cards: [Card], deckMetadata: DeckMetadata) {
         self.cards = cards
+        self.deckMetadata = deckMetadata
     }
     
     enum CodingKeys: CodingKey {
-        case cards, currentIdx, shuffle, maxId, disableAllTextInputExercises
+        case cards, currentIdx, shuffle, maxId, disableAllTextInputExercises, deckMetadata
     }
     
     func encode(to encoder: Encoder) throws {
@@ -61,6 +63,7 @@ class Deck: Codable, ObservableObject {
         try container.encode(shuffle, forKey: .shuffle)
         try container.encode(maxId, forKey: .maxId)
         try container.encode(disableAllTextInputExercises, forKey: .disableAllTextInputExercises)
+        try container.encode(deckMetadata, forKey: .deckMetadata)
     }
     
     required init(from decoder: Decoder) throws {
@@ -68,6 +71,11 @@ class Deck: Codable, ObservableObject {
         cards = try container.decode([Card].self, forKey: .cards)
         maxId = try container.decode(Int.self, forKey: .maxId)
         currentIdx = try? container.decode((Int?).self, forKey: .currentIdx)
+        if let metadata = try? container.decode(DeckMetadata.self, forKey: .deckMetadata) {
+            deckMetadata = metadata
+        } else {
+            deckMetadata = DeckMetadata(name: "oops", frontLanguage: .Hindi, backLanguage: .English)
+        }
         if let idx = currentIdx {
             nextRepetitionDate = cards[idx].getNextRepetition()
         } else {
@@ -228,26 +236,41 @@ class Deck: Codable, ObservableObject {
     }
 }
 
-var defaultDeck: Deck = load()
+//var defaultDeck: Deck = load()
 
-func load() -> Deck {
-    let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("data.json")
+func load(deckMetadata: DeckMetadata) -> Deck {
+//    let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("data.json")
 //    let fileURL = Bundle.main.url(forResource: "data", withExtension: "json")!
-    if let jsonData = try? Data(contentsOf: fileURL) {
-        print(fileURL)
+    if let jsonData = try? Data(contentsOf: deckMetadata.savePath) {
+        print(deckMetadata.savePath)
         // Decode the JSON data into the structure
         let decoder = JSONDecoder()
         let deck = try! decoder.decode(Deck.self, from: jsonData)
+        deck.deckMetadata = deckMetadata
         return deck
     } else {
-        return Deck(cards: [])
+        return Deck(cards: [], deckMetadata: deckMetadata)
     }
 }
+
+//func load() -> Deck {
+//    let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("data.json")
+////    let fileURL = Bundle.main.url(forResource: "data", withExtension: "json")!
+//    if let jsonData = try? Data(contentsOf: fileURL) {
+//        print(fileURL)
+//        // Decode the JSON data into the structure
+//        let decoder = JSONDecoder()
+//        let deck = try! decoder.decode(Deck.self, from: jsonData)
+//        return deck
+//    } else {
+//        return Deck(cards: [])
+//    }
+//}
 
 var previewDeck = simulatedLoad()
 
 func simulatedLoad() -> Deck {
-    let deck = Deck(cards: [])
+    let deck = Deck(cards: [], deckMetadata: DeckMetadata.getPreviewDeckMetadata())
     deck.addCard(frontText: "आगे", backText: "ahead")
     deck.addCard(frontText: "पीछे", backText: "behind")
     deck.nextCard()
@@ -259,4 +282,50 @@ case Again
 case Hard
 case Good
 case Easy
+}
+
+class DeckMetadata: ObservableObject, Codable {
+    @Published var name: String
+    @Published var frontLanguage: ELanguage
+    @Published var backLanguage: ELanguage
+    let savePath: URL
+    init(name: String, frontLanguage: ELanguage, backLanguage: ELanguage) {
+        self.name = name
+        self.frontLanguage = frontLanguage
+        self.backLanguage = backLanguage
+        // generating unique filename
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let uniqueFilename = UUID().uuidString + ".json"
+        let fileURL = documentsDirectory.appendingPathComponent(uniqueFilename)
+        self.savePath = fileURL
+    }
+    private init(name: String, frontLanguage: ELanguage, backLanguage: ELanguage, savePath: URL) {
+        self.name = name
+        self.frontLanguage = frontLanguage
+        self.backLanguage = backLanguage
+        self.savePath = savePath
+    }
+    
+    static func getPreviewDeckMetadata() -> DeckMetadata {
+        let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("data.json")
+        return DeckMetadata(name: "hindi", frontLanguage: .Hindi, backLanguage: .English, savePath: fileURL)
+    }
+    
+    enum CodingKeys: CodingKey {
+        case name, frontLanguage, backLanguage, savePath
+    }
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+        try container.encode(frontLanguage.rawValue, forKey: .frontLanguage)
+        try container.encode(backLanguage.rawValue, forKey: .backLanguage)
+        try container.encode(savePath, forKey: .savePath)
+    }
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decode(String.self, forKey: .name)
+        frontLanguage = try ELanguage(rawValue: container.decode(String.self, forKey: .frontLanguage))!
+        backLanguage = try ELanguage(rawValue: container.decode(String.self, forKey: .backLanguage))!
+        savePath = try container.decode(URL.self, forKey: .savePath)
+    }
 }

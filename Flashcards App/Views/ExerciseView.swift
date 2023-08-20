@@ -18,47 +18,45 @@ struct ExerciseView: View {
         self.deck = deck
     }
     var body: some View {
-        NavigationStack {
-            VStack {
-                ExerciseHeaderView(deck: deck)
-                if let currentCard = deck.currentCard {
-                    if currentCard.isFrontSideUp {
-                        FrontCardView(reveal: $reveal, card: currentCard, deck: deck)
+        VStack {
+            ExerciseHeaderView(deck: deck)
+            if let currentCard = deck.currentCard {
+                if currentCard.isFrontSideUp {
+                    FrontCardView(reveal: $reveal, card: currentCard, deck: deck)
+                    if reveal {
+                        RevealCardView(card: currentCard) {difficulty in
+                            nextCard(currentCard: currentCard, difficulty: difficulty)
+                        }
+                    }
+                } else {
+                    if deck.disableAllTextInputExercises || !currentCard.enableTextInputExercise {
+                        BackCardView(reveal: $reveal, card: currentCard, deck: deck)
                         if reveal {
-                            RevealCardView(card: currentCard) {difficulty in
+                            BackRevealCardView(card: currentCard, deck: deck) {difficulty in
                                 nextCard(currentCard: currentCard, difficulty: difficulty)
                             }
                         }
                     } else {
-                        if deck.disableAllTextInputExercises || !currentCard.enableTextInputExercise {
-                            BackCardView(reveal: $reveal, card: currentCard, deck: deck)
-                            if reveal {
-                                BackRevealCardView(card: currentCard, deck: deck) {difficulty in
-                                    nextCard(currentCard: currentCard, difficulty: difficulty)
-                                }
+                        BackWritingCardView(reveal: $reveal, textInput: $textInput, card: currentCard, deck: deck, focused: $textInputFocus)
+                        if reveal {
+                            BackWritingRevealCardView(card: currentCard, deck: deck, textInput: textInput) {difficulty in
+                                nextCard(currentCard: currentCard, difficulty: difficulty)
                             }
-                        } else {
-                            BackWritingCardView(reveal: $reveal, textInput: $textInput, card: currentCard, deck: deck, focused: $textInputFocus)
-                            if reveal {
-                                BackWritingRevealCardView(card: currentCard, deck: deck, textInput: textInput) {difficulty in
-                                    nextCard(currentCard: currentCard, difficulty: difficulty)
-                                }
-                            }
-                            Spacer()
                         }
-                    }
-                } else {
-                    if let nextDate = deck.nextRepetitionDate {
-                        OutOfCardsView(nextDate: nextDate) {
-                            deck.nextCard()
-                        }
-                    } else {
-                        Text("No cards added yet!")
                         Spacer()
                     }
                 }
-            }.animation(.easeIn, value: reveal)
-        }
+            } else {
+                if let nextDate = deck.nextRepetitionDate {
+                    OutOfCardsView(nextDate: nextDate) {
+                        deck.nextCard()
+                    }
+                } else {
+                    Text("No cards added yet!")
+                    Spacer()
+                }
+            }
+        }.animation(.easeIn, value: reveal)
     }
     
     func nextCard(currentCard: Card, difficulty: Difficulty) {
