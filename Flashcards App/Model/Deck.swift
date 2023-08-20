@@ -18,7 +18,7 @@ class Deck: Codable, ObservableObject {
     @Published private(set) var nextRepetitionDate: Date? = nil
     // Option
     // Whether or not next card will always be deterministic, by date added, or random
-    @Published var shuffle: Bool = false {
+    @Published var shuffle: Bool = true {
         didSet {
             save()
         }

@@ -9,6 +9,13 @@ import Foundation
 
 enum ELanguage: String {
     case English = "en"
-    case Hindi = "hi"
     case French = "fr"
+    case Hindi = "hi"
+    static func allValues() -> [ELanguage] {
+        return [
+            .English,
+            .French,
+            .Hindi
+        ]
+    }
 }

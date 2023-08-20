@@ -16,6 +16,14 @@ struct DecksView: View {
                     ExerciseView(deck: load(deckMetadata: deckMetadata))
                 }
             }
+            Section {
+                NavigationLink {
+                    AddDeckView(decks: decks)
+                } label: {
+                    Text("Add Deck")
+                    .foregroundColor(.accentColor)
+                }
+            }
         }
     }
 }
