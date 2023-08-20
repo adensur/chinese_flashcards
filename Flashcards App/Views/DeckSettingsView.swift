@@ -9,11 +9,24 @@ import SwiftUI
 
 struct DeckSettingsView: View {
     @ObservedObject var deck: Deck
+    @EnvironmentObject var decks: Decks
+    @Environment(\.dismiss) var dismiss
+    var deckDeleteCallback: () -> Void
     var body: some View {
-        Form {
-            Section {
-                Toggle("Shuffle cards?", isOn: $deck.shuffle)
-                Toggle("Disable all writing exercises", isOn: $deck.disableAllTextInputExercises)
+        VStack {
+            Form {
+                Section {
+                    Toggle("Shuffle cards?", isOn: $deck.shuffle)
+                    Toggle("Disable all writing exercises", isOn: $deck.disableAllTextInputExercises)
+                }
+            }
+            Spacer()
+            Button("Delete") {
+                // Perform save action here
+                // hack to update the parent view
+                decks.deleteDeck(deck: deck)
+                dismiss()
+                deckDeleteCallback()
             }
         }
     }
@@ -21,6 +34,6 @@ struct DeckSettingsView: View {
 
 struct DeckSettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        DeckSettingsView(deck: previewDeck)
+        DeckSettingsView(deck: previewDeck) { }
     }
 }

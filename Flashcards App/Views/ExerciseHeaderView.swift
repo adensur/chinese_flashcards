@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ExerciseHeaderView: View {
     @ObservedObject var deck: Deck
+    var deckDeleteCallback: () -> Void
     var body: some View {
         GroupBox {
             HStack {
@@ -21,9 +22,9 @@ struct ExerciseHeaderView: View {
                     }
                 }
                 NavigationLink {
-                    DeckSettingsView(deck: deck)
+                    DeckSettingsView(deck: deck, deckDeleteCallback: deckDeleteCallback)
                 } label: {
-                    Text("settings")
+                    Text("deck settings")
                 }
                 NavigationLink {
                     AddCardView(deck: deck)
@@ -42,6 +43,6 @@ struct ExerciseHeaderView: View {
 
 struct SwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseHeaderView(deck: previewDeck)
+        ExerciseHeaderView(deck: previewDeck) { }
     }
 }

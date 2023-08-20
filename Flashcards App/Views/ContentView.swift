@@ -9,11 +9,13 @@ import SwiftUI
 
 struct ContentView: View {
     var vocab = defaultVocab
+    @StateObject var decks: Decks = Decks.load()
     var body: some View {
         NavigationStack {
-            DecksView(decks: Decks.load())
+            DecksView()
                 .padding()
         }
+        .environmentObject(Decks.load())
     }
 }
 

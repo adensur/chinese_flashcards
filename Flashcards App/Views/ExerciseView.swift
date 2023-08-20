@@ -9,17 +9,20 @@ import SwiftUI
 import Foundation
 
 struct ExerciseView: View {
+    @EnvironmentObject var decks: Decks
     @ObservedObject var deck: Deck
     @State var reveal = false
     @State var textInput = ""
     @FocusState var textInputFocus
-    
+    @Environment(\.dismiss) var dismiss
     init(deck: Deck) {
         self.deck = deck
     }
     var body: some View {
         VStack {
-            ExerciseHeaderView(deck: deck)
+            ExerciseHeaderView(deck: deck){ // deck delete callback
+                dismiss()
+            }
             if let currentCard = deck.currentCard {
                 if currentCard.isFrontSideUp {
                     FrontCardView(reveal: $reveal, card: currentCard, deck: deck)

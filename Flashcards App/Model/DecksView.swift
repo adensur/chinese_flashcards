@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DecksView: View {
-    @ObservedObject var decks: Decks
+    @EnvironmentObject var decks: Decks
     var body: some View {
         List {
             ForEach(decks.decks, id: \.savePath) {deckMetadata in
@@ -30,6 +30,6 @@ struct DecksView: View {
 
 struct DecksView_Previews: PreviewProvider {
     static var previews: some View {
-        DecksView(decks: Decks.load())
+        DecksView()
     }
 }
