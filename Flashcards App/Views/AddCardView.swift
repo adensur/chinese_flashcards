@@ -51,24 +51,8 @@ struct AddCardView: View {
                 } header: {
                     Text("Back Text")
                 }
-                if let data = audioData {
-                    PlaySoundButton(audioData: data) {
-                        Image(systemName: "play")
-                    }
-                }
                 Section {
-                    Button("Get Sound!") {
-                        Task {
-                            print("Started getting sound!", Date())
-                            audioData = await getSound(for: frontText, lang: "hi")
-                            print("Got sound!", Date())
-                            if audioData != nil {
-                                print("Get sound success!")
-                            } else {
-                                print("Failed to get sound")
-                            }
-                        }
-                    }.buttonStyle(BorderlessButtonStyle())
+                    SoundLookupView(lookupText: frontText, audioData: $audioData)
                 } header: {
                     Text("Sound")
                 }

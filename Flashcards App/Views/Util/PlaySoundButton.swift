@@ -23,6 +23,11 @@ struct PlaySoundButton<Content: View>: View {
     }
 }
 
+func playSound(data: Data) {
+    audioPlayer = try? AVAudioPlayer(data: data)
+    audioPlayer?.play()
+}
+
 extension Card {
     func playSound() {
         if let data = self.audioData {
