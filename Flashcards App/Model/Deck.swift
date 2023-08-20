@@ -222,12 +222,13 @@ class Deck: Codable, ObservableObject {
     }
     
     func save() {
-        print("saving deck!", Date())
+        print("Saving \(deckMetadata.name) to \(deckMetadata.savePath)", Date())
         let encoder = JSONEncoder()
         let jsonData = try! encoder.encode(self)
 
         // Write the JSON data to a file
-        let fileURL = deckMetadata.savePath
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = documentsDirectory.appendingPathComponent(deckMetadata.savePath)
         try! jsonData.write(to: fileURL)
     }
 }
@@ -235,9 +236,12 @@ class Deck: Codable, ObservableObject {
 //var defaultDeck: Deck = load()
 
 func load(deckMetadata: DeckMetadata) -> Deck {
+    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    let fileURL = documentsDirectory.appendingPathComponent(deckMetadata.savePath)
+    print("Loading \(deckMetadata.name) from \(fileURL)", Date())
 //    let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("data.json")
 //    let fileURL = Bundle.main.url(forResource: "data", withExtension: "json")!
-    if let jsonData = try? Data(contentsOf: deckMetadata.savePath) {
+    if let jsonData = try? Data(contentsOf: fileURL) {
         print(deckMetadata.savePath)
         // Decode the JSON data into the structure
         let decoder = JSONDecoder()
@@ -284,27 +288,18 @@ class DeckMetadata: ObservableObject, Codable {
     @Published var name: String
     @Published var frontLanguage: ELanguage
     @Published var backLanguage: ELanguage
-    let savePath: URL
+    let savePath: String
     init(name: String, frontLanguage: ELanguage, backLanguage: ELanguage) {
         self.name = name
         self.frontLanguage = frontLanguage
         self.backLanguage = backLanguage
         // generating unique filename
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let uniqueFilename = UUID().uuidString + ".json"
-        let fileURL = documentsDirectory.appendingPathComponent(uniqueFilename)
-        self.savePath = fileURL
-    }
-    private init(name: String, frontLanguage: ELanguage, backLanguage: ELanguage, savePath: URL) {
-        self.name = name
-        self.frontLanguage = frontLanguage
-        self.backLanguage = backLanguage
-        self.savePath = savePath
+        self.savePath = uniqueFilename
     }
     
     static func getPreviewDeckMetadata() -> DeckMetadata {
-        let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("data.json")
-        return DeckMetadata(name: "hindi", frontLanguage: .Hindi, backLanguage: .English, savePath: fileURL)
+        return DeckMetadata(name: "hindi", frontLanguage: .Hindi, backLanguage: .English)
     }
     
     enum CodingKeys: CodingKey {
@@ -322,6 +317,6 @@ class DeckMetadata: ObservableObject, Codable {
         name = try container.decode(String.self, forKey: .name)
         frontLanguage = try ELanguage(rawValue: container.decode(String.self, forKey: .frontLanguage))!
         backLanguage = try ELanguage(rawValue: container.decode(String.self, forKey: .backLanguage))!
-        savePath = try container.decode(URL.self, forKey: .savePath)
+        savePath = try container.decode(String.self, forKey: .savePath)
     }
 }

@@ -15,7 +15,7 @@ struct ContentView: View {
             DecksView()
                 .padding()
         }
-        .environmentObject(Decks.load())
+        .environmentObject(decks)
     }
 }
 

@@ -59,7 +59,9 @@ class Decks: ObservableObject, Codable {
         }
         // remove the file
         do {
-            try FileManager.default.removeItem(at: deck.deckMetadata.savePath)
+            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let fileURL = documentsDirectory.appendingPathComponent(deck.deckMetadata.savePath)
+            try FileManager.default.removeItem(at: fileURL)
             print("File deleted successfully")
         } catch {
             print("Error deleting file: \(error)")
