@@ -44,7 +44,7 @@ class Deck: Codable, ObservableObject {
         }
     }
     // instantly make cards with up to this time interval "trainable"
-    private static let minTimeInterval = TimeInterval(20 * 60) // 20 minutes
+    static let minTimeInterval = TimeInterval(20 * 60) // 20 minutes
     
     init(cards: [Card]) {
         self.cards = cards
@@ -168,8 +168,21 @@ class Deck: Codable, ObservableObject {
             return
         }
         // no unseen cards - let's show at least something!
-        // Just show any random card, no matter if its ready or not
-        currentIdx = Int.random(in: 0..<cards.count)
+        // Just show next available card, no matter if its ready or not
+        minNextRepetition = cards[0].getNextRepetition()
+        var nextIdx = 0
+        for idx in 0 ..< cards.count {
+            let card = self.cards[idx]
+            if recentlySeenCards.contains(card) {
+                continue
+            }
+            let nextRepetition = card.getNextRepetition()
+            if nextRepetition < minNextRepetition {
+                minNextRepetition = nextRepetition
+                nextIdx = idx
+            }
+        }
+        currentIdx = nextIdx
         nextRepetitionDate = cards[currentIdx!].getNextRepetition()
     }
     

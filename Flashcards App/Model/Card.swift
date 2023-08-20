@@ -90,9 +90,15 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     }
     
     func consumeAnswer(difficulty: Difficulty) {
-        self.learningStage = getNextStage(learningStage: self.learningStage, difficulty: difficulty)
-        self.lastRepetition = Date()
         self.isFrontSideUp.toggle()
+        if getNextRepetition().addingTimeInterval(-Deck.minTimeInterval) > Date() {
+            // card was repeated out of order - do not progress it!
+            self.lastRepetition = Date()
+            return
+        } else {
+            self.lastRepetition = Date()
+            self.learningStage = getNextStage(learningStage: self.learningStage, difficulty: difficulty)
+        }
     }
     
     // when would the next repetition be if we press a button with certain difficulty
