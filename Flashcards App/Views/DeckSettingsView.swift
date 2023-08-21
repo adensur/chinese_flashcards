@@ -12,6 +12,7 @@ struct DeckSettingsView: View {
     @EnvironmentObject var decks: Decks
     @Environment(\.dismiss) var dismiss
     var deckDeleteCallback: () -> Void
+    @State private var deleteAlertPresented = false
     var body: some View {
         VStack {
             Form {
@@ -22,13 +23,27 @@ struct DeckSettingsView: View {
             }
             Spacer()
             Button("Delete") {
-                // Perform save action here
-                // hack to update the parent view
-                decks.deleteDeck(deck: deck)
-                dismiss()
-                deckDeleteCallback()
+                if deck.cards.isEmpty {
+                    deleteDeck()
+                } else {
+                    deleteAlertPresented = true
+                }
             }
         }
+        .alert("You are about to delete deck with \(deck.cards.count) cards.", isPresented: $deleteAlertPresented) {
+            HStack {
+                Button("OK") {
+                    deleteDeck()
+                }
+                Button("Cancel") { }
+            }
+        }
+    }
+        
+    func deleteDeck() {
+        decks.deleteDeck(deck: deck)
+        dismiss()
+        deckDeleteCallback()
     }
 }
 
