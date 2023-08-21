@@ -68,16 +68,18 @@ struct AddCardView: View {
 //                print("OnTapGesture! Disabling focus. Was: ", isFocused)
 //                isFocused = false
 //            }
-        }.navigationTitle("Add Flashcard")
-            .navigationBarItems(
-                leading: Button("Cancel") {
-                    presentationMode.wrappedValue.dismiss()
-                },
-                trailing: Button("Save") {
-                    deck.addCard(frontText: frontText, backText: backText, audioData: audioData, enableTextInputExercise: enableTextInputExercise)
-                    presentationMode.wrappedValue.dismiss()
-                }
-            )
+        }
+        .navigationBarBackButtonHidden(true)
+        .navigationTitle("Add Flashcard")
+        .navigationBarItems(
+            leading: Button("Cancel") {
+                presentationMode.wrappedValue.dismiss()
+            },
+            trailing: Button("Save") {
+                deck.addCard(frontText: frontText, backText: backText, audioData: audioData, enableTextInputExercise: enableTextInputExercise)
+                presentationMode.wrappedValue.dismiss()
+            }
+        )
     }
 }
 
