@@ -10,9 +10,19 @@ import SwiftUI
 struct ExerciseHeaderView: View {
     @ObservedObject var deck: Deck
     var deckDeleteCallback: () -> Void
+    @Environment(\.dismiss) var dismiss
     var body: some View {
         GroupBox {
             HStack {
+                HStack {
+                    Group {
+                        Image(systemName: "chevron.left")
+                        Button("back") {
+                            dismiss()
+                        }
+                    }
+                    .foregroundColor(.accentColor)
+                }
                 Spacer()
                 if let currentCard = deck.currentCard {
                     NavigationLink {

@@ -59,7 +59,9 @@ struct ExerciseView: View {
                     Spacer()
                 }
             }
-        }.animation(.easeIn, value: reveal)
+        }
+        .animation(.easeIn, value: reveal)
+        .navigationBarBackButtonHidden(true)
     }
     
     func nextCard(currentCard: Card, difficulty: Difficulty) {
