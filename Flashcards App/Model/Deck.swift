@@ -20,14 +20,18 @@ class Deck: Codable, ObservableObject {
     // Whether or not next card will always be deterministic, by date added, or random
     @Published var shuffle: Bool = true {
         didSet {
-            save()
+            if shuffle != oldValue {
+                save()
+            }
         }
     }
     // Option
     // Disables all writing exercises for all cards, despite card options
     @Published var disableAllTextInputExercises: Bool = false {
         didSet {
-            save()
+            if disableAllTextInputExercises != oldValue {
+                save()
+            }
         }
     }
     @Published var deckMetadata: DeckMetadata
