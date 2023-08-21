@@ -9,6 +9,8 @@ import SwiftUI
 
 struct DecksView: View {
     @EnvironmentObject var decks: Decks
+    @State private var deleteAlertPresented = false
+    @State private var decksToDelete = IndexSet([])
     var body: some View {
         List {
             ForEach(decks.decks, id: \.savePath) {deckMetadata in
@@ -17,6 +19,9 @@ struct DecksView: View {
                         ExerciseView(deck: Deck.load(deckMetadata: deckMetadata))
                     }
                 }
+            }.onDelete {indexSet in
+                deleteAlertPresented = true
+                decksToDelete = indexSet
             }
             Section {
                 NavigationLink {
@@ -24,6 +29,14 @@ struct DecksView: View {
                 } label: {
                     Text("Add Deck")
                     .foregroundColor(.accentColor)
+                }
+            }
+        }
+        .alert("Are you sure you want to delete the deck?", isPresented: $deleteAlertPresented) {
+            HStack {
+                Button("Cancel") {}
+                Button("OK") {
+                    decks.deleteDecks(atOffsets: decksToDelete)
                 }
             }
         }

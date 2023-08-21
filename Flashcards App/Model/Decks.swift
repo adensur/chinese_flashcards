@@ -52,6 +52,22 @@ class Decks: ObservableObject, Codable {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("deck_metadata.json")
     }
     
+    func deleteDecks(atOffsets: IndexSet) {
+        for idx in atOffsets {
+            let deck = decks[idx]
+            do {
+                let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                let fileURL = documentsDirectory.appendingPathComponent(deck.savePath)
+                try FileManager.default.removeItem(at: fileURL)
+                print("File deleted successfully")
+            } catch {
+                print("Error deleting file: \(error)")
+            }
+        }
+        decks.remove(atOffsets: atOffsets)
+        save()
+    }
+    
     func deleteDeck(deck: Deck) {
         // remove all decks by savedPath - unique identifier
         decks.removeAll {deckMetadata in
