@@ -33,8 +33,14 @@ class Deck: Codable, ObservableObject {
     @Published var deckMetadata: DeckMetadata
     // global counter used to generate unique id to every added card
     var maxId = 0
+    // the card will not be repeated if it was repeated in the last maxLastCards repetitions
+    static let maxLastCards = 4
+    // maximum number of cards currently being learned (all levels)
+    static let maxLearningCards = 10
+    // number of repeating cards to add to every batch
+    static let learnedCardsInBatch = 4
     // non-persistent data
-    // contains up to 5 last cards, to do advanced shuffling to avoid repetitions
+    // contains up to maxLastCards last cards, to do advanced shuffling to avoid repetitions
     var lastCards: Deque<Card> = []
     
     var currentCard: Card? {
@@ -111,8 +117,12 @@ class Deck: Codable, ObservableObject {
         } else {
             startIdx = -1
         }
+        // top priority - learning cards with low level
+        var availableFreshCards: [Int] = []
         // Learning and recently mistaken cards have priority
         var availableLearningCards: [Int] = []
+        // new cards
+        var availableNewCards: [Int] = []
         // other cards
         var availableOtherCards: [Int] = []
         for idx in startIdx + 1 ... startIdx + cards.count {
@@ -126,8 +136,20 @@ class Deck: Codable, ObservableObject {
                     return
                 }
                 switch card.learningStage {
-                case .RepeatingAfterMistake(_), .Learning:
-                    availableLearningCards.append(i)
+                case .RepeatingAfterMistake(let lvl):
+                    if lvl < 5 {
+                        availableFreshCards.append(i)
+                    } else {
+                        availableLearningCards.append(i)
+                    }
+                case .Learning(let lvl):
+                    if lvl < 5 {
+                        availableFreshCards.append(i)
+                    } else {
+                        availableLearningCards.append(i)
+                    }
+                case .New:
+                    availableNewCards.append(i)
                 default:
                     availableOtherCards.append(i)
                 }
@@ -136,38 +158,43 @@ class Deck: Codable, ObservableObject {
                 minNextRepetition = nextRepetition
             }
         }
-        if availableOtherCards.isEmpty && availableLearningCards.isEmpty {
+        if availableOtherCards.isEmpty && availableLearningCards.isEmpty && availableNewCards.isEmpty && availableFreshCards.isEmpty {
             // out of cards-to-review
             currentIdx = nil
             nextRepetitionDate = minNextRepetition
             return
         }
-        // First, try to show random learning cards, if they weren't present in the last 5 repetitions
-        let recentlySeenCards = Set(lastCards)
-        var newAvailableLearningCards: [Int] = []
-        for idx in availableLearningCards {
-            let card = cards[idx]
-            if !recentlySeenCards.contains(card) {
-                newAvailableLearningCards.append(idx)
-            }
+        // filter out learning, repeating and new cards by already seen cards
+        let newAvailableFreshCards = availableFreshCards.filter {idx in
+            return !lastCards.contains(cards[idx])
         }
-        if !newAvailableLearningCards.isEmpty {
-            newAvailableLearningCards.shuffle()
-            currentIdx = newAvailableLearningCards.first
-            nextRepetitionDate = cards[currentIdx!].getNextRepetition()
-            return
+        let newAvailableLearningCards = availableLearningCards.filter {idx in
+            return !lastCards.contains(cards[idx])
         }
-        // no learning cards that we haven't seen - try to get other cards
-        var newAvailableOtherCards: [Int] = []
-        for idx in availableOtherCards {
-            let card = cards[idx]
-            if !recentlySeenCards.contains(card) {
-                newAvailableOtherCards.append(idx)
-            }
+        let newAvailableNewCards = availableNewCards.filter {idx in
+            return !lastCards.contains(cards[idx])
         }
-        if !newAvailableOtherCards.isEmpty {
-            newAvailableOtherCards.shuffle()
-            currentIdx = newAvailableOtherCards.first
+        let newAvailableOtherCards = availableOtherCards.filter {idx in
+            return !lastCards.contains(cards[idx])
+        }
+        var newAvailableCards = newAvailableLearningCards
+        if newAvailableCards.count + newAvailableFreshCards.count < Self.maxLearningCards {
+            // how many new cards to add
+            let diff = Self.maxLearningCards - newAvailableCards.count
+            let newCardsToTake = min(newAvailableNewCards.count, diff)
+            let newCards = newAvailableNewCards.shuffled()[0..<newCardsToTake]
+            newAvailableCards.append(contentsOf: newCards)
+        }
+        // fresh cards have x3 weight
+        for _ in 0..<3 {
+            newAvailableCards.append(contentsOf: newAvailableFreshCards)
+        }
+        let otherCardsToTake = min(Self.learnedCardsInBatch, newAvailableOtherCards.count)
+        let otherCards = newAvailableOtherCards.shuffled()[0..<otherCardsToTake]
+        newAvailableCards.append(contentsOf: otherCards)
+        // works if array is not empty
+        if let idx = newAvailableCards.randomElement() {
+            currentIdx = idx
             nextRepetitionDate = cards[currentIdx!].getNextRepetition()
             return
         }
@@ -177,7 +204,7 @@ class Deck: Codable, ObservableObject {
         var nextIdx = 0
         for idx in 0 ..< cards.count {
             let card = self.cards[idx]
-            if recentlySeenCards.contains(card) {
+            if lastCards.contains(card) {
                 continue
             }
             let nextRepetition = card.getNextRepetition()
@@ -194,7 +221,7 @@ class Deck: Codable, ObservableObject {
         if let card = self.currentCard {
             self.currentCard!.consumeAnswer(difficulty: difficulty)
             self.lastCards.append(card)
-            if self.lastCards.count > 5 {
+            if self.lastCards.count > Self.maxLastCards {
                 let _ = self.lastCards.popFirst()
             }
         } else {
@@ -222,13 +249,13 @@ class Deck: Codable, ObservableObject {
     }
     
     func save() {
-        print("Saving \(deckMetadata.name) to \(deckMetadata.savePath)", Date())
         let encoder = JSONEncoder()
         let jsonData = try! encoder.encode(self)
 
         // Write the JSON data to a file
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let fileURL = documentsDirectory.appendingPathComponent(deckMetadata.savePath)
+        print("Saving \(deckMetadata.name) to \(fileURL)", Date())
         try! jsonData.write(to: fileURL)
     }
 }

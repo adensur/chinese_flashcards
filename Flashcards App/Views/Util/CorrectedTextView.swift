@@ -22,6 +22,28 @@ func splitText(text: String, correctText: String) -> (textPrefix: String, textMi
     start1 = i
     start2 = j
     
+    if text.isEmpty {
+        return (
+            textPrefix: "",
+            textMiddle: "",
+            textSuffix: "",
+            correctPrefix: "",
+            correctMiddle: correctText,
+            correctSuffix: ""
+        )
+    }
+    
+    if correctText.isEmpty {
+        return (
+            textPrefix: "",
+            textMiddle: text,
+            textSuffix: "",
+            correctPrefix: "",
+            correctMiddle: "",
+            correctSuffix: ""
+        )
+    }
+    
     i = text.index(before: text.endIndex)
     j = correctText.index(before: correctText.endIndex)
     
