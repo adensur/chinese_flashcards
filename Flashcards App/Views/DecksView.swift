@@ -13,7 +13,9 @@ struct DecksView: View {
         List {
             ForEach(decks.decks, id: \.savePath) {deckMetadata in
                 NavigationLink("\(deckMetadata.name)") {
-                    ExerciseView(deck: load(deckMetadata: deckMetadata))
+                    LazyView {
+                        ExerciseView(deck: Deck.load(deckMetadata: deckMetadata))
+                    }
                 }
             }
             Section {

@@ -34,7 +34,7 @@ class Deck: Codable, ObservableObject {
     // global counter used to generate unique id to every added card
     var maxId = 0
     // the card will not be repeated if it was repeated in the last maxLastCards repetitions
-    static let maxLastCards = 4
+    static let maxLastCards = 3
     // maximum number of cards currently being learned (all levels)
     static let maxLearningCards = 10
     // number of repeating cards to add to every batch
@@ -177,6 +177,13 @@ class Deck: Codable, ObservableObject {
         let newAvailableOtherCards = availableOtherCards.filter {idx in
             return !lastCards.contains(cards[idx])
         }
+        // with 50% chance, just take a random fresh card
+        if Int.random(in: 0..<2) == 0 {
+            if let selectedIdx = newAvailableFreshCards.randomElement() {
+                currentIdx = selectedIdx
+                nextRepetitionDate = cards[currentIdx!].getNextRepetition()
+            }
+        }
         var newAvailableCards = newAvailableLearningCards
         if newAvailableCards.count + newAvailableFreshCards.count < Self.maxLearningCards {
             // how many new cards to add
@@ -184,10 +191,6 @@ class Deck: Codable, ObservableObject {
             let newCardsToTake = min(newAvailableNewCards.count, diff)
             let newCards = newAvailableNewCards.shuffled()[0..<newCardsToTake]
             newAvailableCards.append(contentsOf: newCards)
-        }
-        // fresh cards have x3 weight
-        for _ in 0..<3 {
-            newAvailableCards.append(contentsOf: newAvailableFreshCards)
         }
         let otherCardsToTake = min(Self.learnedCardsInBatch, newAvailableOtherCards.count)
         let otherCards = newAvailableOtherCards.shuffled()[0..<otherCardsToTake]
@@ -258,41 +261,34 @@ class Deck: Codable, ObservableObject {
         print("Saving \(deckMetadata.name) to \(fileURL)", Date())
         try! jsonData.write(to: fileURL)
     }
-}
-
-//var defaultDeck: Deck = load()
-
-func load(deckMetadata: DeckMetadata) -> Deck {
-    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    let fileURL = documentsDirectory.appendingPathComponent(deckMetadata.savePath)
-    print("Loading \(deckMetadata.name) from \(fileURL)", Date())
-//    let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("data.json")
-//    let fileURL = Bundle.main.url(forResource: "data", withExtension: "json")!
-    if let jsonData = try? Data(contentsOf: fileURL) {
-        print(deckMetadata.savePath)
-        // Decode the JSON data into the structure
-        let decoder = JSONDecoder()
-        let deck = try! decoder.decode(Deck.self, from: jsonData)
-        deck.deckMetadata = deckMetadata
-        return deck
-    } else {
-        return Deck(cards: [], deckMetadata: deckMetadata)
+    
+    static var loadedDecks: [String: Deck] = [:]
+    
+    static func load(deckMetadata: DeckMetadata) -> Deck {
+        if let deck = loadedDecks[deckMetadata.savePath] {
+            return deck
+        } else {
+            let deck = loadInner(deckMetadata: deckMetadata)
+            loadedDecks[deckMetadata.savePath] = deck
+            return deck
+        }
+    }
+    
+    static private func loadInner(deckMetadata: DeckMetadata) -> Deck {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = documentsDirectory.appendingPathComponent(deckMetadata.savePath)
+        print("Loading \(deckMetadata.name) from \(fileURL)", Date())
+        if let jsonData = try? Data(contentsOf: fileURL) {
+            print(deckMetadata.savePath)
+            let decoder = JSONDecoder()
+            let deck = try! decoder.decode(Deck.self, from: jsonData)
+            deck.deckMetadata = deckMetadata
+            return deck
+        } else {
+            return Deck(cards: [], deckMetadata: deckMetadata)
+        }
     }
 }
-
-//func load() -> Deck {
-//    let fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("data.json")
-////    let fileURL = Bundle.main.url(forResource: "data", withExtension: "json")!
-//    if let jsonData = try? Data(contentsOf: fileURL) {
-//        print(fileURL)
-//        // Decode the JSON data into the structure
-//        let decoder = JSONDecoder()
-//        let deck = try! decoder.decode(Deck.self, from: jsonData)
-//        return deck
-//    } else {
-//        return Deck(cards: [])
-//    }
-//}
 
 var previewDeck = simulatedLoad()
 
