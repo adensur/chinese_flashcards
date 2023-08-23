@@ -9,9 +9,33 @@ import SwiftUI
 
 struct BrowseDeckView: View {
     @ObservedObject var deck: Deck
+    @State private var filterText: String = ""
+    @State private var filterBy = "frontText"
+    var filteredCards: [Card] {
+        deck.cards.filter {card in
+            if filterText.isEmpty {
+                return true
+            }
+            if filterBy == "frontText" {
+                return card.frontText.contains(filterText.lowercased())
+            } else {
+                return card.backText.contains(filterText.lowercased())
+            }
+        }
+    }
     var body: some View {
         List {
-            ForEach(deck.cards) {card in
+            Section {
+                Picker("Filter by", selection: $filterBy) {
+                    ForEach(["frontText", "backText"], id: \.self) {text in
+                        Text("\(text)")
+                    }
+                }
+                TextField("Filter", text: $filterText)
+            } header: {
+                Text("Filter")
+            }
+            ForEach(filteredCards) {card in
                 NavigationLink {
                     EditCardView(card: card, deck: deck)
                 } label: {

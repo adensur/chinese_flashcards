@@ -10,18 +10,6 @@ import SwiftUI
 func splitText(text: String, correctText: String) -> (textPrefix: String, textMiddle: String, textSuffix: String, correctPrefix: String, correctMiddle: String, correctSuffix: String) {
     var i = text.startIndex
     var j = correctText.startIndex
-    
-    var start1 = text.startIndex
-    var end1 = text.endIndex
-    var start2 = correctText.startIndex
-    var end2 = correctText.endIndex
-    while i < text.endIndex && j < correctText.endIndex && text[i] == correctText[j] {
-        i = text.index(after: i)
-        j = correctText.index(after: j)
-    }
-    start1 = i
-    start2 = j
-    
     if text.isEmpty {
         return (
             textPrefix: "",
@@ -43,6 +31,16 @@ func splitText(text: String, correctText: String) -> (textPrefix: String, textMi
             correctSuffix: ""
         )
     }
+    var start1 = text.startIndex
+    var end1 = text.endIndex
+    var start2 = correctText.startIndex
+    var end2 = correctText.endIndex
+    while i < text.endIndex && j < correctText.endIndex && text[i] == correctText[j] {
+        i = text.index(after: i)
+        j = correctText.index(after: j)
+    }
+    start1 = i
+    start2 = j
     
     i = text.index(before: text.endIndex)
     j = correctText.index(before: correctText.endIndex)
