@@ -43,6 +43,8 @@ class Deck: Codable, ObservableObject {
     static let maxLearningCards = 10
     // number of repeating cards to add to every batch
     static let learnedCardsInBatch = 4
+    // instantly make cards with up to this time interval "trainable"
+    static let minTimeInterval = TimeInterval(20 * 60) // 20 minutes
     // non-persistent data
     // contains up to maxLastCards last cards, to do advanced shuffling to avoid repetitions
     var lastCards: Deque<Card> = []
@@ -54,8 +56,29 @@ class Deck: Codable, ObservableObject {
             return nil
         }
     }
-    // instantly make cards with up to this time interval "trainable"
-    static let minTimeInterval = TimeInterval(20 * 60) // 20 minutes
+    
+    // card counts: new cards, cards being learned, cards being repeated
+    var learnCounts: CardCounts {
+        var new = 0
+        var learning = 0
+        var repeating = 0
+        for card in cards {
+            if card.getNextRepetition().addingTimeInterval(-Self.minTimeInterval) > Date() {
+                continue
+            }
+            switch card.learningStage {
+            case .New:
+                new += 1
+            case .Learning(_), .RepeatingAfterMistake(_):
+                learning += 1
+            case .Repeating(_):
+                repeating += 1
+            default:
+                ()
+            }
+        }
+        return CardCounts(new: new, learning: learning, repeating: repeating)
+    }
     
     init(cards: [Card], deckMetadata: DeckMetadata) {
         self.cards = cards

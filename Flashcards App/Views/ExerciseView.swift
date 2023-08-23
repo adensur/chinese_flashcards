@@ -30,6 +30,9 @@ struct ExerciseView: View {
                         RevealCardView(card: currentCard) {difficulty in
                             nextCard(currentCard: currentCard, difficulty: difficulty)
                         }
+                    } else {
+                        Spacer()
+                        CardCountsView(cardCounts: deck.learnCounts)
                     }
                 } else {
                     if deck.disableAllTextInputExercises || !currentCard.enableTextInputExercise {
