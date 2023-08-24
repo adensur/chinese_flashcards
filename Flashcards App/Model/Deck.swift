@@ -60,8 +60,8 @@ class Deck: Codable, ObservableObject {
     // card counts: new cards, cards being learned, cards being repeated
     var learnCounts: CardCounts {
         var new = 0
-        var learning = 0
         var repeating = 0
+        var learning = 0
         for card in cards {
             if card.getNextRepetition().addingTimeInterval(-Self.minTimeInterval) > Date() {
                 continue
@@ -77,7 +77,7 @@ class Deck: Codable, ObservableObject {
                 ()
             }
         }
-        return CardCounts(new: new, learning: learning, repeating: repeating)
+        return CardCounts(new: new, repeating: repeating, learning: learning)
     }
     
     init(cards: [Card], deckMetadata: DeckMetadata) {

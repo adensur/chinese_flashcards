@@ -9,8 +9,8 @@ import SwiftUI
 
 struct CardCounts {
     var new: Int
-    var learning: Int
     var repeating: Int
+    var learning: Int
 }
 
 struct CardCountsView: View {
@@ -20,10 +20,10 @@ struct CardCountsView: View {
             Text("\(cardCounts.new)")
                 .foregroundColor(.indigo)
             Text("+")
-            Text("\(cardCounts.repeating)")
+            Text("\(cardCounts.learning)")
                 .foregroundColor(.orange)
             Text("+")
-            Text("\(cardCounts.learning)")
+            Text("\(cardCounts.repeating)")
                 .foregroundColor(.teal)
         }
     }
@@ -31,6 +31,6 @@ struct CardCountsView: View {
 
 struct CardCountsView_Previews: PreviewProvider {
     static var previews: some View {
-        CardCountsView(cardCounts: CardCounts(new: 3, learning: 7, repeating: 2))
+        CardCountsView(cardCounts: CardCounts(new: 3, repeating: 7, learning: 2))
     }
 }

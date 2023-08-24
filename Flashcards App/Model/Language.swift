@@ -12,6 +12,7 @@ enum ELanguage: String {
     case French = "fr"
     case Italian = "it"
     case Russian = "ru"
+    case Japanese = "ja"
     case Hindi = "hi"
     
     static func allValues() -> [ELanguage] {
@@ -20,6 +21,7 @@ enum ELanguage: String {
             .French,
             .Italian,
             .Russian,
+            .Japanese,
             .Hindi
         ]
     }

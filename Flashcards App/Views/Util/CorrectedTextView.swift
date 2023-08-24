@@ -45,7 +45,7 @@ func splitText(text: String, correctText: String) -> (textPrefix: String, textMi
     i = text.index(before: text.endIndex)
     j = correctText.index(before: correctText.endIndex)
     
-    while i >= text.startIndex && j >= correctText.startIndex && text[i] == correctText[j] {
+    while i > start1 && j > start2 && text[i] == correctText[j] {
         i = text.index(before: i)
         j = correctText.index(before: j)
     }

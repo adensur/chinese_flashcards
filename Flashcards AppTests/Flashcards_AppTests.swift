@@ -24,6 +24,17 @@ final class Flashcards_AppTests: XCTestCase {
         // Any test you write for XCTest can be annotated as throws and async.
         // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
         // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+        // test correct text split
+    }
+    
+    func testCorrectTestSplit() {
+        let out = splitText(text: "hey hey", correctText: "hey")
+        XCTAssertEqual(out.textPrefix, "hey")
+        XCTAssertEqual(out.textMiddle, " hey")
+        XCTAssertEqual(out.textSuffix, "")
+        XCTAssertEqual(out.correctPrefix, "hey")
+        XCTAssertEqual(out.correctMiddle, "")
+        XCTAssertEqual(out.correctSuffix, "")
     }
 
     func testPerformanceExample() throws {
@@ -32,5 +43,4 @@ final class Flashcards_AppTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
-
 }
