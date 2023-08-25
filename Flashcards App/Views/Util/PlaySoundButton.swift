@@ -39,7 +39,7 @@ extension Card {
 
 struct PlaySoundButton_Previews: PreviewProvider {
     static var previews: some View {
-        PlaySoundButton(audioData: defaultVocab.cards["आगे"]!.audioData!) {
+        PlaySoundButton(audioData: previewVocab.cards["आगे"]!.audioData!) {
             Image(systemName: "edit")
         }
     }

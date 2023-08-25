@@ -65,9 +65,7 @@ struct SuggestView: View {
         }
         .onChange(of: inputText) {inputText in
             print("Computing filtered texts!")
-            filteredTexts = vocab.cards.keys.filter {vocabString in
-                vocabString.hasUnicodePrefx(inputText.precomposedStringWithCanonicalMapping)
-            }
+            filteredTexts = vocab.findMatches(inputText)
         }
         .onAppear {
             print("Initialising filtered texts!")
@@ -90,7 +88,7 @@ struct SuggestView_Previews: PreviewProvider {
         StatefulPreviewWrapper("आ") {text in
             VStack {
                 TextField("Title", text: text)
-                SuggestView(inputText: text, vocab: defaultVocab) { vocabCard in
+                SuggestView(inputText: text, vocab: previewVocab) { vocabCard in
                     print("Matched vocab card: ", vocabCard)
                 }
             }
