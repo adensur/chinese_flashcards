@@ -45,8 +45,8 @@ struct SuggestView: View {
                         Text(textSearched)
                         Spacer()
                         Text(vocab.cards[textSearched]!.backText)
+                        FreqView(freq: vocab.cards[textSearched]!.frequency)
                     }
-//                        .padding(.horizontal, 20)
                         .padding(.vertical, 20)
                         .frame(minWidth: 0,
                                maxWidth: .infinity,
