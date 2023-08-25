@@ -17,7 +17,7 @@ struct ContentView: View {
         }
         .environmentObject(decks)
         .onAppear {
-            updateVocabs(decks: decks)
+            vocabUpdater.updateVocabs(decks: decks.decks)
         }
     }
 }

@@ -9,6 +9,11 @@ import Foundation
 import Zip
 import FirebaseStorage
 
+func getVocabPath(languageFrom: String, languageTo: String) -> URL{
+    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    return documentsDirectory.appendingPathComponent("vocabs/\(languageFrom)_\(languageTo).json")
+}
+
 class VocabCard {
     let frontText: String
     let backText: String
@@ -29,11 +34,6 @@ struct Translation: Codable {
 struct Translations: Codable {
     var word: String
     var translations: [Translation]
-}
-
-fileprivate func getVocabPath(languageFrom: String, languageTo: String) -> URL{
-    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-    return documentsDirectory.appendingPathComponent("vocabs/\(languageFrom)_\(languageTo).json")
 }
 
 class Vocab {
@@ -105,48 +105,3 @@ func load() -> Vocab {
 }
 
 let defaultVocab: Vocab = load()
-
-let vocabs = Vocabs()
-
-class Vocabs {
-    // languageFrom -> languageTo -> Vocab, like hi -> en -> Vocab
-    // nil when we checked the file and it was not there
-    // no entry when we haven't checked
-    var vocabs: [String: [String: Vocab?]] = [:]
-    
-    func getVocab(languageFrom: String, languageTo: String) -> Vocab? {
-        if let dic = vocabs[languageFrom] {
-            if let vocab = dic[languageTo] {
-                return vocab
-            }
-        }
-        let vocab = Vocab.loadV2(languageFrom: languageFrom, languageTo: languageTo)
-        if vocabs[languageFrom] == nil {
-            vocabs[languageFrom] = [:]
-        }
-        vocabs[languageFrom]![languageTo] = vocab
-        return vocab
-    }
-    
-    func updateVocab(languageFrom: String, languageTo: String, path: String, callback: @escaping (Bool) -> Void) {
-        print("Downloading vocab for languages: \(languageFrom)-\(languageTo) from path: \(path)")
-        let storage = Storage.storage()
-        let pathReference = storage.reference(withPath: path)
-        pathReference.write(toFile: getVocabPath(languageFrom: languageFrom, languageTo: languageTo)) { [self] url, error in
-            if let error = error {
-                print("Error downloaded vocab for languages: \(languageFrom)-\(languageTo) from path: \(path), ", error)
-                callback(false)
-            } else {
-                print("Successfully downloading vocab for languages: \(languageFrom)-\(languageTo) from path: \(path)")
-                // update global Vocabs singleton with new version
-                let vocab = Vocab.loadV2(languageFrom: languageFrom, languageTo: languageTo)
-                if vocabs[languageFrom] == nil {
-                    vocabs[languageFrom] = [:]
-                }
-                vocabs[languageFrom]![languageTo] = vocab
-                print("Successfully updated vocab for languages: \(languageFrom)-\(languageTo) from path: \(path)")
-                callback(true)
-            }
-        }
-    }
-}

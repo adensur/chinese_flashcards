@@ -65,6 +65,12 @@ struct ExerciseView: View {
         }
         .animation(.easeIn, value: reveal)
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            Task {
+                // trigger vocab loading in advance
+                let _ = vocabs.getVocab(languageFrom: deck.deckMetadata.frontLanguage.rawValue, languageTo: deck.deckMetadata.backLanguage.rawValue)
+            }
+        }
     }
     
     func nextCard(currentCard: Card, difficulty: Difficulty) {
