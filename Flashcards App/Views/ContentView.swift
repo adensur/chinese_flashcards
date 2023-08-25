@@ -16,6 +16,9 @@ struct ContentView: View {
                 .padding()
         }
         .environmentObject(decks)
+        .onAppear {
+            updateVocabs(decks: decks)
+        }
     }
 }
 

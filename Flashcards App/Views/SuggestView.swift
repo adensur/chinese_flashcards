@@ -33,6 +33,7 @@ extension String {
 
 struct SuggestView: View {
     @Binding var inputText: String
+    var vocab: Vocab
     let callback: (VocabCard) -> Void
     @State private var filteredTexts: [String] = []
     
@@ -43,7 +44,7 @@ struct SuggestView: View {
                     HStack {
                         Text(textSearched)
                         Spacer()
-                        Text(defaultVocab.cards[textSearched]!.backText)
+                        Text(vocab.cards[textSearched]!.backText)
                     }
 //                        .padding(.horizontal, 20)
                         .padding(.vertical, 20)
@@ -55,7 +56,7 @@ struct SuggestView: View {
                         .contentShape(Rectangle())
                         .onTapGesture(perform: {
                             inputText = textSearched
-                            self.callback(defaultVocab.cards[textSearched]!)
+                            self.callback(vocab.cards[textSearched]!)
                         })
                     Divider()
                         .padding(.horizontal, 10)
@@ -64,13 +65,13 @@ struct SuggestView: View {
         }
         .onChange(of: inputText) {inputText in
             print("Computing filtered texts!")
-            filteredTexts = defaultVocab.cards.keys.filter {vocabString in
+            filteredTexts = vocab.cards.keys.filter {vocabString in
                 vocabString.hasUnicodePrefx(inputText.precomposedStringWithCanonicalMapping)
             }
         }
         .onAppear {
             print("Initialising filtered texts!")
-            filteredTexts = defaultVocab.cards.keys.filter {vocabString in
+            filteredTexts = vocab.cards.keys.filter {vocabString in
                 vocabString.hasUnicodePrefx(inputText.precomposedStringWithCanonicalMapping)
             }
         }
@@ -89,7 +90,7 @@ struct SuggestView_Previews: PreviewProvider {
         StatefulPreviewWrapper("आ") {text in
             VStack {
                 TextField("Title", text: text)
-                SuggestView(inputText: text) { vocabCard in
+                SuggestView(inputText: text, vocab: defaultVocab) { vocabCard in
                     print("Matched vocab card: ", vocabCard)
                 }
             }

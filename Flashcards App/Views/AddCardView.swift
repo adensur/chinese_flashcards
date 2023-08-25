@@ -35,12 +35,16 @@ struct AddCardView: View {
                             showSuggestionsSemafor += 1
                         }
                     if showSuggestionsSemafor > 0 {
-                        SuggestView(inputText:$frontText) {vocabCard in
-                            backText = vocabCard.backText
-                            audioData = vocabCard.audioData
-                            print("Setting editing to false", Date())
-                            showSuggestionsSemafor = -1
-                            print("Done setting editing to false", Date())
+                        if let vocab = vocabs.getVocab(languageFrom: deck.deckMetadata.frontLanguage.rawValue, languageTo: deck.deckMetadata.backLanguage.rawValue) {
+                            SuggestView(inputText:$frontText,
+                                        vocab: vocab
+                            ) {vocabCard in
+                                backText = vocabCard.backText
+                                audioData = vocabCard.audioData
+                                print("Setting editing to false", Date())
+                                showSuggestionsSemafor = -1
+                                print("Done setting editing to false", Date())
+                            }
                         }
                     }
                 } header: {

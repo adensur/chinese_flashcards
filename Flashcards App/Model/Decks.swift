@@ -8,20 +8,25 @@
 import Foundation
 
 class Decks: ObservableObject, Codable {
+    @Published var vocabVersions: [VocabMetadata] = []
     @Published var decks: [DeckMetadata]
     init() {
         decks = []
     }
     enum CodingKeys: CodingKey {
-        case decks
+        case decks, vocabVersions
     }
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(decks, forKey: .decks)
+        try container.encode(vocabVersions, forKey: .vocabVersions)
     }
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         decks = try container.decode([DeckMetadata].self, forKey: .decks)
+        if let vocabs = try? container.decode([VocabMetadata].self, forKey: .vocabVersions) {
+            vocabVersions = vocabs
+        }
     }
     static func load() -> Decks {
         do {
@@ -83,6 +88,42 @@ class Decks: ObservableObject, Codable {
             print("Error deleting file: \(error)")
         }
         save()
+    }
+    
+    func updateVocabs(newVocabMetadata: [VocabMetadata]) {
+        for newVocabVersion in newVocabMetadata {
+            let m = decks.first {deck in
+                deck.frontLanguage.rawValue == newVocabVersion.languageFrom && deck.backLanguage.rawValue == newVocabVersion.languageTo
+            }
+            if m == nil {
+                // no decks with this language pair
+                continue
+            }
+            let v = vocabVersions.first {vocabVersion in
+                newVocabVersion.languageTo == vocabVersion.languageTo && newVocabVersion.languageFrom == vocabVersion.languageFrom
+            }
+            if let vocabVersion = v {
+                if vocabVersion.version == newVocabVersion.version {
+                    // already updated to this version
+                    print("Skipping updating vocabs for \(newVocabMetadata), already up to date")
+                    continue
+                }
+            }
+            // no previous versions of this vocab, or current version is old
+            vocabs.updateVocab(languageFrom: newVocabVersion.languageFrom, languageTo: newVocabVersion.languageTo, path: newVocabVersion.path) { [self]isSuccess in
+                if isSuccess {
+                    // update vocab metadata and save
+                    let serialQueue = DispatchQueue(label: "queuename")
+                    serialQueue.sync {
+                        self.vocabVersions.removeAll {vocabVersion in
+                            newVocabVersion.languageTo == vocabVersion.languageTo && newVocabVersion.languageFrom == vocabVersion.languageFrom
+                        }
+                        self.vocabVersions.append(newVocabVersion)
+                        save()
+                    }
+                }
+            }
+        }
     }
 }
 
