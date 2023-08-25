@@ -13,17 +13,26 @@ struct WordTranslationLookupView: View {
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         List {
-            ForEach(translations, id: \.self.word) {detail in
-                HStack {
-                    Text("\(detail.word)")
-                    Text("\(detail.type.toString())")
-                    Text("\(detail.freq)")
+            Section {
+                ForEach(translations, id: \.self.word) {detail in
+                    HStack {
+                        Text("\(detail.word)")
+                        Text("\(detail.type.toString())")
+                        Spacer()
+                        FreqView(freq: detail.freq)
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        print("WordTranslationLookupView onTapGesture!")
+                        callback(detail)
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    print("WordTranslationLookupView onTapGesture!")
-                    callback(detail)
-                    presentationMode.wrappedValue.dismiss()
+            } header: {
+                HStack {
+                    Text("translation")
+                    Spacer()
+                    Text("frequency")
                 }
             }
         }

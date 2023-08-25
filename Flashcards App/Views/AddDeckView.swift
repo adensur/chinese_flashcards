@@ -47,8 +47,7 @@ struct AddDeckView: View {
             },
             trailing: Button("Save") {
                 if valuesAreValid() {
-                    decks.decks.append(DeckMetadata(name: name, frontLanguage: frontLanguage, backLanguage: backLanguage))
-                    decks.save()
+                    decks.addDeck(.init(name: name, frontLanguage: frontLanguage, backLanguage: backLanguage))
                     dismiss()
                 } else {
                     alertPresented = true

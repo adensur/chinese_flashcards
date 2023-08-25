@@ -38,7 +38,7 @@ class Deck: Codable, ObservableObject {
     // global counter used to generate unique id to every added card
     var maxId = 0
     // the card will not be repeated if it was repeated in the last maxLastCards repetitions
-    static let maxLastCards = 3
+    static let maxLastCards = 2
     // maximum number of cards currently being learned (all levels)
     static let maxLearningCards = 10
     // number of repeating cards to add to every batch

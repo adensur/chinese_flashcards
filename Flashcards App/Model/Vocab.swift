@@ -38,7 +38,9 @@ struct Translations: Codable {
 
 class Vocab {
     var cards: [String: VocabCard] = [:]
-    init(cards: [VocabCard]) {
+    var languageFrom: String
+    init(cards: [VocabCard], languageFrom: String) {
+        self.languageFrom = languageFrom
         for card in cards {
             self.cards[card.frontText] = card
         }
@@ -58,25 +60,31 @@ class Vocab {
                     }
                 }
             }
-            return Vocab(cards: cards)
+            return Vocab(cards: cards, languageFrom: languageFrom)
         } else {
             return nil
         }
     }
     
     func findMatches(_ inputText: String) -> [String] {
-        let filteredTexts = cards.keys.filter {vocabString in
-            // we need 
-            vocabString.hasUnicodePrefx(inputText.precomposedStringWithCanonicalMapping)
-        }
-        return filteredTexts.sorted {lhs, rhs in
-            if lhs.utf8.count == rhs.utf8.count {
-                // shortest matches first
-                return lhs < rhs
-            } else {
-                return lhs.utf8.count < rhs.utf8.count
+        switch languageFrom {
+        case "hi":
+            return HindiMatcher.findMatches(vocabCards: cards, inputText: inputText)
+        default:
+            let filteredTexts = cards.keys.filter {vocabString in
+                // we need
+                vocabString.hasUnicodePrefx(inputText.precomposedStringWithCanonicalMapping)
+            }
+            return filteredTexts.sorted {lhs, rhs in
+                if lhs.utf8.count == rhs.utf8.count {
+                    // shortest matches first
+                    return lhs < rhs
+                } else {
+                    return lhs.utf8.count < rhs.utf8.count
+                }
             }
         }
+        
     }
 }
 

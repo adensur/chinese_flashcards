@@ -8,7 +8,7 @@
 import Foundation
 
 class Decks: ObservableObject, Codable {
-    @Published var decks: [DeckMetadata]
+    @Published private(set) var decks: [DeckMetadata]
     init() {
         decks = []
     }
@@ -82,6 +82,13 @@ class Decks: ObservableObject, Codable {
         } catch {
             print("Error deleting file: \(error)")
         }
+        save()
+    }
+    
+    func addDeck(_ deckMetadata: DeckMetadata) {
+        decks.append(deckMetadata)
+        // trigger async vocab update as well
+        vocabUpdater.updateVocabs(decks: decks)
         save()
     }
 }
