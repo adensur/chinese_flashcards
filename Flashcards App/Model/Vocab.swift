@@ -44,7 +44,7 @@ class Vocab {
         }
     }
     
-    static func loadV2(languageFrom: String, languageTo: String) -> Vocab{
+    static func loadV2(languageFrom: String, languageTo: String) -> Vocab? {
         let fileURL = getVocabPath(languageFrom: languageFrom, languageTo: languageTo)
         var cards: [VocabCard] = []
         if let data = try? String(contentsOf: fileURL) {
@@ -60,7 +60,7 @@ class Vocab {
             }
             return Vocab(cards: cards)
         } else {
-            return Vocab(cards: cards)
+            return nil
         }
     }
 }
