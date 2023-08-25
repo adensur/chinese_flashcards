@@ -23,17 +23,28 @@ struct AddCardView: View {
         NavigationView {
             Form {
                 Section {
-                    TextField("Front Text", text: $frontText)
-                        .autocapitalization(.none)
-                        .focused($isFocused)
-                        .onChange(of: isFocused) {_ in
-                            showSuggestionsSemafor = 0
-                            print("focus changed! show suggestions is ", showSuggestionsSemafor)
+                    HStack {
+                        TextField("Front Text", text: $frontText)
+                            .autocapitalization(.none)
+                            .focused($isFocused)
+                            .onChange(of: isFocused) {_ in
+                                showSuggestionsSemafor = 0
+                                print("focus changed! show suggestions is ", showSuggestionsSemafor)
+                            }
+                            .onChange(of: frontText) { _ in
+                                print("onChange processing! ", Date())
+                                showSuggestionsSemafor += 1
+                            }
+                        if let _ = deck.cards.first(where: {card in
+                            card.frontText == frontText
+                        }) {
+                            Spacer()
+                            Group {
+                                Image(systemName: "exclamationmark.triangle")
+                                Text("Word already added")
+                            }.foregroundColor(.secondary)
                         }
-                        .onChange(of: frontText) { _ in
-                            print("onChange processing! ", Date())
-                            showSuggestionsSemafor += 1
-                        }
+                    }
                     if showSuggestionsSemafor > 0 {
                         if let vocab = vocabs.getVocab(languageFrom: deck.deckMetadata.frontLanguage.rawValue, languageTo: deck.deckMetadata.backLanguage.rawValue) {
                             SuggestView(inputText:$frontText,
