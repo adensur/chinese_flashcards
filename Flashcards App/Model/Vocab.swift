@@ -16,12 +16,14 @@ func getVocabPath(languageFrom: String, languageTo: String) -> URL{
 
 class VocabCard {
     let frontText: String
+    let wordType: EWordType
     let backText: String
     let frequency: Int
     let audioData: Data?
 //    let translations: [Translation]
-    init(frontText: String, backText: String, frequency: Int, audioData: Data?) {
+    init(frontText: String, wordType: EWordType, backText: String, frequency: Int, audioData: Data?) {
         self.frontText = frontText
+        self.wordType = wordType
         self.backText = backText
         self.audioData = audioData
         self.frequency = frequency
@@ -59,7 +61,8 @@ class Vocab {
                 let decoder = JSONDecoder()
                 if let translations = try? decoder.decode(Translations.self, from: Data(line.utf8)) {
                     if let translation = translations.translations.first {
-                        cards.append(.init(frontText: translations.word, backText: translation.translation, frequency: translation.frequency, audioData: nil))
+                        let wordType = EWordType.fromString(translation.type) ?? .unknown
+                        cards.append(.init(frontText: translations.word, wordType: wordType, backText: translation.translation, frequency: translation.frequency, audioData: nil))
                     }
                 }
             }

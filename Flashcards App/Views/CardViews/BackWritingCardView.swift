@@ -18,6 +18,7 @@ struct BackWritingCardView: View {
             HStack{
                 Spacer()
                 Text(card.backText)
+                WordTypeView(type: card.type)
                 Spacer()
             }
             TextField("Enter translation", text: $textInput)

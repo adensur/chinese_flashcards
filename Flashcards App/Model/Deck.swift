@@ -116,8 +116,8 @@ class Deck: Codable, ObservableObject {
         }
     }
     
-    func addCard(frontText: String, backText: String, audioData: Data? = nil, enableTextInputExercise: Bool = true) {
-        self.cards.append(Card(frontText: frontText, backText: backText, id: maxId, creationDate: Date(), audioData: audioData, enableTextInputExercise: enableTextInputExercise))
+    func addCard(frontText: String, backText: String, audioData: Data? = nil, enableTextInputExercise: Bool = true, wordType: EWordType = .unknown) {
+        self.cards.append(Card(frontText: frontText, backText: backText, id: maxId, creationDate: Date(), audioData: audioData, enableTextInputExercise: enableTextInputExercise, type: wordType))
         maxId += 1
         // we had no card before, but now we have a card. Need to trigger the repetition update
         if currentIdx == nil {
@@ -209,6 +209,7 @@ class Deck: Codable, ObservableObject {
             if let selectedIdx = newAvailableFreshCards.randomElement() {
                 currentIdx = selectedIdx
                 nextRepetitionDate = cards[currentIdx!].getNextRepetition()
+                return
             }
         }
         var newAvailableCards = newAvailableLearningCards

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TextFieldLookupView: View {
     @Binding var text: String
+    @Binding var wordType: EWordType
     var lookupText: String
     var lookupAvailable: Bool {
         get {
@@ -56,6 +57,7 @@ struct TextFieldLookupView: View {
         .navigationDestination(isPresented: $detailsPresented) {
             WordTranslationLookupView(word: lookupText, translations: translations) {detail in
                 text = detail.word
+                wordType = detail.type
             }
         }
     }
@@ -63,6 +65,6 @@ struct TextFieldLookupView: View {
 
 struct TextFieldLookupView_Previews: PreviewProvider {
     static var previews: some View {
-        TextFieldLookupView(text: .constant(""), lookupText: "मछली", translateFromLanguage: .Hindi, translateToLanguage: .English)
+        TextFieldLookupView(text: .constant(""), wordType: .constant(.noun), lookupText: "मछली", translateFromLanguage: .Hindi, translateToLanguage: .English)
     }
 }

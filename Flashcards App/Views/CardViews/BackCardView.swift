@@ -16,6 +16,7 @@ struct BackCardView: View {
             HStack{
                 Spacer()
                 Text(card.backText)
+                WordTypeView(type: card.type)
                 Spacer()
             }
             Spacer()

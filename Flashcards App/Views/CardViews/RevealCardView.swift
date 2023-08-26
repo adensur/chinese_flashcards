@@ -13,7 +13,10 @@ struct RevealCardView: View {
     var body: some View {
         VStack {
             Divider()
-            Text(card.backText)
+            HStack {
+                Text(card.backText)
+                WordTypeView(type: card.type)
+            }
             Spacer()
             HStack {
                 ForEach(Difficulty.allCases, id: \.self) {difficulty in

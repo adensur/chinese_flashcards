@@ -19,7 +19,7 @@ struct WordTranslationLookupView: View {
                     ForEach(translations, id: \.self.word) {detail in
                         HStack {
                             Text("\(detail.word)")
-                            Text("\(detail.type.toString())")
+                            WordTypeView(type: detail.type)
                             Spacer()
                             FreqView(freq: detail.freq)
                         }

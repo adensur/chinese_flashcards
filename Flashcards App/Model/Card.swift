@@ -39,17 +39,19 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     var lastRepetition: Date = Date(timeIntervalSince1970: 0)
     var learningStage: LearningStage = .New
     var audioData: Data? = nil
+    var type: EWordType = .unknown
     
-    init(frontText: String, backText: String, id: Int, creationDate: Date, audioData: Data? = nil, enableTextInputExercise: Bool) {
+    init(frontText: String, backText: String, id: Int, creationDate: Date, audioData: Data? = nil, enableTextInputExercise: Bool, type: EWordType = .unknown) {
         self.frontText = frontText
         self.backText = backText
         self.id = id
         self.creationDate = creationDate
         self.audioData = audioData
         self.enableTextInputExercise = enableTextInputExercise
+        self.type = type
     }
     enum CodingKeys: CodingKey {
-        case id, frontText, backText, creationDate, lastRepetition, learningStage, audioData, isFrontSideUp, enableTextInputExercise
+        case id, frontText, backText, creationDate, lastRepetition, learningStage, audioData, isFrontSideUp, enableTextInputExercise, type
     }
     
     func encode(to encoder: Encoder) throws {
@@ -63,6 +65,7 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         try container.encode(audioData, forKey: .audioData)
         try container.encode(isFrontSideUp, forKey: .isFrontSideUp)
         try container.encode(enableTextInputExercise, forKey: .enableTextInputExercise)
+        try container.encode(type.rawValue, forKey: .type)
     }
     
     required init(from decoder: Decoder) throws {
@@ -77,6 +80,11 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         isFrontSideUp = try container.decode(Bool.self, forKey: .isFrontSideUp)
         if let val = try? container.decode(Bool.self, forKey: .enableTextInputExercise) {
             enableTextInputExercise = val
+        }
+        if let i = try? container.decode(Int.self, forKey: .type) {
+            if let t = EWordType(rawValue: i) {
+                type = t
+            }
         }
     }
     

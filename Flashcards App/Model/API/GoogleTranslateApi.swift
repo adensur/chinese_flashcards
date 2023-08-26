@@ -64,6 +64,64 @@ enum EWordType: Int {
     case particle = 19
     case unknown = 20
     
+    static func fromString(_ s: String) -> EWordType {
+        switch s {
+        case "noun":
+            return .noun
+        case "verb":
+            return .verb
+        case "adjective":
+            return .adjective
+        case "adverb":
+            return .adverb
+        case "preposition":
+            return .preposition
+        case "abbreviation":
+            return .abbreviation
+        case "conjunction":
+            return .conjuction
+        case "pronoun":
+            return .pronoun
+        case "phrase":
+            return .phrase
+        case "prefix":
+            return .prefix
+        case "article":
+            return .article
+        case "numeral":
+            return .numeral
+        case "auxiliaryVerb":
+            return .auxiliaryVerb
+        case "exclamation":
+            return .exclamation
+        case "particle":
+            return .particle
+        default:
+            return .unknown
+        }
+    }
+    
+    static func allValues() -> [EWordType] {
+        return [
+            .unknown,
+            .noun,
+            .verb,
+            .adjective,
+            .adverb,
+            .preposition,
+            .abbreviation,
+            .conjuction,
+            .pronoun,
+            .phrase,
+            .prefix,
+            .article,
+            .numeral,
+            .auxiliaryVerb,
+            .exclamation,
+            .particle,
+        ]
+    }
+    
     func toString() -> String {
         switch self {
         case .noun:
@@ -97,7 +155,7 @@ enum EWordType: Int {
         case .particle:
             return "particle"
         case .unknown:
-            return "unknown"
+            return ""
         }
     }
 }

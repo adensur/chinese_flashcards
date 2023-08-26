@@ -13,6 +13,7 @@ struct AddCardView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var frontText: String = ""
     @State private var backText: String = ""
+    @State private var wordType: EWordType = .unknown
     @State private var enableTextInputExercise: Bool = true
     @State private var audioData: Data? = nil
     @State var showSuggestionsSemafor = 0
@@ -52,17 +53,28 @@ struct AddCardView: View {
                             ) {vocabCard in
                                 backText = vocabCard.backText
                                 audioData = vocabCard.audioData
+                                wordType = vocabCard.wordType
                                 print("Setting editing to false", Date())
                                 showSuggestionsSemafor = -1
                                 print("Done setting editing to false", Date())
                             }
                         }
                     }
+                    Picker(selection: $wordType) {
+                        ForEach(EWordType.allValues(), id: \.self) {wordType in
+                            WordTypeView(type: wordType)
+                        }
+                    } label: {
+                        Text("word type")
+                            .foregroundColor(.secondary)
+                    }
                 } header: {
                     Text("FrontText")
                 }
                 Section {
-                    TextFieldLookupView(text: $backText, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
+                    HStack {
+                        TextFieldLookupView(text: $backText, wordType: $wordType, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
+                    }
                 } header: {
                     Text("Back Text")
                 }
@@ -91,7 +103,7 @@ struct AddCardView: View {
                 presentationMode.wrappedValue.dismiss()
             },
             trailing: Button("Save") {
-                deck.addCard(frontText: frontText, backText: backText, audioData: audioData, enableTextInputExercise: enableTextInputExercise)
+                deck.addCard(frontText: frontText, backText: backText, audioData: audioData, enableTextInputExercise: enableTextInputExercise, wordType: wordType)
                 presentationMode.wrappedValue.dismiss()
             }
         )
