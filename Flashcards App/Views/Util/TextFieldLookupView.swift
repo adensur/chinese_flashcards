@@ -54,7 +54,7 @@ struct TextFieldLookupView: View {
             }
         }
         .navigationDestination(isPresented: $detailsPresented) {
-            WordTranslationLookupView(translations: translations) {detail in
+            WordTranslationLookupView(word: lookupText, translations: translations) {detail in
                 text = detail.word
             }
         }

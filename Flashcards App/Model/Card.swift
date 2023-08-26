@@ -90,7 +90,9 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     }
     
     func consumeAnswer(difficulty: Difficulty) {
-        self.isFrontSideUp.toggle()
+        if difficulty == .Easy || difficulty == .Good {
+            self.isFrontSideUp.toggle()
+        }
         if getNextRepetition().addingTimeInterval(-Deck.minTimeInterval) > Date() {
             // card was repeated out of order - do not progress it!
             self.lastRepetition = Date()
