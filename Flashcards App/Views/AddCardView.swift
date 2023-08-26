@@ -72,9 +72,7 @@ struct AddCardView: View {
                     Text("FrontText")
                 }
                 Section {
-                    HStack {
-                        TextFieldLookupView(text: $backText, wordType: $wordType, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
-                    }
+                    TextFieldLookupView(text: $backText, wordType: $wordType, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
                 } header: {
                     Text("Back Text")
                 }

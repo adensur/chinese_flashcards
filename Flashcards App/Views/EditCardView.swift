@@ -10,8 +10,9 @@ import SwiftUI
 struct EditCardView: View {
     @ObservedObject var card: Card
     @ObservedObject var deck: Deck
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @State private var frontText: String = ""
+    @State private var wordType: EWordType = .unknown
     @State private var backText: String = ""
     @State private var enableTextInputExercise: Bool = false
     @State private var audioData: Data? = nil
@@ -21,12 +22,24 @@ struct EditCardView: View {
                 Form {
                     Section(header: Text("Front Text")) {
                         TextField("Front Text", text: $frontText)
+                                .autocapitalization(.none)
+                        Picker(selection: $wordType) {
+                            ForEach(EWordType.allValues(), id: \.self) {wordType in
+                                WordTypeView(type: wordType)
+                            }
+                        } label: {
+                            Text("word type")
+                                .foregroundColor(.secondary)
+                        }
                     }
-                    
                     Section(header: Text("Back Text")) {
-                        TextField("Back Text", text: $backText)
+                        TextFieldLookupView(text: $backText, wordType: $wordType, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
                     }
-                    
+                    Section {
+                        SoundLookupView(lookupText: frontText, audioData: $audioData, languageToGetSoundFor: deck.deckMetadata.frontLanguage)
+                    } header: {
+                        Text("Sound")
+                    }
                     Section {
                         Toggle(isOn: $enableTextInputExercise) {
                             Text("Enable text input exercise")
@@ -36,53 +49,35 @@ struct EditCardView: View {
                     } header: {
                         Text("Exercise Options")
                     }
-                    Section {
-                        Button("Get Sound!") {
-                            Task {
-                                print("Started getting sound!", Date())
-                                audioData = await getSound(for: frontText, lang: "hi")
-                                print("Got sound!", Date())
-                                if audioData != nil {
-                                    print("Get sound success!")
-                                } else {
-                                    print("Failed to get sound")
-                                }
-                            }
-                        }.buttonStyle(BorderlessButtonStyle())
-                    } header: {
-                        Text("Sound")
-                    }
-                    if let data = audioData {
-                        PlaySoundButton(audioData: data) {
-                            Image(systemName: "play")
-                        }
-                    }
                 }.onAppear {
                     self.frontText = card.frontText
+                    self.wordType = card.type
                     self.backText = card.backText
                     self.audioData = card.audioData
                 }
                 Spacer()
-                Button("Delete") {
-                    // Perform save action here
-                    // hack to update the parent view
+                Button {
                     deck.deleteCard(id: card.id)
-                    presentationMode.wrappedValue.dismiss()
+                    dismiss()
+                } label: {
+                    Text("Delete")
+                        .foregroundColor(.red)
                 }
             }
         }.navigationTitle("Edit Flashcard")
         .navigationBarItems(
             leading: Button("Cancel") {
-                presentationMode.wrappedValue.dismiss()
+                dismiss()
             },
             trailing:
                 Button("Save") {
                     // Perform save action here
                     card.frontText = frontText
+                    card.type = wordType
                     card.backText = backText
                     card.enableTextInputExercise = enableTextInputExercise
                     card.audioData = audioData
-                    presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 }
         )
     }
