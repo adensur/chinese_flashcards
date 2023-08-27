@@ -32,6 +32,14 @@ struct ExerciseView: View {
                         }
                     } else {
                         Spacer()
+                        Button {
+                            reveal = true
+                        } label: {
+                            Text("Reveal")
+                            .frame(maxWidth: .infinity)
+                        }
+                        .padding()
+                        .buttonStyle(.bordered)
                         CardCountsView(cardCounts: deck.learnCounts)
                     }
                 } else {
