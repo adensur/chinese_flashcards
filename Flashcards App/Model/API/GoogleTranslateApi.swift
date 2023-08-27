@@ -57,6 +57,7 @@ enum EWordType: Int {
     case pronoun = 8
     case phrase = 10
     case prefix = 11
+    case suffix = 12
     case article = 13
     case numeral = 15
     case auxiliaryVerb = 16
@@ -84,6 +85,8 @@ enum EWordType: Int {
             return .pronoun
         case "phrase":
             return .phrase
+        case "suffix":
+            return .suffix
         case "prefix":
             return .prefix
         case "article":
@@ -114,6 +117,7 @@ enum EWordType: Int {
             .pronoun,
             .phrase,
             .prefix,
+            .suffix,
             .article,
             .numeral,
             .auxiliaryVerb,
@@ -144,6 +148,8 @@ enum EWordType: Int {
             return "phrase"
         case .prefix:
             return "prefix"
+        case .suffix:
+            return "suffix"
         case .article:
             return "article"
         case .numeral:

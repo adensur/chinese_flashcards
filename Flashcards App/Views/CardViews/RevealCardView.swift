@@ -15,6 +15,7 @@ struct RevealCardView: View {
             Divider()
             HStack {
                 Text(card.backText)
+                    .font(.largeTitle)
                 WordTypeView(type: card.type)
             }
             Spacer()

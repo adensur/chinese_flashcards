@@ -87,8 +87,10 @@ struct CorrectedTextView: View {
     var body: some View {
         VStack {
             Text(highlightedText)
+                .font(.largeTitle)
             Image(systemName: "arrow.down")
             Text(highlightedCorrectText)
+                .font(.largeTitle)
         }
     }
 }

@@ -18,10 +18,12 @@ struct BackWritingCardView: View {
             HStack{
                 Spacer()
                 Text(card.backText)
+                    .font(.largeTitle)
                 WordTypeView(type: card.type)
                 Spacer()
             }
             TextField("Enter translation", text: $textInput)
+                .font(.largeTitle)
                 .onAppear {
                     self.focused.wrappedValue = true
                 }

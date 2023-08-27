@@ -17,11 +17,14 @@ struct BackWritingRevealCardView: View {
             Divider()
             if textInput == card.frontText {
                 Text("You are correct!")
+                    .font(.largeTitle)
                 Text(card.frontText)
+                    .font(.largeTitle)
                     .background(Color.green)
                     
             } else {
                 Text("Incorrect")
+                    .font(.largeTitle)
                 CorrectedTextView(text: textInput, correctText: card.frontText)
             }
             if let data = card.audioData {

@@ -15,6 +15,7 @@ struct BackRevealCardView: View {
         VStack {
             Divider()
             Text(card.frontText)
+                .font(.largeTitle)
                 .onAppear {
                     if let currentCard = deck.currentCard {
                         currentCard.playSound()
