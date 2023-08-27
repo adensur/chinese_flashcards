@@ -10,20 +10,20 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"sort"
 	"strings"
 	"time"
 )
 
 var (
-	input = flag.String("input", "", "Input file")
-	lang  = flag.String("lang", "hi", "Language in google translate's 2 letter abbreviation")
+	input    = flag.String("input", "", "Input file")
+	langFrom = flag.String("lang-from", "hi", "Language in google translate's 2 letter abbreviation")
+	langTo   = flag.String("lang-to", "en", "Language in google translate's 2 letter abbreviation")
 )
 
 type Detail struct {
-	Word string
-	Freq float64
-	Type string
+	Translation string  `json:"translation"`
+	Frequency   float64 `json:"frequency"`
+	Type        string  `json:"type"`
 }
 
 func parseWordType(wordType int, word string) string {
@@ -38,18 +38,30 @@ func parseWordType(wordType int, word string) string {
 		return "adverb"
 	case 5:
 		return "preposition"
+	case 6:
+		return "abbreviation"
 	case 7:
 		return "conjunction"
 	case 8:
 		return "pronoun"
+	case 9:
+		return "interjection"
 	case 10:
 		return "phrase"
 	case 11:
 		return "prefix"
+	case 12:
+		return "suffix"
 	case 13:
 		return "article"
 	case 15:
 		return "numeral"
+	case 16:
+		return "auxiliary verb"
+	case 17:
+		return "exclamation"
+	case 19:
+		return "particle"
 	case 20:
 		return "unknown"
 	default:
@@ -57,13 +69,13 @@ func parseWordType(wordType int, word string) string {
 	}
 }
 
-func getDetails(word, lang string) ([]Detail, error) {
+func getDetails(word, langFrom, langTo string) (*Output, error) {
 	encodedWord := url.QueryEscape(word)
-	url := "https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=rPsWke%2CHGRyXb%2CV11VDb&source-path=%2Fdetails&f.sid=94628587805217822&bl=boq_translate-webserver_20230813.08_p0&hl=en&soc-app=1&soc-platform=1&soc-device=1&_reqid=1262696&rt=c"
-	payload := "f.req=%5B%5B%5B%22rPsWke%22%2C%22%5B%5B%5C%22" + encodedWord + "%5C%22%2C%5C%22" + lang +
-		"%5C%22%2C%5C%22en%5C%22%5D%2C1%5D%22%2Cnull%2C%221%22%5D%2C%5B%22HGRyXb%22%2C%22%5B%5C%22" + lang +
-		"%5C%22%2C%5C%22en%5C%22%5D%22%2Cnull%2C%229%22%5D%2C%5B%22V11VDb%22%2C%22%5B%5C%22" + lang +
-		"%5C%22%2C%5C%22en%5C%22%5D%22%2Cnull%2C%2212%22%5D%5D%5D&at=AFS6QyhTMeUWg72pSEGCg2YaZYOw%3A1692203095521&"
+	url := "https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=rPsWke%2CHGRyXb%2CV11VDb&source-path=%2Fdetails&f.sid=94628587805217822&bl=boq_translate-webserver_20230813.08_p0&hl=&soc-app=1&soc-platform=1&soc-device=1&_reqid=1262696&rt=c"
+	payload := "f.req=%5B%5B%5B%22rPsWke%22%2C%22%5B%5B%5C%22" + encodedWord + "%5C%22%2C%5C%22" + langFrom +
+		"%5C%22%2C%5C%22" + langTo + "%5C%22%5D%2C1%5D%22%2Cnull%2C%221%22%5D%2C%5B%22HGRyXb%22%2C%22%5B%5C%22" + langFrom +
+		"%5C%22%2C%5C%22" + langTo + "%5C%22%5D%22%2Cnull%2C%229%22%5D%2C%5B%22V11VDb%22%2C%22%5B%5C%22" + langFrom +
+		"%5C%22%2C%5C%22" + langTo + "%5C%22%5D%22%2Cnull%2C%2212%22%5D%5D%5D&at=AFS6QyhTMeUWg72pSEGCg2YaZYOw%3A1692203095521&"
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(payload)))
 	if err != nil {
 		panic(err)
@@ -102,7 +114,10 @@ func getDetails(word, lang string) ([]Detail, error) {
 		panic(err)
 	}
 	// fmt.Println("Response Body:")
-	result := make([]Detail, 0)
+	result := Output{
+		Word:         word,
+		Translations: make([]Detail, 0),
+	}
 	lines := strings.Split(string(body), "\n")
 	for _, line := range lines {
 		if strings.Contains(line, "rPsWke") {
@@ -125,7 +140,7 @@ func getDetails(word, lang string) ([]Detail, error) {
 			// fmt.Printf("\nSubdata2: %v\n", subdata2)
 			subdata3, ok := subdata2[0].([]interface{})
 			if !ok {
-				return result, fmt.Errorf("not ok1")
+				return &result, fmt.Errorf("not ok1")
 			}
 			// fmt.Printf("\nSubdata3: %v\n", subdata3)
 			// example translations + frequencies
@@ -134,10 +149,17 @@ func getDetails(word, lang string) ([]Detail, error) {
 				fmt.Fprintf(os.Stderr, "Subdata3 too short: %v\n", subdata3)
 				return nil, fmt.Errorf("transient")
 			}
+			// infinitive
+			infinitive, ok := subdata3[0].(string)
+			if !ok {
+				panic("Failed to find infinitive")
+			}
+			result.Infinitive = infinitive
+			// translation details
 			subdata4, ok := subdata3[5].([]interface{})
 			if !ok {
 				// not transient error
-				return result, nil
+				return &result, nil
 			}
 			// fmt.Printf("\nSubdata4: %v\n", subdata4)
 			subdata5, ok := subdata4[0].([]interface{})
@@ -169,12 +191,18 @@ func getDetails(word, lang string) ([]Detail, error) {
 					if !ok {
 						panic("not ok7")
 					}
-					result = append(result, Detail{Word: translation, Freq: freq, Type: parsedWordType})
+					result.Translations = append(result.Translations, Detail{Translation: translation, Frequency: freq, Type: parsedWordType})
 				}
 			}
 		}
 	}
-	return result, nil
+	return &result, nil
+}
+
+type Output struct {
+	Word         string   `json:"word"`
+	Infinitive   string   `json:"infinitive"`
+	Translations []Detail `json:"translations"`
 }
 
 func main() {
@@ -188,7 +216,11 @@ func main() {
 		panic("Expected input file!")
 	}
 
-	if len(*lang) != 2 {
+	if len(*langFrom) != 2 {
+		panic("Expected language with length of 2")
+	}
+
+	if len(*langTo) != 2 {
 		panic("Expected language with length of 2")
 	}
 
@@ -203,10 +235,10 @@ func main() {
 		values := strings.Split(line, "\t")
 		word := values[0]
 		fmt.Fprintf(os.Stderr, "Processing word: %v\n", word)
-		var details []Detail
+		var output *Output
 		expBackoff := 1 * time.Second
 		for {
-			details, err = getDetails(word, *lang)
+			output, err = getDetails(word, *langFrom, *langTo)
 			if err == nil {
 				break
 			} else if err.Error() == "transient" {
@@ -222,18 +254,10 @@ func main() {
 				panic(err)
 			}
 		}
-		// sort by freq
-		sort.Slice(details, func(i, j int) bool {
-			return details[i].Freq < details[j].Freq
-		})
-		wordType := ""
-		freq := ""
-		translation := ""
-		if len(details) > 0 {
-			wordType = details[0].Type
-			freq = fmt.Sprintf("%v", int(details[0].Freq))
-			translation = details[0].Word
+		js, err := json.Marshal(output)
+		if err != nil {
+			panic(err)
 		}
-		fmt.Printf("%s\n", strings.Join([]string{word, wordType, freq, translation}, "\t"))
+		fmt.Printf("%s\n", js)
 	}
 }
