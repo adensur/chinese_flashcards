@@ -31,16 +31,19 @@ struct ExerciseHeaderView: View {
                         Text("edit")
                     }
                 }
+                Spacer()
                 NavigationLink {
                     DeckSettingsView(deck: deck, deckDeleteCallback: deckDeleteCallback)
                 } label: {
-                    Text("deck settings")
+                    Text("settings")
                 }
+                Spacer()
                 NavigationLink {
                     AddCardView(deck: deck)
                 } label: {
                     Text("add")
                 }
+                Spacer()
                 NavigationLink {
                     BrowseDeckView(deck: deck)
                 } label: {
