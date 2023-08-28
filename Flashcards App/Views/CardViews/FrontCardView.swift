@@ -27,11 +27,14 @@ struct FrontCardView: View {
                             }
                         }
                     }
+                    .id(UUID())
+                    .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
                 Spacer()
             }
             if let data = card.audioData {
                 PlaySoundButton(audioData: data) {
                     Image(systemName: "play")
+                        .imageScale(.large)
                 }
             }
             Spacer()

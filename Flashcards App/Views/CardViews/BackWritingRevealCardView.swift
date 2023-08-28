@@ -30,6 +30,7 @@ struct BackWritingRevealCardView: View {
             if let data = card.audioData {
                 PlaySoundButton(audioData: data) {
                     Image(systemName: "play")
+                        .imageScale(.large)
                 }
             }
             Spacer()

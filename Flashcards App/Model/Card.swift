@@ -166,7 +166,8 @@ func getNextStage(learningStage: LearningStage, difficulty: Difficulty) -> Learn
     case .Learning(let level):
         switch difficulty {
         case .Again:
-            return .Learning(0)
+            let nextLevel = max(level - 2, 0)
+            return .Learning(nextLevel)
         case .Hard:
             return learningStage
         case .Good:
