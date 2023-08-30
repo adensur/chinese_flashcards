@@ -40,6 +40,14 @@ struct DecksView: View {
                 }
             }
         }
+        .onAppear {
+            // async preload all saved decks from disk
+            Task {
+                for deck in decks.decks {
+                    let _ = Deck.load(deckMetadata: deck)
+                }
+            }
+        }
     }
 }
 

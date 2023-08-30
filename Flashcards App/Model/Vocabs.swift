@@ -142,7 +142,7 @@ class VocabUpdater: Codable {
                 print("Successfully downloading vocab for languages: \(languageFrom)-\(languageTo) from path: \(path)")
                 // update global Vocabs singleton with new version
                 // update vocab metadata and save
-                let serialQueue = DispatchQueue(label: "queuename")
+                let serialQueue = DispatchQueue(label: "vocab")
                 serialQueue.sync {
                     // update vocab holder singleton
                     vocabs.updateVocab(languageFrom: languageFrom, languageTo: languageTo)

@@ -297,7 +297,10 @@ class Deck: Codable, ObservableObject {
             return deck
         } else {
             let deck = loadInner(deckMetadata: deckMetadata)
-            loadedDecks[deckMetadata.savePath] = deck
+            let serialQueue = DispatchQueue(label: "deck")
+            serialQueue.sync {
+                loadedDecks[deckMetadata.savePath] = deck
+            }
             return deck
         }
     }
