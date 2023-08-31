@@ -1,0 +1,26 @@
+[
+	{
+		"languageTo": "en",
+		"languageFrom": "hi",
+		"version": 2,
+		"path": "hi_en.json"
+	},
+	{
+		"languageTo": "ru",
+		"languageFrom": "en",
+		"version": 1,
+		"path": "en_ru.json"
+	},
+	{
+		"languageTo": "en",
+		"languageFrom": "fr",
+		"version": 1,
+		"path": "fr_en.json"
+	},
+	{
+		"languageTo": "en",
+		"languageFrom": "it",
+		"version": 1,
+		"path": "it_en.json"
+	}
+]
