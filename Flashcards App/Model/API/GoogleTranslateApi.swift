@@ -215,7 +215,12 @@ func getTranslation(for word: String, langFrom: String, langTo: String) async ->
     do {
         for line in data.split(separator: UInt8(ascii: "\n")) {
             if line.contains("rPsWke".utf8) {
-                guard let jsonObject = try JSONSerialization.jsonObject(with: line, options: []) as? [[Any]] else {
+                guard let js = try? JSONSerialization.jsonObject(with: line, options: []) else {
+                    print("Transient erorr #1 in google translate api")
+                    return nil
+                }
+                guard let jsonObject = js as? [[Any]] else {
+                    print("non-transient error in parsing translate details response #0")
                     return result
                 }
                 if jsonObject.isEmpty || jsonObject[0].count <= 2 {

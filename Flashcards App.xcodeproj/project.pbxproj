@@ -17,7 +17,52 @@
 		09156D842A31C43B00BA2D89 /* ExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09156D832A31C43B00BA2D89 /* ExerciseView.swift */; };
 		09156D872A31C46100BA2D89 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09156D862A31C46100BA2D89 /* Card.swift */; };
 		09156D8A2A31C86800BA2D89 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09156D892A31C86800BA2D89 /* Deck.swift */; };
+		0933712B2A92510A00D0DC50 /* Decks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933712A2A92510A00D0DC50 /* Decks.swift */; };
+		0933712D2A92516700D0DC50 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933712C2A92516700D0DC50 /* Language.swift */; };
+		0933712F2A92613C00D0DC50 /* AddDeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0933712E2A92613C00D0DC50 /* AddDeckView.swift */; };
+		093455562A8408FA0009ED8E /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 093455552A8408FA0009ED8E /* DequeModule */; };
+		0934555D2A84DF600009ED8E /* BackCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0934555C2A84DF600009ED8E /* BackCardView.swift */; };
+		0934555F2A84E0EB0009ED8E /* BackRevealCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0934555E2A84E0EB0009ED8E /* BackRevealCardView.swift */; };
+		093455622A8515B70009ED8E /* BackWritingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093455612A8515B70009ED8E /* BackWritingCardView.swift */; };
+		093455642A8516790009ED8E /* BackWritingRevealCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093455632A8516790009ED8E /* BackWritingRevealCardView.swift */; };
+		093455662A851CC10009ED8E /* CorrectedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093455652A851CC10009ED8E /* CorrectedTextView.swift */; };
+		0934557C2A86A7A40009ED8E /* GoogleTranslateApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0934557B2A86A7A40009ED8E /* GoogleTranslateApi.swift */; };
+		094207742A7D1100009EAE2F /* Zip in Frameworks */ = {isa = PBXBuildFile; productRef = 094207732A7D1100009EAE2F /* Zip */; };
+		094207802A7D45BF009EAE2F /* PlaySoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0942077F2A7D45BF009EAE2F /* PlaySoundButton.swift */; };
+		0942079C2A83BD38009EAE2F /* DeckSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0942079B2A83BD38009EAE2F /* DeckSettingsView.swift */; };
+		094B22642A9241C900A0C578 /* DecksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 094B22632A9241C900A0C578 /* DecksView.swift */; };
+		096D4F652A5DAC2E004C4C30 /* FrontCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D4F642A5DAC2E004C4C30 /* FrontCardView.swift */; };
+		096D4F672A5DADFE004C4C30 /* RevealCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D4F662A5DADFE004C4C30 /* RevealCardView.swift */; };
+		096D4F692A5DC3AE004C4C30 /* OutOfCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D4F682A5DC3AE004C4C30 /* OutOfCardsView.swift */; };
+		096D4F6B2A5DD8EE004C4C30 /* ExerciseHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D4F6A2A5DD8EE004C4C30 /* ExerciseHeaderView.swift */; };
+		096D4F6D2A6345E4004C4C30 /* BrowseDeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D4F6C2A6345E4004C4C30 /* BrowseDeckView.swift */; };
+		096D4F6F2A65DDA7004C4C30 /* Vocab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D4F6E2A65DDA7004C4C30 /* Vocab.swift */; };
+		096D4F712A65E19F004C4C30 /* SuggestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D4F702A65E19F004C4C30 /* SuggestView.swift */; };
 		096D8FDF2A3724F800E402B5 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D8FDE2A3724F800E402B5 /* AddCardView.swift */; };
+		096D8FE32A37335800E402B5 /* EditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D8FE22A37335800E402B5 /* EditCardView.swift */; };
+		0978584D2A8FD822000A4908 /* WordTranslationLookupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0978584C2A8FD822000A4908 /* WordTranslationLookupView.swift */; };
+		097858892A912264000A4908 /* TextFieldLookupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097858882A912264000A4908 /* TextFieldLookupView.swift */; };
+		098A160E2A7263FA00D3CA84 /* MyForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098A160D2A7263FA00D3CA84 /* MyForm.swift */; };
+		098FDEFF2A966C01009AD700 /* CardCountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDEFE2A966C01009AD700 /* CardCountsView.swift */; };
+		098FDF062A97AC4C009AD700 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 098FDF052A97AC4C009AD700 /* FirebaseAnalytics */; };
+		098FDF082A97AC4C009AD700 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 098FDF072A97AC4C009AD700 /* FirebaseStorage */; };
+		098FDF132A98A0AF009AD700 /* Vocabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDF122A98A0AF009AD700 /* Vocabs.swift */; };
+		098FDF142A98A0AF009AD700 /* Vocabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDF122A98A0AF009AD700 /* Vocabs.swift */; };
+		098FDF152A98A0AF009AD700 /* Vocabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDF122A98A0AF009AD700 /* Vocabs.swift */; };
+		098FDF172A98AA32009AD700 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 098FDF162A98AA32009AD700 /* GoogleService-Info.plist */; };
+		098FDF182A98AA32009AD700 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 098FDF162A98AA32009AD700 /* GoogleService-Info.plist */; };
+		098FDF192A98AA32009AD700 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 098FDF162A98AA32009AD700 /* GoogleService-Info.plist */; };
+		098FDF1C2A98B409009AD700 /* Hindi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDF1B2A98B409009AD700 /* Hindi.swift */; };
+		098FDF1D2A98B409009AD700 /* Hindi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDF1B2A98B409009AD700 /* Hindi.swift */; };
+		098FDF1E2A98B409009AD700 /* Hindi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDF1B2A98B409009AD700 /* Hindi.swift */; };
+		098FDF202A98EF8F009AD700 /* FreqView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDF1F2A98EF8F009AD700 /* FreqView.swift */; };
+		098FDF212A98EF8F009AD700 /* FreqView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDF1F2A98EF8F009AD700 /* FreqView.swift */; };
+		098FDF222A98EF8F009AD700 /* FreqView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDF1F2A98EF8F009AD700 /* FreqView.swift */; };
+		098FDF242A9A0512009AD700 /* WordTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDF232A9A0512009AD700 /* WordTypeView.swift */; };
+		098FDF252A9A0512009AD700 /* WordTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDF232A9A0512009AD700 /* WordTypeView.swift */; };
+		098FDF262A9A0513009AD700 /* WordTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDF232A9A0512009AD700 /* WordTypeView.swift */; };
+		09B171C52A93B2B400B30162 /* LazyVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B171C42A93B2B400B30162 /* LazyVIew.swift */; };
+		09D0C2162A92257D00FE36D1 /* SoundLookupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0C2152A92257D00FE36D1 /* SoundLookupView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,7 +96,38 @@
 		09156D832A31C43B00BA2D89 /* ExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseView.swift; sourceTree = "<group>"; };
 		09156D862A31C46100BA2D89 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		09156D892A31C86800BA2D89 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		0933712A2A92510A00D0DC50 /* Decks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decks.swift; sourceTree = "<group>"; };
+		0933712C2A92516700D0DC50 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		0933712E2A92613C00D0DC50 /* AddDeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeckView.swift; sourceTree = "<group>"; };
+		0934555C2A84DF600009ED8E /* BackCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackCardView.swift; sourceTree = "<group>"; };
+		0934555E2A84E0EB0009ED8E /* BackRevealCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackRevealCardView.swift; sourceTree = "<group>"; };
+		093455612A8515B70009ED8E /* BackWritingCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackWritingCardView.swift; sourceTree = "<group>"; };
+		093455632A8516790009ED8E /* BackWritingRevealCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackWritingRevealCardView.swift; sourceTree = "<group>"; };
+		093455652A851CC10009ED8E /* CorrectedTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectedTextView.swift; sourceTree = "<group>"; };
+		0934557B2A86A7A40009ED8E /* GoogleTranslateApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTranslateApi.swift; sourceTree = "<group>"; };
+		0942077F2A7D45BF009EAE2F /* PlaySoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaySoundButton.swift; sourceTree = "<group>"; };
+		0942079B2A83BD38009EAE2F /* DeckSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckSettingsView.swift; sourceTree = "<group>"; };
+		094B22632A9241C900A0C578 /* DecksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecksView.swift; sourceTree = "<group>"; };
+		096D4F642A5DAC2E004C4C30 /* FrontCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrontCardView.swift; sourceTree = "<group>"; };
+		096D4F662A5DADFE004C4C30 /* RevealCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevealCardView.swift; sourceTree = "<group>"; };
+		096D4F682A5DC3AE004C4C30 /* OutOfCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutOfCardsView.swift; sourceTree = "<group>"; };
+		096D4F6A2A5DD8EE004C4C30 /* ExerciseHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseHeaderView.swift; sourceTree = "<group>"; };
+		096D4F6C2A6345E4004C4C30 /* BrowseDeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowseDeckView.swift; sourceTree = "<group>"; };
+		096D4F6E2A65DDA7004C4C30 /* Vocab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocab.swift; sourceTree = "<group>"; };
+		096D4F702A65E19F004C4C30 /* SuggestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestView.swift; sourceTree = "<group>"; };
 		096D8FDE2A3724F800E402B5 /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
+		096D8FE22A37335800E402B5 /* EditCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardView.swift; sourceTree = "<group>"; };
+		0978584C2A8FD822000A4908 /* WordTranslationLookupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTranslationLookupView.swift; sourceTree = "<group>"; };
+		097858882A912264000A4908 /* TextFieldLookupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLookupView.swift; sourceTree = "<group>"; };
+		098A160D2A7263FA00D3CA84 /* MyForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyForm.swift; sourceTree = "<group>"; };
+		098FDEFE2A966C01009AD700 /* CardCountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCountsView.swift; sourceTree = "<group>"; };
+		098FDF122A98A0AF009AD700 /* Vocabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocabs.swift; sourceTree = "<group>"; };
+		098FDF162A98AA32009AD700 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		098FDF1B2A98B409009AD700 /* Hindi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hindi.swift; sourceTree = "<group>"; };
+		098FDF1F2A98EF8F009AD700 /* FreqView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreqView.swift; sourceTree = "<group>"; };
+		098FDF232A9A0512009AD700 /* WordTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTypeView.swift; sourceTree = "<group>"; };
+		09B171C42A93B2B400B30162 /* LazyVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyVIew.swift; sourceTree = "<group>"; };
+		09D0C2152A92257D00FE36D1 /* SoundLookupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundLookupView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +135,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				094207742A7D1100009EAE2F /* Zip in Frameworks */,
+				098FDF082A97AC4C009AD700 /* FirebaseStorage in Frameworks */,
+				093455562A8408FA0009ED8E /* DequeModule in Frameworks */,
+				098FDF062A97AC4C009AD700 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +182,7 @@
 		09156D582A31C3AF00BA2D89 /* Flashcards App */ = {
 			isa = PBXGroup;
 			children = (
+				098FDF162A98AA32009AD700 /* GoogleService-Info.plist */,
 				09156D882A31C46500BA2D89 /* Model */,
 				09156D852A31C44900BA2D89 /* Views */,
 				09156D592A31C3AF00BA2D89 /* Flashcards_AppApp.swift */,
@@ -139,9 +220,21 @@
 		09156D852A31C44900BA2D89 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				093455602A85120B0009ED8E /* CardViews */,
+				098A16112A72641C00D3CA84 /* Util */,
 				096D8FDE2A3724F800E402B5 /* AddCardView.swift */,
+				094B22632A9241C900A0C578 /* DecksView.swift */,
+				0933712E2A92613C00D0DC50 /* AddDeckView.swift */,
+				0978584C2A8FD822000A4908 /* WordTranslationLookupView.swift */,
+				096D4F702A65E19F004C4C30 /* SuggestView.swift */,
 				09156D5B2A31C3AF00BA2D89 /* ContentView.swift */,
+				0942079B2A83BD38009EAE2F /* DeckSettingsView.swift */,
 				09156D832A31C43B00BA2D89 /* ExerciseView.swift */,
+				098FDEFE2A966C01009AD700 /* CardCountsView.swift */,
+				096D4F682A5DC3AE004C4C30 /* OutOfCardsView.swift */,
+				096D8FE22A37335800E402B5 /* EditCardView.swift */,
+				096D4F6A2A5DD8EE004C4C30 /* ExerciseHeaderView.swift */,
+				096D4F6C2A6345E4004C4C30 /* BrowseDeckView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -149,10 +242,60 @@
 		09156D882A31C46500BA2D89 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				098FDF1A2A98B3EA009AD700 /* LanguagesLogic */,
+				098FDF0D2A989D9E009AD700 /* API */,
 				09156D862A31C46100BA2D89 /* Card.swift */,
 				09156D892A31C86800BA2D89 /* Deck.swift */,
+				096D4F6E2A65DDA7004C4C30 /* Vocab.swift */,
+				0933712A2A92510A00D0DC50 /* Decks.swift */,
+				0933712C2A92516700D0DC50 /* Language.swift */,
+				098FDF122A98A0AF009AD700 /* Vocabs.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		093455602A85120B0009ED8E /* CardViews */ = {
+			isa = PBXGroup;
+			children = (
+				096D4F642A5DAC2E004C4C30 /* FrontCardView.swift */,
+				096D4F662A5DADFE004C4C30 /* RevealCardView.swift */,
+				0934555C2A84DF600009ED8E /* BackCardView.swift */,
+				0934555E2A84E0EB0009ED8E /* BackRevealCardView.swift */,
+				093455612A8515B70009ED8E /* BackWritingCardView.swift */,
+				093455632A8516790009ED8E /* BackWritingRevealCardView.swift */,
+			);
+			path = CardViews;
+			sourceTree = "<group>";
+		};
+		098A16112A72641C00D3CA84 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				097858882A912264000A4908 /* TextFieldLookupView.swift */,
+				09D0C2152A92257D00FE36D1 /* SoundLookupView.swift */,
+				098A160D2A7263FA00D3CA84 /* MyForm.swift */,
+				0942077F2A7D45BF009EAE2F /* PlaySoundButton.swift */,
+				093455652A851CC10009ED8E /* CorrectedTextView.swift */,
+				09B171C42A93B2B400B30162 /* LazyVIew.swift */,
+				098FDF1F2A98EF8F009AD700 /* FreqView.swift */,
+				098FDF232A9A0512009AD700 /* WordTypeView.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		098FDF0D2A989D9E009AD700 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				0934557B2A86A7A40009ED8E /* GoogleTranslateApi.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		098FDF1A2A98B3EA009AD700 /* LanguagesLogic */ = {
+			isa = PBXGroup;
+			children = (
+				098FDF1B2A98B409009AD700 /* Hindi.swift */,
+			);
+			path = LanguagesLogic;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,6 +314,12 @@
 			dependencies = (
 			);
 			name = "Flashcards App";
+			packageProductDependencies = (
+				094207732A7D1100009EAE2F /* Zip */,
+				093455552A8408FA0009ED8E /* DequeModule */,
+				098FDF052A97AC4C009AD700 /* FirebaseAnalytics */,
+				098FDF072A97AC4C009AD700 /* FirebaseStorage */,
+			);
 			productName = "Flashcards App";
 			productReference = 09156D562A31C3AF00BA2D89 /* Flashcards App.app */;
 			productType = "com.apple.product-type.application";
@@ -219,7 +368,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					09156D552A31C3AF00BA2D89 = {
 						CreatedOnToolsVersion = 14.2;
@@ -243,6 +392,11 @@
 				Base,
 			);
 			mainGroup = 09156D4D2A31C3AF00BA2D89;
+			packageReferences = (
+				094207722A7D10FF009EAE2F /* XCRemoteSwiftPackageReference "Zip" */,
+				0942079D2A83C62F009EAE2F /* XCRemoteSwiftPackageReference "swift-collections" */,
+				098FDF042A97AC4C009AD700 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 09156D572A31C3AF00BA2D89 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -259,6 +413,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				098FDF172A98AA32009AD700 /* GoogleService-Info.plist in Resources */,
 				09156D612A31C3B200BA2D89 /* Preview Assets.xcassets in Resources */,
 				09156D5E2A31C3B200BA2D89 /* Assets.xcassets in Resources */,
 			);
@@ -268,6 +423,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				098FDF182A98AA32009AD700 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +431,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				098FDF192A98AA32009AD700 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,10 +442,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				098FDEFF2A966C01009AD700 /* CardCountsView.swift in Sources */,
+				0933712B2A92510A00D0DC50 /* Decks.swift in Sources */,
+				098FDF1C2A98B409009AD700 /* Hindi.swift in Sources */,
+				09B171C52A93B2B400B30162 /* LazyVIew.swift in Sources */,
+				093455642A8516790009ED8E /* BackWritingRevealCardView.swift in Sources */,
+				0934557C2A86A7A40009ED8E /* GoogleTranslateApi.swift in Sources */,
+				0933712D2A92516700D0DC50 /* Language.swift in Sources */,
+				094B22642A9241C900A0C578 /* DecksView.swift in Sources */,
+				0934555D2A84DF600009ED8E /* BackCardView.swift in Sources */,
 				09156D842A31C43B00BA2D89 /* ExerciseView.swift in Sources */,
+				098FDF242A9A0512009AD700 /* WordTypeView.swift in Sources */,
+				093455622A8515B70009ED8E /* BackWritingCardView.swift in Sources */,
 				09156D872A31C46100BA2D89 /* Card.swift in Sources */,
+				093455662A851CC10009ED8E /* CorrectedTextView.swift in Sources */,
+				096D4F6B2A5DD8EE004C4C30 /* ExerciseHeaderView.swift in Sources */,
+				096D4F672A5DADFE004C4C30 /* RevealCardView.swift in Sources */,
+				096D8FE32A37335800E402B5 /* EditCardView.swift in Sources */,
+				09D0C2162A92257D00FE36D1 /* SoundLookupView.swift in Sources */,
+				097858892A912264000A4908 /* TextFieldLookupView.swift in Sources */,
+				0933712F2A92613C00D0DC50 /* AddDeckView.swift in Sources */,
+				096D4F692A5DC3AE004C4C30 /* OutOfCardsView.swift in Sources */,
+				096D4F6F2A65DDA7004C4C30 /* Vocab.swift in Sources */,
+				096D4F712A65E19F004C4C30 /* SuggestView.swift in Sources */,
+				098FDF202A98EF8F009AD700 /* FreqView.swift in Sources */,
+				098FDF132A98A0AF009AD700 /* Vocabs.swift in Sources */,
 				096D8FDF2A3724F800E402B5 /* AddCardView.swift in Sources */,
+				098A160E2A7263FA00D3CA84 /* MyForm.swift in Sources */,
+				0942079C2A83BD38009EAE2F /* DeckSettingsView.swift in Sources */,
+				096D4F6D2A6345E4004C4C30 /* BrowseDeckView.swift in Sources */,
+				094207802A7D45BF009EAE2F /* PlaySoundButton.swift in Sources */,
+				0978584D2A8FD822000A4908 /* WordTranslationLookupView.swift in Sources */,
+				096D4F652A5DAC2E004C4C30 /* FrontCardView.swift in Sources */,
 				09156D8A2A31C86800BA2D89 /* Deck.swift in Sources */,
+				0934555F2A84E0EB0009ED8E /* BackRevealCardView.swift in Sources */,
 				09156D5C2A31C3AF00BA2D89 /* ContentView.swift in Sources */,
 				09156D5A2A31C3AF00BA2D89 /* Flashcards_AppApp.swift in Sources */,
 			);
@@ -298,6 +485,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				098FDF252A9A0512009AD700 /* WordTypeView.swift in Sources */,
+				098FDF142A98A0AF009AD700 /* Vocabs.swift in Sources */,
+				098FDF1D2A98B409009AD700 /* Hindi.swift in Sources */,
+				098FDF212A98EF8F009AD700 /* FreqView.swift in Sources */,
 				09156D6B2A31C3B300BA2D89 /* Flashcards_AppTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -308,6 +499,10 @@
 			files = (
 				09156D752A31C3B300BA2D89 /* Flashcards_AppUITests.swift in Sources */,
 				09156D772A31C3B300BA2D89 /* Flashcards_AppUITestsLaunchTests.swift in Sources */,
+				098FDF222A98EF8F009AD700 /* FreqView.swift in Sources */,
+				098FDF1E2A98B409009AD700 /* Hindi.swift in Sources */,
+				098FDF262A9A0513009AD700 /* WordTypeView.swift in Sources */,
+				098FDF152A98A0AF009AD700 /* Vocabs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,6 +526,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -363,6 +559,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -391,6 +588,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -423,6 +621,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -446,17 +645,21 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Flashcards App/Preview Content\"";
-				DEVELOPMENT_TEAM = 4LZSXT57C3;
+				DEVELOPMENT_TEAM = 9RWD5U99FS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "My Flashcards App";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -464,6 +667,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "mgaiduk.Flashcards-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -475,17 +679,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Flashcards App/Preview Content\"";
-				DEVELOPMENT_TEAM = 4LZSXT57C3;
+				DEVELOPMENT_TEAM = 9RWD5U99FS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "My Flashcards App";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -615,6 +822,56 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		094207722A7D10FF009EAE2F /* XCRemoteSwiftPackageReference "Zip" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/Zip.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 2.1.0;
+			};
+		};
+		0942079D2A83C62F009EAE2F /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		098FDF042A97AC4C009AD700 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		093455552A8408FA0009ED8E /* DequeModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0942079D2A83C62F009EAE2F /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = DequeModule;
+		};
+		094207732A7D1100009EAE2F /* Zip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 094207722A7D10FF009EAE2F /* XCRemoteSwiftPackageReference "Zip" */;
+			productName = Zip;
+		};
+		098FDF052A97AC4C009AD700 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 098FDF042A97AC4C009AD700 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		098FDF072A97AC4C009AD700 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 098FDF042A97AC4C009AD700 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 09156D4E2A31C3AF00BA2D89 /* Project object */;
 }

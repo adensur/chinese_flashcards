@@ -21,78 +21,76 @@ struct AddCardView: View {
     @FocusState private var isFocused: Bool
     
     var body: some View {
-        NavigationView {
-            Form {
-                Section {
-                    HStack {
-                        TextField("Front Text", text: $frontText)
-                            .autocapitalization(.none)
-                            .focused($isFocused)
-                            .onChange(of: isFocused) {_ in
-                                showSuggestionsSemafor = 0
-                                print("focus changed! show suggestions is ", showSuggestionsSemafor)
-                            }
-                            .onChange(of: frontText) { _ in
-                                print("onChange processing! ", Date())
-                                showSuggestionsSemafor += 1
-                            }
-                        if let _ = deck.cards.first(where: {card in
-                            card.frontText == frontText
-                        }) {
-                            Spacer()
-                            Group {
-                                Image(systemName: "exclamationmark.triangle")
-                                Text("Word already added")
-                            }.foregroundColor(.secondary)
+        Form {
+            Section {
+                HStack {
+                    TextField("Front Text", text: $frontText)
+                        .autocapitalization(.none)
+                        .focused($isFocused)
+                        .onChange(of: isFocused) {_ in
+                            showSuggestionsSemafor = 0
+                            print("focus changed! show suggestions is ", showSuggestionsSemafor)
+                        }
+                        .onChange(of: frontText) { _ in
+                            print("onChange processing! ", Date())
+                            showSuggestionsSemafor += 1
+                        }
+                    if let _ = deck.cards.first(where: {card in
+                        card.frontText == frontText
+                    }) {
+                        Spacer()
+                        Group {
+                            Image(systemName: "exclamationmark.triangle")
+                            Text("Word already added")
+                        }.foregroundColor(.secondary)
+                    }
+                }
+                if showSuggestionsSemafor > 0 {
+                    if let vocab = vocabs.getVocab(languageFrom: deck.deckMetadata.frontLanguage.rawValue, languageTo: deck.deckMetadata.backLanguage.rawValue) {
+                        SuggestView(inputText:$frontText,
+                                    vocab: vocab
+                        ) {vocabCard in
+                            backText = vocabCard.backText
+                            audioData = vocabCard.audioData
+                            wordType = vocabCard.wordType
+                            print("Setting editing to false", Date())
+                            showSuggestionsSemafor = -1
+                            print("Done setting editing to false", Date())
                         }
                     }
-                    if showSuggestionsSemafor > 0 {
-                        if let vocab = vocabs.getVocab(languageFrom: deck.deckMetadata.frontLanguage.rawValue, languageTo: deck.deckMetadata.backLanguage.rawValue) {
-                            SuggestView(inputText:$frontText,
-                                        vocab: vocab
-                            ) {vocabCard in
-                                backText = vocabCard.backText
-                                audioData = vocabCard.audioData
-                                wordType = vocabCard.wordType
-                                print("Setting editing to false", Date())
-                                showSuggestionsSemafor = -1
-                                print("Done setting editing to false", Date())
-                            }
-                        }
+                }
+                Picker(selection: $wordType) {
+                    ForEach(EWordType.allValues(), id: \.self) {wordType in
+                        WordTypeView(type: wordType)
                     }
-                    Picker(selection: $wordType) {
-                        ForEach(EWordType.allValues(), id: \.self) {wordType in
-                            WordTypeView(type: wordType)
-                        }
-                    } label: {
-                        Text("word type")
-                            .foregroundColor(.secondary)
-                    }
-                } header: {
-                    Text("FrontText")
+                } label: {
+                    Text("word type")
+                        .foregroundColor(.secondary)
                 }
-                Section {
-                    TextFieldLookupView(text: $backText, wordType: $wordType, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
-                } header: {
-                    Text("Back Text")
-                }
-                Section {
-                    SoundLookupView(lookupText: frontText, audioData: $audioData, languageToGetSoundFor: deck.deckMetadata.frontLanguage)
-                } header: {
-                    Text("Sound")
-                }
-                Section {
-                    Toggle(isOn: $enableTextInputExercise) {
-                        Text("Enable text input exercise")
-                    }
-                } header: {
-                    Text("Exercise options")
-                }
+            } header: {
+                Text("FrontText")
             }
-//            .onTapGesture {
-//                print("OnTapGesture! Disabling focus. Was: ", isFocused)
-//                isFocused = false
-//            }
+            Section {
+                TextFieldLookupView(text: $backText, wordType: $wordType, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
+            } header: {
+                Text("Back Text")
+            }
+            Section {
+                SoundLookupView(lookupText: frontText, audioData: $audioData, languageToGetSoundFor: deck.deckMetadata.frontLanguage)
+            } header: {
+                Text("Sound")
+            }
+            Section {
+                Toggle(isOn: $enableTextInputExercise) {
+                    Text("Enable text input exercise")
+                }
+            } header: {
+                Text("Exercise options")
+            }
+            //            .onTapGesture {
+            //                print("OnTapGesture! Disabling focus. Was: ", isFocused)
+            //                isFocused = false
+            //            }
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Add Flashcard")

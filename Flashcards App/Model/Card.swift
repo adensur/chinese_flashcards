@@ -185,7 +185,8 @@ func getNextStage(learningStage: LearningStage, difficulty: Difficulty) -> Learn
         case .Again:
             return .RepeatingAfterMistake(0)
         case .Hard:
-            return learningStage
+            let newLevel = max(level - 1, 0)
+            return .Repeating(newLevel)
         case .Good:
             let newLevel = level + 1
             if newLevel >= repeatingLevels.count {

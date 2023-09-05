@@ -17,69 +17,67 @@ struct EditCardView: View {
     @State private var enableTextInputExercise: Bool = false
     @State private var audioData: Data? = nil
     var body: some View {
-        NavigationView {
-            VStack {
-                Form {
-                    Section(header: Text("Front Text")) {
-                        TextField("Front Text", text: $frontText)
-                                .autocapitalization(.none)
-                        Picker(selection: $wordType) {
-                            ForEach(EWordType.allValues(), id: \.self) {wordType in
-                                WordTypeView(type: wordType)
-                            }
-                        } label: {
-                            Text("word type")
-                                .foregroundColor(.secondary)
+        VStack {
+            Form {
+                Section(header: Text("Front Text")) {
+                    TextField("Front Text", text: $frontText)
+                        .autocapitalization(.none)
+                    Picker(selection: $wordType) {
+                        ForEach(EWordType.allValues(), id: \.self) {wordType in
+                            WordTypeView(type: wordType)
                         }
+                    } label: {
+                        Text("word type")
+                            .foregroundColor(.secondary)
                     }
-                    Section(header: Text("Back Text")) {
-                        TextFieldLookupView(text: $backText, wordType: $wordType, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
-                    }
-                    Section {
-                        SoundLookupView(lookupText: frontText, audioData: $audioData, languageToGetSoundFor: deck.deckMetadata.frontLanguage)
-                    } header: {
-                        Text("Sound")
-                    }
-                    Section {
-                        Toggle(isOn: $enableTextInputExercise) {
-                            Text("Enable text input exercise")
-                        }.onAppear {
-                            enableTextInputExercise = card.enableTextInputExercise
-                        }
-                    } header: {
-                        Text("Exercise Options")
-                    }
-                }.onAppear {
-                    self.frontText = card.frontText
-                    self.wordType = card.type
-                    self.backText = card.backText
-                    self.audioData = card.audioData
                 }
-                Spacer()
-                Button {
-                    deck.deleteCard(id: card.id)
-                    dismiss()
-                } label: {
-                    Text("Delete")
-                        .foregroundColor(.red)
+                Section(header: Text("Back Text")) {
+                    TextFieldLookupView(text: $backText, wordType: $wordType, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
                 }
+                Section {
+                    SoundLookupView(lookupText: frontText, audioData: $audioData, languageToGetSoundFor: deck.deckMetadata.frontLanguage)
+                } header: {
+                    Text("Sound")
+                }
+                Section {
+                    Toggle(isOn: $enableTextInputExercise) {
+                        Text("Enable text input exercise")
+                    }.onAppear {
+                        enableTextInputExercise = card.enableTextInputExercise
+                    }
+                } header: {
+                    Text("Exercise Options")
+                }
+            }.onAppear {
+                self.frontText = card.frontText
+                self.wordType = card.type
+                self.backText = card.backText
+                self.audioData = card.audioData
+            }
+            Spacer()
+            Button {
+                deck.deleteCard(id: card.id)
+                dismiss()
+            } label: {
+                Text("Delete")
+                    .foregroundColor(.red)
             }
         }.navigationTitle("Edit Flashcard")
-        .navigationBarItems(
-            leading: Button("Cancel") {
-                dismiss()
-            },
-            trailing:
-                Button("Save") {
-                    // Perform save action here
-                    card.frontText = frontText
-                    card.type = wordType
-                    card.backText = backText
-                    card.enableTextInputExercise = enableTextInputExercise
-                    card.audioData = audioData
+            .navigationBarItems(
+                leading: Button("Cancel") {
                     dismiss()
-                }
-        )
+                },
+                trailing:
+                    Button("Save") {
+                        // Perform save action here
+                        card.frontText = frontText
+                        card.type = wordType
+                        card.backText = backText
+                        card.enableTextInputExercise = enableTextInputExercise
+                        card.audioData = audioData
+                        dismiss()
+                    }
+            )
     }
 }
 
