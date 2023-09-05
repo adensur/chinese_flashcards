@@ -22,5 +22,11 @@
 		"languageFrom": "it",
 		"version": 1,
 		"path": "it_en.json"
+	},
+	{
+		"languageTo": "en",
+		"languageFrom": "es",
+		"version": 1,
+		"path": "es_en.json"
 	}
 ]
