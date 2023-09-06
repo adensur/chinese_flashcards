@@ -93,7 +93,7 @@ struct AddCardView: View {
             //            }
         }
         .navigationBarBackButtonHidden(true)
-        .navigationTitle("Add Flashcard")
+        .navigationTitle("Adding Flashcard to \(deck.deckMetadata.name)")
         .navigationBarItems(
             leading: Button("Cancel") {
                 presentationMode.wrappedValue.dismiss()

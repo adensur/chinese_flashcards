@@ -28,6 +28,9 @@ class Decks: ObservableObject, Codable {
             if let jsonData = try? Data(contentsOf: getMetadataUrl()) {
                 let decoder = JSONDecoder()
                 let decks = try decoder.decode(Decks.self, from: jsonData)
+                for deck in decks.decks {
+                    deck.decks = decks
+                }
                 return decks
             }
         } catch {
@@ -86,10 +89,18 @@ class Decks: ObservableObject, Codable {
     }
     
     func addDeck(_ deckMetadata: DeckMetadata) {
+        deckMetadata.decks = self
         decks.append(deckMetadata)
         // trigger async vocab update as well
         vocabUpdater.updateVocabs(decks: decks)
         save()
+    }
+    
+    func moveCard(card: Card, fromDeck: Deck, toDeck: Deck) {
+        toDeck.addCard(card: card)
+        toDeck.save()
+        fromDeck.deleteCard(id: card.id)
+        fromDeck.save()
     }
 }
 

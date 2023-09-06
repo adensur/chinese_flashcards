@@ -132,6 +132,19 @@ class Deck: Codable, ObservableObject {
         if currentIdx == nil {
             self.nextCard()
         } else {
+            // save is part of nextCard() call as well
+            self.save()
+        }
+    }
+    
+    func addCard(card: Card) {
+        card.id = maxId
+        maxId += 1
+        self.cards.append(card)
+        if currentIdx == nil {
+            self.nextCard()
+        } else {
+            // save is part of nextCard() call as well
             self.save()
         }
     }
@@ -349,8 +362,21 @@ case Easy
 
 class DeckMetadata: ObservableObject, Codable {
     @Published var name: String
-    @Published var frontLanguage: ELanguage
-    @Published var backLanguage: ELanguage
+    @Published var frontLanguage: ELanguage {
+        didSet {
+            if frontLanguage != oldValue {
+                decks?.save()
+            }
+        }
+    }
+    @Published var backLanguage: ELanguage {
+        didSet {
+            if backLanguage != oldValue {
+                decks?.save()
+            }
+        }
+    }
+    weak var decks: Decks?
     let savePath: String
     init(name: String, frontLanguage: ELanguage, backLanguage: ELanguage) {
         self.name = name

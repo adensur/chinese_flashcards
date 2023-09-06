@@ -21,8 +21,6 @@ struct DeckSettingsView: View {
                         ForEach(ELanguage.allValues(), id: \.self) {language in
                             Text("\(language.longString())")
                         }
-                    }.onSubmit {
-                        decks.save()
                     }
                 } header: {
                     Text("Learning language")

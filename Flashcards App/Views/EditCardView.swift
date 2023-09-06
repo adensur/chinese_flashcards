@@ -48,6 +48,11 @@ struct EditCardView: View {
                 } header: {
                     Text("Exercise Options")
                 }
+                NavigationLink("Move") {
+                    CardMoveView(decks: deck.deckMetadata.decks!, currentDeck: deck, card: card) {
+                        dismiss()
+                    }
+                }
             }.onAppear {
                 self.frontText = card.frontText
                 self.wordType = card.type

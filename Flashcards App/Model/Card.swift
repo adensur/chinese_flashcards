@@ -13,7 +13,7 @@ let repeatingAfterMistakeLevels = ["1m", "6m", "12m", "16m", "20m", "30m", "1h",
 
 // simple exercise. Front and back text, no value checking - just turning the card over
 class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
-    let id: Int
+    var id: Int
     @Published var frontText: String {
         didSet {
             let normalisedText = frontText.precomposedStringWithCanonicalMapping
