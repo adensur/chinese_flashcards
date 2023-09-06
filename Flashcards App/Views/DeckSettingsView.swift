@@ -17,6 +17,26 @@ struct DeckSettingsView: View {
         VStack {
             Form {
                 Section {
+                    Picker("Language to learn", selection: $deck.deckMetadata.frontLanguage) {
+                        ForEach(ELanguage.allValues(), id: \.self) {language in
+                            Text("\(language.longString())")
+                        }
+                    }.onSubmit {
+                        decks.save()
+                    }
+                } header: {
+                    Text("Learning language")
+                }
+                Section {
+                    Picker("Back of the card language", selection: $deck.deckMetadata.backLanguage) {
+                        ForEach(ELanguage.allValues(), id: \.self) {language in
+                            Text("\(language.longString())")
+                        }
+                    }
+                } header: {
+                    Text("Language You Speak")
+                }
+                Section {
                     Toggle("Shuffle cards?", isOn: $deck.shuffle)
                     Toggle("Disable all writing exercises", isOn: $deck.disableAllTextInputExercises)
                     Toggle("Enable advanced difficulty options", isOn: $deck.showAdvancedDifficultyButtons)
