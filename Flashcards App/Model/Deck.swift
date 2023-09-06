@@ -35,6 +35,13 @@ class Deck: Codable, ObservableObject {
         }
     }
     @Published var deckMetadata: DeckMetadata
+    @Published var showAdvancedDifficultyButtons: Bool = false {
+        didSet {
+            if showAdvancedDifficultyButtons != oldValue {
+                save()
+            }
+        }
+    }
     // global counter used to generate unique id to every added card
     var maxId = 0
     // the card will not be repeated if it was repeated in the last maxLastCards repetitions
@@ -86,7 +93,7 @@ class Deck: Codable, ObservableObject {
     }
     
     enum CodingKeys: CodingKey {
-        case cards, currentIdx, shuffle, maxId, disableAllTextInputExercises, deckMetadata
+        case cards, currentIdx, shuffle, maxId, disableAllTextInputExercises, deckMetadata, showAdvancedDifficultyButtons
     }
     
     func encode(to encoder: Encoder) throws {
@@ -97,6 +104,7 @@ class Deck: Codable, ObservableObject {
         try container.encode(maxId, forKey: .maxId)
         try container.encode(disableAllTextInputExercises, forKey: .disableAllTextInputExercises)
         try container.encode(deckMetadata, forKey: .deckMetadata)
+        try container.encode(showAdvancedDifficultyButtons, forKey: .showAdvancedDifficultyButtons)
     }
     
     required init(from decoder: Decoder) throws {
@@ -114,6 +122,7 @@ class Deck: Codable, ObservableObject {
         if let val = try? container.decode(Bool.self, forKey: .disableAllTextInputExercises) {
             disableAllTextInputExercises = val
         }
+        showAdvancedDifficultyButtons = (try? container.decode(Bool.self, forKey: .showAdvancedDifficultyButtons)) ?? false
     }
     
     func addCard(frontText: String, backText: String, audioData: Data? = nil, enableTextInputExercise: Bool = true, wordType: EWordType = .unknown) {

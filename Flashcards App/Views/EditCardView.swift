@@ -62,22 +62,24 @@ struct EditCardView: View {
                 Text("Delete")
                     .foregroundColor(.red)
             }
-        }.navigationTitle("Edit Flashcard")
-            .navigationBarItems(
-                leading: Button("Cancel") {
+        }
+        .navigationTitle("Edit Flashcard")
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(
+            leading: Button("Cancel") {
+                dismiss()
+            },
+            trailing:
+                Button("Save") {
+                    // Perform save action here
+                    card.frontText = frontText
+                    card.type = wordType
+                    card.backText = backText
+                    card.enableTextInputExercise = enableTextInputExercise
+                    card.audioData = audioData
                     dismiss()
-                },
-                trailing:
-                    Button("Save") {
-                        // Perform save action here
-                        card.frontText = frontText
-                        card.type = wordType
-                        card.backText = backText
-                        card.enableTextInputExercise = enableTextInputExercise
-                        card.audioData = audioData
-                        dismiss()
-                    }
-            )
+                }
+        )
     }
 }
 

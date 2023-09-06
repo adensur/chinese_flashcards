@@ -61,7 +61,7 @@ class Vocab {
                 let decoder = JSONDecoder()
                 if let translations = try? decoder.decode(Translations.self, from: Data(line.utf8)) {
                     if let translation = translations.translations.first {
-                        let wordType = EWordType.fromString(translation.type) ?? .unknown
+                        let wordType = EWordType.fromString(translation.type)
                         cards.append(.init(frontText: translations.word, wordType: wordType, backText: translation.translation, frequency: translation.frequency, audioData: nil))
                     }
                 }

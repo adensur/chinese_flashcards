@@ -27,7 +27,7 @@ struct ExerciseView: View {
                 if currentCard.isFrontSideUp {
                     FrontCardView(reveal: $reveal, card: currentCard, deck: deck)
                     if reveal {
-                        RevealCardView(card: currentCard) {difficulty in
+                        RevealCardView(card: currentCard, deck: deck) {difficulty in
                             nextCard(currentCard: currentCard, difficulty: difficulty)
                         }
                     } else {
@@ -66,7 +66,9 @@ struct ExerciseView: View {
                         deck.nextCard()
                     }
                 } else {
-                    Text("No cards added yet!")
+                    Spacer()
+                    Text("Ready to add a new card?")
+                        .padding()
                     Spacer()
                 }
             }

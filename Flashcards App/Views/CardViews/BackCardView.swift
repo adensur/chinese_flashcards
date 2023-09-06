@@ -13,12 +13,10 @@ struct BackCardView: View {
     @ObservedObject var deck: Deck
     var body: some View {
         VStack {
-            HStack{
-                Spacer()
+            VStack{
                 Text(card.backText)
                     .font(.largeTitle)
                 WordTypeView(type: card.type)
-                Spacer()
             }
             Spacer()
         }

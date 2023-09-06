@@ -28,14 +28,10 @@ struct BackRevealCardView: View {
                 }
             }
             Spacer()
-            HStack {
-                ForEach(Difficulty.allCases, id: \.self) {difficulty in
-                    Spacer()
-                    Button("\(card.getNextRepetitionTooltip(difficulty: difficulty))\n\(difficulty.rawValue)") {
-                        callback(difficulty)
-                    }
-                }
-                Spacer()
+            if deck.showAdvancedDifficultyButtons {
+                AdvancedDifficultyButtonsView(card: card, callback: callback)
+            } else {
+                SimpleDifficultyButtonsView(card: card, callback: callback)
             }
         }
     }

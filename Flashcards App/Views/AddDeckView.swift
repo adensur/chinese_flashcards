@@ -24,7 +24,7 @@ struct AddDeckView: View {
             Section {
                 Picker("Language to learn", selection: $frontLanguage) {
                     ForEach(ELanguage.allValues(), id: \.self) {language in
-                        Text("\(language.rawValue)")
+                        Text("\(language.longString())")
                     }
                 }
             } header: {
@@ -33,7 +33,7 @@ struct AddDeckView: View {
             Section {
                 Picker("Back of the card language", selection: $backLanguage) {
                     ForEach(ELanguage.allValues(), id: \.self) {language in
-                        Text("\(language.rawValue)")
+                        Text("\(language.longString())")
                     }
                 }
             } header: {
@@ -41,6 +41,7 @@ struct AddDeckView: View {
             }
         }
         .navigationTitle("Add deck")
+        .navigationBarBackButtonHidden(true)
         .navigationBarItems(
             leading: Button("Cancel") {
                 dismiss()

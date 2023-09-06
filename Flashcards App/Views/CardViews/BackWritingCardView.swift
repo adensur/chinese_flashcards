@@ -15,12 +15,10 @@ struct BackWritingCardView: View {
     var focused: FocusState<Bool>.Binding
     var body: some View {
         VStack {
-            HStack{
-                Spacer()
+            VStack{
                 Text(card.backText)
                     .font(.largeTitle)
                 WordTypeView(type: card.type)
-                Spacer()
             }
             TextField("Enter translation", text: $textInput)
                 .font(.largeTitle)
@@ -29,11 +27,13 @@ struct BackWritingCardView: View {
                 }
                 .focused(focused)
                 .autocorrectionDisabled(true)
+                .autocapitalization(.none)
                 .padding(5)
                 .border(Color.black, width: 1)
                 .onSubmit {
                     reveal = true
                 }
+                .padding()
         }
         .contentShape(Rectangle())
     }

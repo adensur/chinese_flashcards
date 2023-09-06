@@ -9,24 +9,21 @@ import SwiftUI
 
 struct RevealCardView: View {
     @ObservedObject var card: Card
+    @ObservedObject var deck: Deck
     var callback: (_: Difficulty) -> Void
     var body: some View {
         VStack {
             Divider()
-            HStack {
+            VStack {
                 Text(card.backText)
                     .font(.largeTitle)
                 WordTypeView(type: card.type)
             }
             Spacer()
-            HStack {
-                ForEach(Difficulty.allCases, id: \.self) {difficulty in
-                    Spacer()
-                    Button("\(card.getNextRepetitionTooltip(difficulty: difficulty))\n\(difficulty.rawValue)") {
-                        callback(difficulty)
-                    }
-                }
-                Spacer()
+            if deck.showAdvancedDifficultyButtons {
+                AdvancedDifficultyButtonsView(card: card, callback: callback)
+            } else {
+                SimpleDifficultyButtonsView(card: card, callback: callback)
             }
         }
     }
@@ -34,7 +31,7 @@ struct RevealCardView: View {
 
 struct RevealCardView_Previews: PreviewProvider {
     static var previews: some View {
-        RevealCardView(card: previewDeck.cards[0]) {_ in
+        RevealCardView(card: previewDeck.cards[0], deck: previewDeck) {_ in
         }
     }
 }

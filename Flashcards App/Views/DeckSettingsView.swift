@@ -19,6 +19,7 @@ struct DeckSettingsView: View {
                 Section {
                     Toggle("Shuffle cards?", isOn: $deck.shuffle)
                     Toggle("Disable all writing exercises", isOn: $deck.disableAllTextInputExercises)
+                    Toggle("Enable advanced difficulty options", isOn: $deck.showAdvancedDifficultyButtons)
                 }
             }
             Spacer()

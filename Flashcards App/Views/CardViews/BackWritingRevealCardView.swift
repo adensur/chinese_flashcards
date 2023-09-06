@@ -21,7 +21,7 @@ struct BackWritingRevealCardView: View {
                 Text(card.frontText)
                     .font(.largeTitle)
                     .background(Color.green)
-                    
+                
             } else {
                 Text("Incorrect")
                     .font(.largeTitle)
@@ -34,14 +34,10 @@ struct BackWritingRevealCardView: View {
                 }
             }
             Spacer()
-            HStack {
-                ForEach(Difficulty.allCases, id: \.self) {difficulty in
-                    Spacer()
-                    Button("\(card.getNextRepetitionTooltip(difficulty: difficulty))\n\(difficulty.rawValue)") {
-                        callback(difficulty)
-                    }
-                }
-                Spacer()
+            if deck.showAdvancedDifficultyButtons {
+                AdvancedDifficultyButtonsView(card: card, callback: callback)
+            } else {
+                SimpleDifficultyButtonsView(card: card, callback: callback)
             }
         }.onAppear {
             if let currentCard = deck.currentCard {
