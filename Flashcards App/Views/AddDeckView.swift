@@ -12,7 +12,6 @@ struct AddDeckView: View {
     @State private var name: String = ""
     @State private var frontLanguage: ELanguage = .French
     @State private var backLanguage: ELanguage = .English
-    @State private var alertPresented = false
     @Environment(\.dismiss) var dismiss
     var body: some View {
         Form {
@@ -47,19 +46,10 @@ struct AddDeckView: View {
                 dismiss()
             },
             trailing: Button("Save") {
-                if valuesAreValid() {
-                    decks.addDeck(.init(name: name, frontLanguage: frontLanguage, backLanguage: backLanguage))
-                    dismiss()
-                } else {
-                    alertPresented = true
-                }
-            }
+                decks.addDeck(.init(name: name, frontLanguage: frontLanguage, backLanguage: backLanguage))
+                dismiss()
+            }.disabled(!valuesAreValid())
         )
-        .alert(
-            Text("Deck name cannot be empty!"),
-            isPresented: $alertPresented) {
-                Button("OK") { }
-            }
     }
     
     func valuesAreValid() -> Bool {
