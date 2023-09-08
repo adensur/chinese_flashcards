@@ -10,7 +10,6 @@ import SwiftUI
 struct BackRevealCardView: View {
     @ObservedObject var card: Card
     @ObservedObject var deck: Deck
-    var callback: (_: Difficulty) -> Void
     var body: some View {
         VStack {
             Divider()
@@ -27,19 +26,12 @@ struct BackRevealCardView: View {
                         .imageScale(.large)
                 }
             }
-            Spacer()
-            if deck.showAdvancedDifficultyButtons {
-                AdvancedDifficultyButtonsView(card: card, callback: callback)
-            } else {
-                SimpleDifficultyButtonsView(card: card, callback: callback)
-            }
         }
     }
 }
 
 struct BackRevealCardView_Previews: PreviewProvider {
     static var previews: some View {
-        BackRevealCardView(card: previewDeck.cards[0], deck: previewDeck) {_ in
-        }
+        BackRevealCardView(card: previewDeck.cards[0], deck: previewDeck)
     }
 }

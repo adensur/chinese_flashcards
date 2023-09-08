@@ -35,7 +35,6 @@ struct BackWritingCardView: View {
                 }
                 .padding()
         }
-        .contentShape(Rectangle())
     }
 }
 

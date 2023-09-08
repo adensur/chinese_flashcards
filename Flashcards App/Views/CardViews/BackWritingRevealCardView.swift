@@ -11,7 +11,6 @@ struct BackWritingRevealCardView: View {
     @ObservedObject var card: Card
     @ObservedObject var deck: Deck
     var textInput: String
-    var callback: (_: Difficulty) -> Void
     var body: some View {
         VStack {
             Divider()
@@ -33,12 +32,6 @@ struct BackWritingRevealCardView: View {
                         .imageScale(.large)
                 }
             }
-            Spacer()
-            if deck.showAdvancedDifficultyButtons {
-                AdvancedDifficultyButtonsView(card: card, callback: callback)
-            } else {
-                SimpleDifficultyButtonsView(card: card, callback: callback)
-            }
         }.onAppear {
             if let currentCard = deck.currentCard {
                 currentCard.playSound()
@@ -49,7 +42,6 @@ struct BackWritingRevealCardView: View {
 
 struct BackWritingRevealCardView_Previews: PreviewProvider {
     static var previews: some View {
-        BackWritingRevealCardView(card: previewDeck.cards[0], deck: previewDeck, textInput: "asd") {_ in
-        }
+        BackWritingRevealCardView(card: previewDeck.cards[0], deck: previewDeck, textInput: "asd")
     }
 }

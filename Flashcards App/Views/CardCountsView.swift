@@ -26,6 +26,7 @@ struct CardCountsView: View {
             Text("\(cardCounts.repeating)")
                 .foregroundColor(.teal)
         }
+        .padding()
     }
 }
 

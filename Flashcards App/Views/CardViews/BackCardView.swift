@@ -8,27 +8,24 @@
 import SwiftUI
 
 struct BackCardView: View {
-    @Binding var reveal: Bool
     @ObservedObject var card: Card
     @ObservedObject var deck: Deck
     var body: some View {
         VStack {
-            VStack{
+            HStack {
+                // make extra horizontal spacers to make sure the area is tappable
+                Spacer()
                 Text(card.backText)
                     .font(.largeTitle)
-                WordTypeView(type: card.type)
+                Spacer()
             }
-            Spacer()
-        }
-        .contentShape(Rectangle())
-        .onTapGesture {
-            reveal = true
+            WordTypeView(type: card.type)
         }
     }
 }
 
 struct BackCardView_Previews: PreviewProvider {
     static var previews: some View {
-        BackCardView(reveal: .constant(false), card: previewDeck.cards[0], deck: previewDeck)
+        BackCardView(card: previewDeck.cards[0], deck: previewDeck)
     }
 }

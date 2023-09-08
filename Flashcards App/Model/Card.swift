@@ -12,6 +12,11 @@ let repeatingLevels = ["1d", "2d", "3d", "4d", "6d", "8d", "12d", "18d", "24d", 
 let repeatingAfterMistakeLevels = ["1m", "6m", "12m", "16m", "20m", "30m", "1h", "2h", "3h", "4h"]
 
 // simple exercise. Front and back text, no value checking - just turning the card over
+
+enum EExerciseType {
+    case frontToBack, backToFront, writing
+}
+
 class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     var id: Int
     @Published var frontText: String {
@@ -134,7 +139,6 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
 
         return formattedDate
     }
-    
 }
 
 // New - the card was just added, with no repetitions yet
