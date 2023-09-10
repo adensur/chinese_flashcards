@@ -65,6 +65,7 @@ struct EditCardView: View {
                 dismiss()
             } label: {
                 Text("Delete")
+                    .padding()
                     .foregroundColor(.red)
             }
         }
