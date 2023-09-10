@@ -34,5 +34,11 @@
 		"languageFrom": "de",
 		"version": 1,
 		"path": "de_en.json"
+	},
+	{
+		"languageTo": "en",
+		"languageFrom": "ar",
+		"version": 1,
+		"path": "ar_en.json"
 	}
 ]
