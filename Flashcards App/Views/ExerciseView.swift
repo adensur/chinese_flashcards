@@ -33,99 +33,102 @@ struct ExerciseView: View {
     }
     
     var body: some View {
-        VStack {
-            ExerciseHeaderView(deck: deck){ // deck delete callback
-                dismiss()
-            }
-            if let currentCard = deck.currentCard {
-                VStack {
-                    Spacer()
-                    switch currentExercise! {
-                    case .frontToBack:
-                        FrontCardView(card: currentCard, deck: deck)
-                    case .backToFront:
-                        BackCardView(card: currentCard, deck: deck)
-                    case .writing:
-                        BackWritingCardView(reveal: $reveal, textInput: $textInput, card: currentCard, deck: deck, focused: $textInputFocus)
+        GeometryReader { geometry in
+            VStack {
+                ExerciseHeaderView(deck: deck){ // deck delete callback
+                    dismiss()
+                }
+                if let currentCard = deck.currentCard {
+                    VStack {
+                        Spacer(minLength: geometry.size.height / 6)
+                        VStack {
+                            switch currentExercise! {
+                            case .frontToBack:
+                                FrontCardView(card: currentCard, deck: deck)
+                            case .backToFront:
+                                BackCardView(card: currentCard, deck: deck)
+                            case .writing:
+                                BackWritingCardView(reveal: $reveal, textInput: $textInput, card: currentCard, deck: deck, focused: $textInputFocus)
+                            }
+                            if reveal {
+                                switch currentExercise! {
+                                case .frontToBack:
+                                    RevealCardView(card: currentCard, deck: deck)
+                                case .backToFront:
+                                    BackRevealCardView(card: currentCard, deck: deck)
+                                case .writing:
+                                    BackWritingRevealCardView(card: currentCard, deck: deck, textInput: textInput)
+                                }
+                            }
+                        }
+                        .frame(minHeight: geometry.size.height / 6, alignment: .top)
+                        Spacer()
+                        Spacer()
+                        Spacer()
+                        Spacer()
+                        Spacer()
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        // do not accidentally reveal when writing
+                        if currentExercise != .writing {
+                            reveal = true
+                        }
                     }
                     if reveal {
-                        switch currentExercise! {
-                        case .frontToBack:
-                            RevealCardView(card: currentCard, deck: deck)
-                        case .backToFront:
-                            BackRevealCardView(card: currentCard, deck: deck)
-                        case .writing:
-                            BackWritingRevealCardView(card: currentCard, deck: deck, textInput: textInput)
-                        }
-                    }
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    // do not accidentally reveal when writing
-                    if currentExercise != .writing {
-                        reveal = true
-                    }
-                }
-                if reveal {
-                    if deck.showAdvancedDifficultyButtons {
-                        AdvancedDifficultyButtonsView(card: currentCard) {difficulty in
-                            nextCard(currentCard: currentCard, difficulty: difficulty)
+                        if deck.showAdvancedDifficultyButtons {
+                            AdvancedDifficultyButtonsView(card: currentCard) {difficulty in
+                                nextCard(currentCard: currentCard, difficulty: difficulty)
+                            }
+                        } else {
+                            SimpleDifficultyButtonsView(card: currentCard) {difficulty in
+                                nextCard(currentCard: currentCard, difficulty: difficulty)
+                            }
                         }
                     } else {
-                        SimpleDifficultyButtonsView(card: currentCard) {difficulty in
-                            nextCard(currentCard: currentCard, difficulty: difficulty)
+                        Button {
+                            reveal = true
+                        } label: {
+                            Text("Reveal")
+                                .frame(maxWidth: .infinity)
                         }
-                    }
-                } else {
-                    Button {
-                        reveal = true
-                    } label: {
-                        Text("Reveal")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .padding()
-                    .buttonStyle(.bordered)
-                    CardCountsView(cardCounts: deck.learnCounts)
-                }
-            } else {
-                if let nextDate = deck.nextRepetitionDate {
-                    OutOfCardsView(nextDate: nextDate) {
-                        deck.nextCard()
-                    }
-                } else {
-                    Spacer()
-                    Text("Ready to add a new card?")
                         .padding()
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    Spacer()
-                    Spacer()
+                        .buttonStyle(.bordered)
+                        CardCountsView(cardCounts: deck.learnCounts)
+                    }
+                } else {
+                    if let nextDate = deck.nextRepetitionDate {
+                        OutOfCardsView(nextDate: nextDate) {
+                            deck.nextCard()
+                        }
+                    } else {
+                        Spacer()
+                        Text("Ready to add a new card?")
+                            .padding()
+                        Spacer()
+                        Spacer()
+                        Spacer()
+                        Spacer()
+                        Spacer()
+                    }
+                }
+            }
+            .navigationBarBackButtonHidden(true)
+            .onAppear {
+                Task {
+                    // trigger vocab loading in advance
+                    let _ = vocabs.getVocab(languageFrom: deck.deckMetadata.frontLanguage.rawValue, languageTo: deck.deckMetadata.backLanguage.rawValue)
                 }
             }
         }
-        .animation(.easeIn, value: reveal)
-        .navigationBarBackButtonHidden(true)
-        .onAppear {
-            Task {
-                // trigger vocab loading in advance
-                let _ = vocabs.getVocab(languageFrom: deck.deckMetadata.frontLanguage.rawValue, languageTo: deck.deckMetadata.backLanguage.rawValue)
-            }
-        }
+        .ignoresSafeArea([.keyboard])
     }
     
     func nextCard(currentCard: Card, difficulty: Difficulty) {
         reveal = false
         textInput = ""
         textInputFocus = true
-        withAnimation {
-            deck.consumeAnswer(difficulty: difficulty)
-        }
+        deck.consumeAnswer(difficulty: difficulty)
         if let card = deck.currentCard {
             if card.isFrontSideUp {
                 card.playSound()
