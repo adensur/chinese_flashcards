@@ -63,6 +63,8 @@
 		098FDF262A9A0513009AD700 /* WordTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDF232A9A0512009AD700 /* WordTypeView.swift */; };
 		09B171C52A93B2B400B30162 /* LazyVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B171C42A93B2B400B30162 /* LazyVIew.swift */; };
 		09D0C2162A92257D00FE36D1 /* SoundLookupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0C2152A92257D00FE36D1 /* SoundLookupView.swift */; };
+		09D13DB82AADCBBD004E2A59 /* CardMoveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D13DB72AADCBBD004E2A59 /* CardMoveView.swift */; };
+		09D13DBA2AADCC01004E2A59 /* DifficultyButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D13DB92AADCC01004E2A59 /* DifficultyButtonsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +130,8 @@
 		098FDF232A9A0512009AD700 /* WordTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTypeView.swift; sourceTree = "<group>"; };
 		09B171C42A93B2B400B30162 /* LazyVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyVIew.swift; sourceTree = "<group>"; };
 		09D0C2152A92257D00FE36D1 /* SoundLookupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundLookupView.swift; sourceTree = "<group>"; };
+		09D13DB72AADCBBD004E2A59 /* CardMoveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardMoveView.swift; sourceTree = "<group>"; };
+		09D13DB92AADCC01004E2A59 /* DifficultyButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyButtonsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,8 +227,10 @@
 				093455602A85120B0009ED8E /* CardViews */,
 				098A16112A72641C00D3CA84 /* Util */,
 				096D8FDE2A3724F800E402B5 /* AddCardView.swift */,
+				09D13DB72AADCBBD004E2A59 /* CardMoveView.swift */,
 				094B22632A9241C900A0C578 /* DecksView.swift */,
 				0933712E2A92613C00D0DC50 /* AddDeckView.swift */,
+				09D13DB92AADCC01004E2A59 /* DifficultyButtonsView.swift */,
 				0978584C2A8FD822000A4908 /* WordTranslationLookupView.swift */,
 				096D4F702A65E19F004C4C30 /* SuggestView.swift */,
 				09156D5B2A31C3AF00BA2D89 /* ContentView.swift */,
@@ -443,6 +449,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				098FDEFF2A966C01009AD700 /* CardCountsView.swift in Sources */,
+				09D13DB82AADCBBD004E2A59 /* CardMoveView.swift in Sources */,
 				0933712B2A92510A00D0DC50 /* Decks.swift in Sources */,
 				098FDF1C2A98B409009AD700 /* Hindi.swift in Sources */,
 				09B171C52A93B2B400B30162 /* LazyVIew.swift in Sources */,
@@ -452,6 +459,7 @@
 				094B22642A9241C900A0C578 /* DecksView.swift in Sources */,
 				0934555D2A84DF600009ED8E /* BackCardView.swift in Sources */,
 				09156D842A31C43B00BA2D89 /* ExerciseView.swift in Sources */,
+				09D13DBA2AADCC01004E2A59 /* DifficultyButtonsView.swift in Sources */,
 				098FDF242A9A0512009AD700 /* WordTypeView.swift in Sources */,
 				093455622A8515B70009ED8E /* BackWritingCardView.swift in Sources */,
 				09156D872A31C46100BA2D89 /* Card.swift in Sources */,
