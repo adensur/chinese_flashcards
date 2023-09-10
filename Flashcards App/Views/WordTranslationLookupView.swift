@@ -11,7 +11,7 @@ struct WordTranslationLookupView: View {
     var word: String
     var translations: [Detail]
     var callback: (Detail) -> Void
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     var body: some View {
         if !translations.isEmpty {
             List {
@@ -26,8 +26,8 @@ struct WordTranslationLookupView: View {
                         .contentShape(Rectangle())
                         .onTapGesture {
                             print("WordTranslationLookupView onTapGesture!")
+                            dismiss()
                             callback(detail)
-                            presentationMode.wrappedValue.dismiss()
                         }
                     }
                 } header: {
