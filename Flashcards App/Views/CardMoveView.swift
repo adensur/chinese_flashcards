@@ -33,6 +33,8 @@ struct CardMoveView: View {
     }
 }
 
-#Preview {
-    CardMoveView(decks: Decks(), currentDeck: previewDeck, card: previewDeck.cards.first!) {}
+struct CardMoveView_Previews: PreviewProvider {
+    static var previews: some View {
+        CardMoveView(decks: Decks(), currentDeck: previewDeck, card: previewDeck.cards.first!) {}
+    }
 }
