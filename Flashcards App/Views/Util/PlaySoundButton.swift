@@ -10,6 +10,15 @@ import AVFoundation
 
 var audioPlayer : AVAudioPlayer?
 
+fileprivate func playSoundInner(data: Data) {
+    audioPlayer = try? AVAudioPlayer(data: data)
+    do {
+        try AVAudioSession.sharedInstance().setCategory(.playback)
+    } catch(let error) {
+        print(error.localizedDescription)
+    }
+    audioPlayer?.play()
+}
 
 struct PlaySoundButton<Content: View>: View {
     let audioData: Data
@@ -17,22 +26,19 @@ struct PlaySoundButton<Content: View>: View {
     var body: some View {
         content
             .onTapGesture {
-                audioPlayer = try? AVAudioPlayer(data: audioData)
-                audioPlayer?.play()
+                playSoundInner(data: audioData)
             }
     }
 }
 
 func playSound(data: Data) {
-    audioPlayer = try? AVAudioPlayer(data: data)
-    audioPlayer?.play()
+    playSoundInner(data: data)
 }
 
 extension Card {
     func playSound() {
         if let data = self.audioData {
-            audioPlayer = try? AVAudioPlayer(data: data)
-            audioPlayer?.play()
+            playSoundInner(data: data)
         }
     }
 }
