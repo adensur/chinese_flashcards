@@ -15,6 +15,7 @@ enum ELanguage: String {
     case Russian = "ru"
     case Japanese = "ja"
     case Hindi = "hi"
+    case Arabic = "ar"
     
     func longString() -> String {
         switch self {
@@ -32,6 +33,8 @@ enum ELanguage: String {
             return "Japanese"
         case .Hindi:
             return "Hindi"
+        case .Arabic:
+            return "Arabic"
         }
     }
     
@@ -43,7 +46,8 @@ enum ELanguage: String {
             .Italian,
             .Russian,
             .Japanese,
-            .Hindi
+            .Hindi,
+            .Arabic
         ]
     }
 }

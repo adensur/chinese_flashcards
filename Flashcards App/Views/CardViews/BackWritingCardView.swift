@@ -21,6 +21,7 @@ struct BackWritingCardView: View {
                 WordTypeView(type: card.type)
             }
             TextField("Enter translation", text: $textInput)
+                .multilineTextAlignment(.center)
                 .font(.largeTitle)
                 .onAppear {
                     self.focused.wrappedValue = true
