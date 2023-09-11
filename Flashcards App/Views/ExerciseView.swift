@@ -66,7 +66,6 @@ struct ExerciseView: View {
                         Spacer()
                         Spacer()
                         Spacer()
-                        Spacer()
                     }
                     .contentShape(Rectangle())
                     .onTapGesture {
@@ -76,13 +75,15 @@ struct ExerciseView: View {
                         }
                     }
                     if reveal {
-                        if deck.showAdvancedDifficultyButtons {
-                            AdvancedDifficultyButtonsView(card: currentCard) {difficulty in
-                                nextCard(currentCard: currentCard, difficulty: difficulty)
-                            }
-                        } else {
-                            SimpleDifficultyButtonsView(card: currentCard) {difficulty in
-                                nextCard(currentCard: currentCard, difficulty: difficulty)
+                        Group {
+                            if deck.showAdvancedDifficultyButtons {
+                                AdvancedDifficultyButtonsView(card: currentCard) {difficulty in
+                                    nextCard(currentCard: currentCard, difficulty: difficulty)
+                                }
+                            } else {
+                                SimpleDifficultyButtonsView(card: currentCard) {difficulty in
+                                    nextCard(currentCard: currentCard, difficulty: difficulty)
+                                }
                             }
                         }
                     } else {

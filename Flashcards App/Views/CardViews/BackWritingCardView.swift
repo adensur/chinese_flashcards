@@ -21,6 +21,7 @@ struct BackWritingCardView: View {
                 WordTypeView(type: card.type)
             }
             TextField("Enter translation", text: $textInput)
+                .disabled(reveal)
                 .multilineTextAlignment(.center)
                 .font(.largeTitle)
                 .onAppear {

@@ -20,6 +20,8 @@ struct AdvancedDifficultyButtonsView: View {
                 Spacer()
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        .offset(y: -100)
     }
 }
 
@@ -47,6 +49,7 @@ struct SimpleDifficultyButtonsView: View {
                 Text("nah")
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                    .offset(y: -100)
                     .contentShape(Rectangle())
             }
             .buttonStyle(CustomButtonStyle(pressedColor: .red))
@@ -58,6 +61,7 @@ struct SimpleDifficultyButtonsView: View {
                 Text("ok")
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                    .offset(y: -100)
                     .contentShape(Rectangle())
             }
             .buttonStyle(CustomButtonStyle(pressedColor: .green))
