@@ -20,13 +20,15 @@ class VocabCard {
     let backText: String
     let frequency: Int
     let audioData: Data?
+    let translations: [Detail]
 //    let translations: [Translation]
-    init(frontText: String, wordType: EWordType, backText: String, frequency: Int, audioData: Data?) {
+    init(frontText: String, wordType: EWordType, backText: String, frequency: Int, audioData: Data?, translations: [Detail]) {
         self.frontText = frontText
         self.wordType = wordType
         self.backText = backText
         self.audioData = audioData
         self.frequency = frequency
+        self.translations = translations
     }
 }
 
@@ -39,6 +41,12 @@ struct Translation: Codable {
 struct Translations: Codable {
     var word: String
     var translations: [Translation]
+}
+
+func parseDetails(_ translations: [Translation]) -> [Detail] {
+    return translations.map {translation in
+        return Detail(word: translation.translation, freq: translation.frequency, type: EWordType.fromString(translation.type))
+    }
 }
 
 class Vocab {
@@ -62,7 +70,7 @@ class Vocab {
                 if let translations = try? decoder.decode(Translations.self, from: Data(line.utf8)) {
                     if let translation = translations.translations.first {
                         let wordType = EWordType.fromString(translation.type)
-                        cards.append(.init(frontText: translations.word, wordType: wordType, backText: translation.translation, frequency: translation.frequency, audioData: nil))
+                        cards.append(.init(frontText: translations.word, wordType: wordType, backText: translation.translation, frequency: translation.frequency, audioData: nil, translations: parseDetails(translations.translations)))
                     }
                 }
             }

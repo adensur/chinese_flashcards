@@ -49,6 +49,14 @@ struct TextFieldLookupView: View {
                         if !lookupAvailable {
                             return
                         }
+                        // check if the word is in the vocab
+                        if let vocab = vocabs.getVocab(languageFrom: translateFromLanguage.rawValue, languageTo: translateToLanguage.rawValue) {
+                            if let vocabCard = vocab.cards[lookupText] {
+                                self.translations = vocabCard.translations
+                                detailsPresented = true
+                                return
+                            }
+                        }
                         loading = true
                         Task {
                             let translations = await getTranslation(for: lookupText, langFrom: translateFromLanguage.rawValue, langTo: translateToLanguage.rawValue)
