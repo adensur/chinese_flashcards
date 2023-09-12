@@ -7,7 +7,7 @@
 
 import Foundation
 
-let learningLevels = ["1m", "6m", "9m", "10m", "12m", "14m", "16m", "20m", "30m", "1h", "2h", "3h", "4h"]
+let learningLevels = ["1m", "6m", "9m", "12m", "14m", "16m", "20m", "30m", "1h", "2h", "3h", "4h"]
 let repeatingLevels = ["1d", "2d", "3d", "4d", "6d", "8d", "12d", "18d", "24d", "30d", "45d", "60d", "90d", "120d", "180d", "360d"]
 let repeatingAfterMistakeLevels = ["1m", "6m", "12m", "16m", "20m", "30m", "1h", "2h", "3h", "4h"]
 
@@ -81,6 +81,19 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         creationDate = try container.decode(Date.self, forKey: .creationDate)
         lastRepetition = try container.decode(Date.self, forKey: .lastRepetition)
         learningStage = try container.decode(LearningStage.self, forKey: .learningStage)
+        // make sure learningStage doesn't overflow existing levels in case code for them was changed
+        switch learningStage {
+        case .New:
+            ()
+        case .Learning(let level):
+            learningStage = .Learning(min(learningLevels.count - 1, level))
+        case .Repeating(let level):
+            learningStage = .Repeating(min(repeatingLevels.count - 1, level))
+        case .RepeatingAfterMistake(let level):
+            learningStage = .RepeatingAfterMistake(min(repeatingLevels.count - 1, level))
+        case .Learned:
+            ()
+        }
         audioData = try container.decode(Data?.self, forKey: .audioData)
         isFrontSideUp = try container.decode(Bool.self, forKey: .isFrontSideUp)
         if let val = try? container.decode(Bool.self, forKey: .enableTextInputExercise) {
