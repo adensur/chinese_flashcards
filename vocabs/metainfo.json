@@ -40,5 +40,11 @@
 		"languageFrom": "ar",
 		"version": 1,
 		"path": "ar_en.json"
+	},
+	{
+		"languageTo": "en",
+		"languageFrom": "iw",
+		"version": 1,
+		"path": "iw_en.json"
 	}
 ]

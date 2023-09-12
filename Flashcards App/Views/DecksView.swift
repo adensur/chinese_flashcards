@@ -34,8 +34,8 @@ struct DecksView: View {
         }
         .alert("Are you sure you want to delete the deck?", isPresented: $deleteAlertPresented) {
             HStack {
-                Button("Cancel") {}
-                Button("OK") {
+                Button("Cancel", role: .cancel) {}
+                Button("OK", role: .destructive) {
                     decks.deleteDecks(atOffsets: decksToDelete)
                 }
             }

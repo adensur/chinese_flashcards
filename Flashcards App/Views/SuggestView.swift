@@ -87,7 +87,6 @@ struct SuggestView_Previews: PreviewProvider {
     static var previews: some View {
         StatefulPreviewWrapper("आ") {text in
             VStack {
-                TextField("Title", text: text)
                 SuggestView(inputText: text, vocab: previewVocab) { vocabCard in
                     print("Matched vocab card: ", vocabCard)
                 }

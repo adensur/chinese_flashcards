@@ -31,7 +31,7 @@ struct BrowseDeckView: View {
                         Text("\(text)")
                     }
                 }
-                TextField("Filter", text: $filterText)
+                LanguageAwareTextField("Filter", text: $filterText, language: deck.deckMetadata.frontLanguage)
             } header: {
                 Text("Filter")
             }

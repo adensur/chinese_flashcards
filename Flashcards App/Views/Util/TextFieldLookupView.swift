@@ -33,7 +33,7 @@ struct TextFieldLookupView: View {
                 }
             }.opacity(0)
             HStack {
-                TextField("Back Text", text: $text)
+                LanguageAwareTextField("Back Text", text: $text, language: translateToLanguage)
                     .autocapitalization(.none)
                 Spacer()
                 if loading {
@@ -54,6 +54,7 @@ struct TextFieldLookupView: View {
                             if let vocabCard = vocab.cards[lookupText] {
                                 self.translations = vocabCard.translations
                                 detailsPresented = true
+                                errorPresented = false
                                 return
                             }
                         }
@@ -63,6 +64,7 @@ struct TextFieldLookupView: View {
                             if let translations = translations {
                                 self.translations = translations
                                 detailsPresented = true
+                                errorPresented = false
                             } else {
                                 errorPresented = true
                             }

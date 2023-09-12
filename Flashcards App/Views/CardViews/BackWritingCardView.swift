@@ -20,7 +20,7 @@ struct BackWritingCardView: View {
                     .font(.largeTitle)
                 WordTypeView(type: card.type)
             }
-            TextField("Enter translation", text: $textInput)
+            LanguageAwareTextField("Enter translation", text: $textInput, language: deck.deckMetadata.frontLanguage)
                 .disabled(reveal)
                 .multilineTextAlignment(.center)
                 .font(.largeTitle)

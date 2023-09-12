@@ -20,11 +20,12 @@ struct AddCardView: View {
     @State private var translations: [Detail] = []
     @FocusState private var isFocused: Bool
     
+    
     var body: some View {
         Form {
             Section {
                 HStack {
-                    TextField("Front Text", text: $frontText)
+                    LanguageAwareTextField("Front Text", text: $frontText, language: deck.deckMetadata.frontLanguage)
                         .autocapitalization(.none)
                         .focused($isFocused)
                         .onChange(of: isFocused) {_ in
