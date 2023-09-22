@@ -41,7 +41,8 @@ var tense2 = ""
 
 type Result struct {
 	// gender -> perfective/imperfective -> tense -> pronoun -> form
-	Data map[string]map[string]map[string]map[string]string
+	Word         string
+	Conjugations map[string]map[string]map[string]map[string]string
 }
 
 var result Result
@@ -80,19 +81,19 @@ func Process(n *html.Node, prefix string) {
 	_, ok := node.Attrs["data-speech"]
 	if ok && isDevanagari {
 		form := n.FirstChild.Data
-		if result.Data == nil {
-			result.Data = make(map[string]map[string]map[string]map[string]string)
+		if result.Conjugations == nil {
+			result.Conjugations = make(map[string]map[string]map[string]map[string]string)
 		}
-		if result.Data[gender] == nil {
-			result.Data[gender] = make(map[string]map[string]map[string]string)
+		if result.Conjugations[gender] == nil {
+			result.Conjugations[gender] = make(map[string]map[string]map[string]string)
 		}
-		if result.Data[gender][tense2] == nil {
-			result.Data[gender][tense2] = make(map[string]map[string]string)
+		if result.Conjugations[gender][tense2] == nil {
+			result.Conjugations[gender][tense2] = make(map[string]map[string]string)
 		}
-		if result.Data[gender][tense2][tense] == nil {
-			result.Data[gender][tense2][tense] = make(map[string]string)
+		if result.Conjugations[gender][tense2][tense] == nil {
+			result.Conjugations[gender][tense2][tense] = make(map[string]string)
 		}
-		result.Data[gender][tense2][tense][pronoun] = form
+		result.Conjugations[gender][tense2][tense][pronoun] = form
 		// fmt.Printf("Got form: %s, pronoun: %s, gender: %s tense: %s, tense2: %s\n", form, pronoun, gender, tense, tense2)
 	}
 	idx := 0
@@ -109,7 +110,7 @@ func getConjugations(word string) error {
 	defer cancel()
 
 	// Create a timeout for the operation
-	ctx, cancel = context.WithTimeout(ctx, 15*time.Second)
+	ctx, cancel = context.WithTimeout(ctx, 150*time.Second)
 	defer cancel()
 
 	var page string
@@ -127,7 +128,7 @@ func getConjugations(word string) error {
 
 	doc, err := html.Parse(strings.NewReader(page))
 	if err != nil {
-		panic(err)
+		return err
 	}
 	Process(doc, "/")
 	return nil
@@ -153,7 +154,10 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Processing word: %v\n", word)
 		expBackoff := 1 * time.Second
 		for {
-			result = Result{make(map[string]map[string]map[string]map[string]string)}
+			result = Result{
+				Word:         word,
+				Conjugations: make(map[string]map[string]map[string]map[string]string),
+			}
 			err = getConjugations(word)
 			if err == nil {
 				break
@@ -164,7 +168,11 @@ func main() {
 				expBackoff *= 2
 				continue
 			} else {
-				panic(err)
+				fmt.Fprintf(os.Stderr, "Unknown error, retrying word: %v, err: %v\n", word, err)
+				fmt.Fprint(os.Stderr, "Sleeping for: ", expBackoff, "\n")
+				time.Sleep(expBackoff)
+				expBackoff *= 2
+				continue
 			}
 		}
 		js, err := json.Marshal(result)

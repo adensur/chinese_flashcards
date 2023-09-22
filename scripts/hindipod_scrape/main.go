@@ -1,10 +1,16 @@
 package main
 
 import (
+	"bufio"
+	"bytes"
+	"encoding/json"
 	"flag"
 	"fmt"
+	"net/http"
+	"net/url"
 	"os"
 	"strings"
+	"time"
 
 	"golang.org/x/net/html"
 )
@@ -143,6 +149,31 @@ func Process(n *html.Node, prefix string) {
 	}
 }
 
+func getConjugations(word string) (*Result, error) {
+	encodedWord := url.QueryEscape(word)
+	url := "https://www.verbix.com/webverbix/go.php?T1=" + encodedWord + "&Submit=Go&D1=47&H1=147"
+	req, err := http.NewRequest("Get", url, bytes.NewBuffer([]byte("")))
+	if err != nil {
+		panic(err)
+	}
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+	fmt.Fprintln(os.Stderr, "Response Status:", resp.Status)
+	if resp.Status != "200 OK" {
+		return nil, fmt.Errorf("transient")
+	}
+	doc, err := html.Parse(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+	Process(doc, "/")
+	return &result, nil
+}
+
 func main() {
 	flag.Parse()
 	if len(*input) == 0 {
@@ -155,10 +186,33 @@ func main() {
 		panic(err)
 	}
 	defer r.Close()
-	doc, err := html.Parse(r)
-	if err != nil {
-		panic(err)
+	scanner := bufio.NewScanner(r)
+	for scanner.Scan() {
+		line := scanner.Text()
+		values := strings.Split(line, "\t")
+		word := values[0]
+		fmt.Fprintf(os.Stderr, "Processing word: %v\n", word)
+		expBackoff := 1 * time.Second
+		var conjugations *Result
+		for {
+			conjugations, err = getConjugations(word)
+			if err == nil {
+				break
+			} else if err.Error() == "transient" {
+				fmt.Fprintf(os.Stderr, "Transient error, retrying word: %v\n", word)
+				fmt.Fprint(os.Stderr, "Sleeping for: ", expBackoff, "\n")
+				time.Sleep(expBackoff)
+				expBackoff *= 2
+				continue
+			} else {
+				panic(err)
+			}
+		}
+		js, err := json.Marshal(conjugations)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("%s\n", js)
 	}
-	Process(doc, "/")
-	printResult()
+
 }
