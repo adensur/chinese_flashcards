@@ -34,6 +34,15 @@ class Deck: Codable, ObservableObject {
             }
         }
     }
+    // Option
+    // Disables sound
+    @Published var disableSound: Bool = false {
+        didSet {
+            if disableSound != oldValue {
+                save()
+            }
+        }
+    }
     @Published var deckMetadata: DeckMetadata
     @Published var showAdvancedDifficultyButtons: Bool = false {
         didSet {
@@ -126,7 +135,7 @@ class Deck: Codable, ObservableObject {
     }
     
     func addCard(frontText: String, backText: String, audioData: Data? = nil, enableTextInputExercise: Bool = true, wordType: EWordType = .unknown) {
-        self.cards.append(Card(frontText: frontText, backText: backText, id: maxId, creationDate: Date(), audioData: audioData, enableTextInputExercise: enableTextInputExercise, type: wordType))
+        self.cards.append(Card(frontText: frontText, backText: backText, id: maxId, creationDate: Date(), audioData: audioData, enableTextInputExercise: enableTextInputExercise, type: wordType, deck: self))
         maxId += 1
         // we had no card before, but now we have a card. Need to trigger the repetition update
         if currentIdx == nil {
@@ -335,6 +344,10 @@ class Deck: Codable, ObservableObject {
             print(deckMetadata.savePath)
             let decoder = JSONDecoder()
             let deck = try! decoder.decode(Deck.self, from: jsonData)
+            // set backlinks
+            for card in deck.cards {
+                card.deck = deck
+            }
             deck.deckMetadata = deckMetadata
             return deck
         } else {

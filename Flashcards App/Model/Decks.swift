@@ -98,6 +98,7 @@ class Decks: ObservableObject, Codable {
     
     func moveCard(card: Card, fromDeck: Deck, toDeck: Deck) {
         toDeck.addCard(card: card)
+        card.deck = toDeck
         toDeck.save()
         fromDeck.deleteCard(id: card.id)
         fromDeck.save()

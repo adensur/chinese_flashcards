@@ -37,6 +37,11 @@ func playSound(data: Data) {
 
 extension Card {
     func playSound() {
+        if let deck = self.deck {
+            if deck.disableSound {
+                return
+            }
+        }
         if let data = self.audioData {
             playSoundInner(data: data)
         }

@@ -20,7 +20,7 @@ struct SoundLookupView: View {
     var languageToGetSoundFor: ELanguage
     var body: some View {
         HStack {
-            Image(systemName: "play")
+            Image(systemName: "speaker.wave.3.fill")
                 .foregroundColor(audioData == nil ? .secondary : .accentColor)
             .onTapGesture {
                 if let data = audioData {
@@ -48,6 +48,9 @@ struct SoundLookupView: View {
                         print("Got sound!", Date())
                         if audioData == nil {
                             errorPresented = true
+                        }
+                        if let data = audioData {
+                            playSound(data: data)
                         }
                         loading = false
                     }

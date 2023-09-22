@@ -35,13 +35,14 @@ struct DeckSettingsView: View {
                     Text("Language You Speak")
                 }
                 Section {
+                    Toggle("Disable sound", isOn: $deck.disableSound)
                     Toggle("Shuffle cards?", isOn: $deck.shuffle)
                     Toggle("Disable all writing exercises", isOn: $deck.disableAllTextInputExercises)
                     Toggle("Enable advanced difficulty options", isOn: $deck.showAdvancedDifficultyButtons)
                 }
             }
             Spacer()
-            Button("Delete") {
+            Button("Delete Deck", role: .destructive) {
                 if deck.cards.isEmpty {
                     deleteDeck()
                 } else {

@@ -46,7 +46,9 @@ struct SimpleDifficultyButtonsView: View {
             Button {
                 callback(Difficulty.Hard)
             } label: {
-                Text("nah")
+                Image(systemName: "hand.thumbsdown.fill")
+                    .imageScale(.large)
+                    .scaleEffect(CGSize(width: 2.0, height: 2.0))
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                     .offset(y: -100)
@@ -58,7 +60,9 @@ struct SimpleDifficultyButtonsView: View {
                 okTapped = false
                 callback(Difficulty.Good)
             } label: {
-                Text("ok")
+                Image(systemName: "hand.thumbsup.fill")
+                    .imageScale(.large)
+                    .scaleEffect(CGSize(width: 2.0, height: 2.0))
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                     .offset(y: -100)

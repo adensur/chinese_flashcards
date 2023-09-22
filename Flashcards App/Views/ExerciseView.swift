@@ -19,6 +19,10 @@ struct ExerciseView: View {
         self.deck = deck
     }
     
+    // vars for onboarding spotlight
+    @State private var showSpotlight = false
+    @State private var currentSpot = 0
+    
     var currentExercise: EExerciseType? {
         guard let card = deck.currentCard else {
             return nil
@@ -85,7 +89,7 @@ struct ExerciseView: View {
                                     nextCard(currentCard: currentCard, difficulty: difficulty)
                                 }
                             }
-                        }
+                        }.addSpotlight(2, shape: .rounded, roundedRadius: 10, text: "If you are happy with your guess, press 👍. Otherwise, press 👎")
                     } else {
                         Button {
                             reveal = true
@@ -95,6 +99,7 @@ struct ExerciseView: View {
                         }
                         .padding()
                         .buttonStyle(.bordered)
+                        .addSpotlight(1, shape: .rounded, roundedRadius: 10, text: "Press \"reveal\", or anywhere at the bottom of the screen, once you are ready")
                         CardCountsView(cardCounts: deck.learnCounts)
                     }
                 } else {
@@ -123,6 +128,10 @@ struct ExerciseView: View {
             }
         }
         .ignoresSafeArea([.keyboard])
+//        .addSpotlightOverlay(show: $showSpotlight, currentSpot: $currentSpot)
+        .onAppear {
+            showSpotlight = true
+        }
     }
     
     func nextCard(currentCard: Card, difficulty: Difficulty) {

@@ -45,8 +45,9 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     var learningStage: LearningStage = .New
     var audioData: Data? = nil
     var type: EWordType = .unknown
+    weak var deck: Deck?
     
-    init(frontText: String, backText: String, id: Int, creationDate: Date, audioData: Data? = nil, enableTextInputExercise: Bool, type: EWordType = .unknown) {
+    init(frontText: String, backText: String, id: Int, creationDate: Date, audioData: Data? = nil, enableTextInputExercise: Bool, type: EWordType = .unknown, deck: Deck) {
         self.frontText = frontText
         self.backText = backText
         self.id = id
@@ -187,7 +188,7 @@ func getNextStage(learningStage: LearningStage, difficulty: Difficulty) -> Learn
             let nextLevel = max(level - 2, 0)
             return .Learning(nextLevel)
         case .Hard:
-            return learningStage
+            return .Learning(level - 2)
         case .Good:
             let newLevel = level + 1
             if newLevel >= learningLevels.count {
@@ -203,7 +204,7 @@ func getNextStage(learningStage: LearningStage, difficulty: Difficulty) -> Learn
         case .Again:
             return .RepeatingAfterMistake(0)
         case .Hard:
-            let newLevel = max(level - 1, 0)
+            let newLevel = max(level - 2, 0)
             return .Repeating(newLevel)
         case .Good:
             let newLevel = level + 1
@@ -246,11 +247,11 @@ func getRepetitionInterval(learningStage: LearningStage) -> TimeInterval {
     case .New:
         return TimeInterval(0)
     case .Learning(let level):
-        return try! parseTimeInterval(timeInterval: learningLevels[level])
+        return parseTimeInterval(timeInterval: learningLevels[level])
     case .Repeating(let level):
-        return try! parseTimeInterval(timeInterval: repeatingLevels[level])
+        return parseTimeInterval(timeInterval: repeatingLevels[level])
     case .RepeatingAfterMistake(let level):
-        return try! parseTimeInterval(timeInterval: repeatingAfterMistakeLevels[level])
+        return parseTimeInterval(timeInterval: repeatingAfterMistakeLevels[level])
     case .Learned:
         return TimeInterval(0)
     }
@@ -273,7 +274,7 @@ func encodeTimeInterval(timeInterval: TimeInterval) -> String {
     return "\(Int(timeIntervalDays))d"
 }
 
-func parseTimeInterval(timeInterval: String) throws -> TimeInterval {
+func parseTimeInterval(timeInterval: String) -> TimeInterval {
     let suffix = timeInterval.last!
     let prefix = String(timeInterval.prefix(timeInterval.count - 1))
     let unit: TimeInterval
@@ -286,7 +287,7 @@ func parseTimeInterval(timeInterval: String) throws -> TimeInterval {
     } else if suffix == "s" {
         unit = 1.0
     } else {
-        throw fatalError("Unexpected timeinterval suffix: \(suffix)")
+        fatalError("Unexpected timeinterval suffix: \(suffix)")
     }
     let value = Double(prefix)!
     return value * unit

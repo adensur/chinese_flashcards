@@ -20,6 +20,9 @@ struct AddCardView: View {
     @State private var translations: [Detail] = []
     @FocusState private var isFocused: Bool
     
+    var saveDisabled: Bool {
+        return frontText.isEmpty || backText.isEmpty
+    }
     
     var body: some View {
         Form {
@@ -69,7 +72,7 @@ struct AddCardView: View {
                         .foregroundColor(.secondary)
                 }
             } header: {
-                Text("FrontText")
+                Text("Front Text")
             }
             Section {
                 TextFieldLookupView(text: $backText, wordType: $wordType, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
@@ -103,6 +106,7 @@ struct AddCardView: View {
                 deck.addCard(frontText: frontText, backText: backText, audioData: audioData, enableTextInputExercise: enableTextInputExercise, wordType: wordType)
                 presentationMode.wrappedValue.dismiss()
             }
+                .disabled(saveDisabled)
         )
     }
 }

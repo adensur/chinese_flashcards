@@ -14,6 +14,7 @@ struct LanguageAwareTextField: View {
     var text: Binding<String>
     var language: ELanguage
     var body: some View {
+//        TextField(titleKey, text: text)
         SpecificLanguageTextFieldView(placeHolder: titleKey, text: text, language: language.bcp47Code)
             .environment(\.layoutDirection, language.isRtl ? .rightToLeft : .leftToRight)
             .flipsForRightToLeftLayoutDirection(true)
@@ -27,6 +28,8 @@ struct LanguageAwareTextField: View {
     }
 }
 
+// not currently used
+// need to implement onSubmit and onTextChange for that
 class SpecificLanguageTextField: UITextField {
     var language: String? {
         didSet {
@@ -50,6 +53,16 @@ class SpecificLanguageTextField: UITextField {
 }
 
 struct SpecificLanguageTextFieldView: UIViewRepresentable {
+    class Coordinator: NSObject, UITextFieldDelegate {
+        var parent: SpecificLanguageTextFieldView
+        init(_ parent: SpecificLanguageTextFieldView) {
+            self.parent = parent
+        }
+        
+        func textFieldDidChangeSelection(_ textField: UITextField) {
+            parent.text = textField.text ?? ""
+        }
+    }
     
     let placeHolder: String
     @Binding var text: String
@@ -60,12 +73,18 @@ struct SpecificLanguageTextFieldView: UIViewRepresentable {
         textField.placeholder = self.placeHolder
         textField.text = self.text
         textField.language = self.language
+        textField.delegate = context.coordinator
+        
         return textField
     }
     
     func updateUIView(_ uiView: UITextField, context: Context) {
+        uiView.text = text
     }
     
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(self)
+    }
 }
 
 #Preview {

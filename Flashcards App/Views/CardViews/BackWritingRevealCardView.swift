@@ -28,7 +28,7 @@ struct BackWritingRevealCardView: View {
             }
             if let data = card.audioData {
                 PlaySoundButton(audioData: data) {
-                    Image(systemName: "play")
+                    Image(systemName: "speaker.wave.3.fill")
                         .imageScale(.large)
                 }
             }

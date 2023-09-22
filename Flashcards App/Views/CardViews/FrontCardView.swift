@@ -26,11 +26,19 @@ struct FrontCardView: View {
                             }
                         }
                     }
+                    .overlay {
+                        Text(card.frontText)
+                            .font(.largeTitle)
+                            .opacity(0)
+                            .padding(.horizontal, 100)
+                            .padding(.vertical, 60)
+                        .addSpotlight(0, shape: .rounded, roundedRadius: 10, text: "Look at the word and try to think of a translation")
+                    }
                 Spacer()
             }
             if let data = card.audioData {
                 PlaySoundButton(audioData: data) {
-                    Image(systemName: "play")
+                    Image(systemName: "speaker.wave.3.fill")
                         .imageScale(.large)
                 }
             }
