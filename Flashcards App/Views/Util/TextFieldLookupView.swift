@@ -33,7 +33,7 @@ struct TextFieldLookupView: View {
                 }
             }.opacity(0)
             HStack {
-                LanguageAwareTextField("Back Text", text: $text, language: translateToLanguage)
+                LanguageAwareTextField("Back Text", text: $text, language: translateToLanguage) { }
                     .autocapitalization(.none)
                 Spacer()
                 if loading {

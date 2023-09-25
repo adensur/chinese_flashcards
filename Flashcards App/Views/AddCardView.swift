@@ -28,7 +28,9 @@ struct AddCardView: View {
         Form {
             Section {
                 HStack {
-                    LanguageAwareTextField("Front Text", text: $frontText, language: deck.deckMetadata.frontLanguage)
+                    LanguageAwareTextField("Front Text", text: $frontText, language: deck.deckMetadata.frontLanguage) {
+                        
+                    }
                         .autocapitalization(.none)
                         .focused($isFocused)
                         .onChange(of: isFocused) {_ in

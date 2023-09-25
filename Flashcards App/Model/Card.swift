@@ -188,7 +188,8 @@ func getNextStage(learningStage: LearningStage, difficulty: Difficulty) -> Learn
             let nextLevel = max(level - 2, 0)
             return .Learning(nextLevel)
         case .Hard:
-            return .Learning(level - 2)
+            let nextLevel = max(level - 2, 0)
+            return .Learning(nextLevel)
         case .Good:
             let newLevel = level + 1
             if newLevel >= learningLevels.count {

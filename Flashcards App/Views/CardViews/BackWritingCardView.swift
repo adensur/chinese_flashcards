@@ -20,7 +20,9 @@ struct BackWritingCardView: View {
                     .font(.largeTitle)
                 WordTypeView(type: card.type)
             }
-            LanguageAwareTextField("Enter translation", text: $textInput, language: deck.deckMetadata.frontLanguage)
+            LanguageAwareTextField("Enter translation", text: $textInput, language: deck.deckMetadata.frontLanguage) {
+                reveal = true
+            }
                 .disabled(reveal)
                 .multilineTextAlignment(.center)
                 .font(.largeTitle)
@@ -32,9 +34,6 @@ struct BackWritingCardView: View {
                 .autocapitalization(.none)
                 .padding(5)
                 .border(Color.black, width: 1)
-                .onSubmit {
-                    reveal = true
-                }
                 .padding()
         }
     }

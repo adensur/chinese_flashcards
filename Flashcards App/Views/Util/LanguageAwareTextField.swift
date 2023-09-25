@@ -13,23 +13,25 @@ struct LanguageAwareTextField: View {
     var titleKey: String
     var text: Binding<String>
     var language: ELanguage
+    var onSubmit: () -> Void
     var body: some View {
 //        TextField(titleKey, text: text)
-        SpecificLanguageTextFieldView(placeHolder: titleKey, text: text, language: language.bcp47Code)
+        SpecificLanguageTextFieldView(placeHolder: titleKey, text: text, language: language.bcp47Code) {
+            onSubmit()
+        }
             .environment(\.layoutDirection, language.isRtl ? .rightToLeft : .leftToRight)
             .flipsForRightToLeftLayoutDirection(true)
             .keyboardType(.default)
     }
     
-    init(_ titleKey: String, text: Binding<String>, language: ELanguage) {
+    init(_ titleKey: String, text: Binding<String>, language: ELanguage, onSubmit: @escaping () -> Void) {
         self.titleKey = titleKey
         self.text = text
         self.language = language
+        self.onSubmit = onSubmit
     }
 }
 
-// not currently used
-// need to implement onSubmit and onTextChange for that
 class SpecificLanguageTextField: UITextField {
     var language: String? {
         didSet {
@@ -62,12 +64,18 @@ struct SpecificLanguageTextFieldView: UIViewRepresentable {
         func textFieldDidChangeSelection(_ textField: UITextField) {
             parent.text = textField.text ?? ""
         }
+        
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            parent.onSubmit()
+            textField.resignFirstResponder() // Dismiss the keyboard
+            return true
+        }
     }
     
     let placeHolder: String
     @Binding var text: String
     var language: String = "en-US"
-    
+    var onSubmit: (() -> Void)
     func makeUIView(context: Context) -> UITextField{
         let textField = SpecificLanguageTextField(frame: .zero)
         textField.placeholder = self.placeHolder
@@ -88,5 +96,5 @@ struct SpecificLanguageTextFieldView: UIViewRepresentable {
 }
 
 #Preview {
-    LanguageAwareTextField("InputText", text: .constant("שלום"), language: .Hebrew)
+    LanguageAwareTextField("InputText", text: .constant("שלום"), language: .Hebrew) { }
 }

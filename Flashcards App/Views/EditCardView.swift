@@ -20,7 +20,7 @@ struct EditCardView: View {
         VStack {
             Form {
                 Section(header: Text("Front Text")) {
-                    LanguageAwareTextField("Front Text", text: $frontText, language: deck.deckMetadata.frontLanguage)
+                    LanguageAwareTextField("Front Text", text: $frontText, language: deck.deckMetadata.frontLanguage) { }
                         .autocapitalization(.none)
                     Picker(selection: $wordType) {
                         ForEach(EWordType.allValues(), id: \.self) {wordType in
