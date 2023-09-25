@@ -45,7 +45,7 @@ class SpecificLanguageTextField: UITextField {
     override var textInputMode: UITextInputMode? {
         if let language = self.language {
             for inputMode in UITextInputMode.activeInputModes {
-                if let inputModeLanguage = inputMode.primaryLanguage, inputModeLanguage == language {
+                if let inputModeLanguage = inputMode.primaryLanguage, inputModeLanguage.prefix(2) == language {
                     return inputMode
                 }
             }
@@ -82,7 +82,7 @@ struct SpecificLanguageTextFieldView: UIViewRepresentable {
         textField.text = self.text
         textField.language = self.language
         textField.delegate = context.coordinator
-        
+        textField.autocapitalizationType = .none
         return textField
     }
     
