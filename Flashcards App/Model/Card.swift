@@ -248,10 +248,13 @@ func getRepetitionInterval(learningStage: LearningStage) -> TimeInterval {
     case .New:
         return TimeInterval(0)
     case .Learning(let level):
+        let level = min(learningLevels.count, level)
         return parseTimeInterval(timeInterval: learningLevels[level])
     case .Repeating(let level):
+        let level = min(repeatingLevels.count, level)
         return parseTimeInterval(timeInterval: repeatingLevels[level])
     case .RepeatingAfterMistake(let level):
+        let level = min(repeatingAfterMistakeLevels.count, level)
         return parseTimeInterval(timeInterval: repeatingAfterMistakeLevels[level])
     case .Learned:
         return TimeInterval(0)
