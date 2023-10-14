@@ -13,6 +13,7 @@ struct ContentView: View {
         NavigationStack {
             DecksView()
                 .padding()
+                .preferredColorScheme(.dark)
         }
         .environmentObject(decks)
         .onAppear {
