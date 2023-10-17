@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import HanziWriter
 
 struct ExerciseView: View {
     @EnvironmentObject var decks: Decks
@@ -27,12 +28,30 @@ struct ExerciseView: View {
         guard let card = deck.currentCard else {
             return nil
         }
-        if card.isFrontSideUp {
-            return .frontToBack
-        } else if deck.disableAllTextInputExercises || !card.enableTextInputExercise {
-            return .backToFront
-        } else {
-            return .writing
+        switch card.cardState {
+        case .simple(let eSimpleCardState):
+            if eSimpleCardState == .frontSideUp {
+                return .frontToBack
+            } else if deck.disableAllTextInputExercises || !card.enableTextInputExercise {
+                return .backToFront
+            } else {
+                return .writing
+            }
+        case .japanese(let eJapaneseCardState):
+            switch eJapaneseCardState {
+            case .kanjiToKana:
+                if deck.disableAllTextInputExercises || !card.enableTextInputExercise {
+                    return .backToFront
+                } else {
+                    return .writing
+                }
+            case .kanjiToTranslation:
+                return .backToFront
+            case .kanaToKanji:
+                return .scribbling
+            case .translationToKanji:
+                return .scribbling
+            }
         }
     }
     
@@ -53,6 +72,12 @@ struct ExerciseView: View {
                                 BackCardView(card: currentCard, deck: deck)
                             case .writing:
                                 BackWritingCardView(reveal: $reveal, textInput: $textInput, card: currentCard, deck: deck, focused: $textInputFocus)
+                            case .scribbling:
+                                if !reveal {
+                                    ScribblingExerciseView(card: currentCard) {
+                                        reveal = true
+                                    }
+                                }
                             }
                             if reveal {
                                 switch currentExercise! {
@@ -62,6 +87,8 @@ struct ExerciseView: View {
                                     BackRevealCardView(card: currentCard, deck: deck)
                                 case .writing:
                                     BackWritingRevealCardView(card: currentCard, deck: deck, textInput: textInput)
+                                case .scribbling:
+                                    ScribblingRevealExerciseView(card: currentCard)
                                 }
                             }
                         }
@@ -140,7 +167,7 @@ struct ExerciseView: View {
         textInputFocus = true
         deck.consumeAnswer(difficulty: difficulty)
         if let card = deck.currentCard {
-            if card.isFrontSideUp {
+            if card.shouldPlaySoundOnAppear() {
                 card.playSound()
             }
         }

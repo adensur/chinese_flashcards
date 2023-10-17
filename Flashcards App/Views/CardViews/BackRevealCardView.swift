@@ -13,7 +13,7 @@ struct BackRevealCardView: View {
     var body: some View {
         VStack {
             Divider()
-            Text(card.frontText)
+            Text(card.currentFrontText)
                 .font(.largeTitle)
                 .onAppear {
                     if let currentCard = deck.currentCard {

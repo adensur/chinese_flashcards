@@ -7,18 +7,19 @@
 
 import SwiftUI
 
-
 struct AddCardView: View {
     @ObservedObject var deck: Deck
     @Environment(\.presentationMode) var presentationMode
     @State private var frontText: String = ""
     @State private var backText: String = ""
+    @State private var kana: String = ""
     @State private var wordType: EWordType = .unknown
     @State private var enableTextInputExercise: Bool = true
     @State private var audioData: Data? = nil
     @State var showSuggestionsSemafor = 0
     @State private var translations: [Detail] = []
     @FocusState private var isFocused: Bool
+    @State private var cardTemplate: ECardTemplate = .twoWay
     
     var saveDisabled: Bool {
         return frontText.isEmpty || backText.isEmpty
@@ -26,10 +27,22 @@ struct AddCardView: View {
     
     var body: some View {
         Form {
+            if deck.deckMetadata.frontLanguage == .Japanese {
+                Section {
+                    Picker(selection: $cardTemplate) {
+                        ForEach(ECardTemplate.allValues(), id: \.self) {cardTemplate in
+                            CardTemplateView(cardTemplate: cardTemplate)
+                        }
+                    } label: {
+                        Text("card template")
+                            .foregroundColor(.secondary)
+                    }
+
+                }
+            }
             Section {
                 HStack {
                     LanguageAwareTextField("Front Text", text: $frontText, language: deck.deckMetadata.frontLanguage) {
-                        
                     }
                         .autocapitalization(.none)
                         .focused($isFocused)
@@ -76,6 +89,15 @@ struct AddCardView: View {
             } header: {
                 Text("Front Text")
             }
+            
+            if cardTemplate == .threeWay {
+                Section {
+                    LanguageAwareTextField("Kana", text: $kana, language: deck.deckMetadata.frontLanguage) { }
+                        .autocapitalization(.none)
+                } header: {
+                    Text("Kana")
+                }
+            }
             Section {
                 TextFieldLookupView(text: $backText, wordType: $wordType, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
             } header: {
@@ -98,6 +120,11 @@ struct AddCardView: View {
             //                isFocused = false
             //            }
         }
+        .onAppear {
+            if deck.deckMetadata.frontLanguage == .Japanese {
+                cardTemplate = deck.lastUsedCardTemplate
+            }
+        }
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Adding Flashcard to \(deck.deckMetadata.name)")
         .navigationBarItems(
@@ -105,7 +132,8 @@ struct AddCardView: View {
                 presentationMode.wrappedValue.dismiss()
             },
             trailing: Button("Save") {
-                deck.addCard(frontText: frontText, backText: backText, audioData: audioData, enableTextInputExercise: enableTextInputExercise, wordType: wordType)
+                deck.addCard(frontText: frontText, backText: backText, kana: kana, audioData: audioData, enableTextInputExercise: enableTextInputExercise, wordType: wordType, cardTemplate: cardTemplate)
+                deck.lastUsedCardTemplate = cardTemplate
                 presentationMode.wrappedValue.dismiss()
             }
                 .disabled(saveDisabled)

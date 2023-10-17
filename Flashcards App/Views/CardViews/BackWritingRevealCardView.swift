@@ -14,17 +14,17 @@ struct BackWritingRevealCardView: View {
     var body: some View {
         VStack {
             Divider()
-            if textInput == card.frontText {
+            if textInput == card.currentFrontText {
                 Text("You are correct!")
                     .font(.largeTitle)
-                Text(card.frontText)
+                Text(card.currentFrontText)
                     .font(.largeTitle)
                     .background(Color.green)
                 
             } else {
                 Text("Incorrect")
                     .font(.largeTitle)
-                CorrectedTextView(text: textInput, correctText: card.frontText)
+                CorrectedTextView(text: textInput, correctText: card.currentFrontText)
             }
             if let data = card.audioData {
                 PlaySoundButton(audioData: data) {

@@ -14,7 +14,7 @@ struct RevealCardView: View {
         VStack {
             Divider()
             VStack {
-                Text(card.backText)
+                Text(card.currentBackText)
                     .font(.largeTitle)
                 WordTypeView(type: card.type)
             }

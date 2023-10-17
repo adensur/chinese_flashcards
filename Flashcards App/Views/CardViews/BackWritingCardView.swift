@@ -16,25 +16,25 @@ struct BackWritingCardView: View {
     var body: some View {
         VStack {
             VStack{
-                Text(card.backText)
+                Text(card.currentBackText)
                     .font(.largeTitle)
                 WordTypeView(type: card.type)
             }
-            LanguageAwareTextField("Enter translation", text: $textInput, language: deck.deckMetadata.frontLanguage) {
+            LanguageAwareTextField(card.currentWritingPrompt, text: $textInput, language: deck.deckMetadata.frontLanguage) {
                 reveal = true
             }
-                .disabled(reveal)
-                .multilineTextAlignment(.center)
-                .font(.largeTitle)
-                .onAppear {
-                    self.focused.wrappedValue = true
-                }
-                .focused(focused)
-                .autocorrectionDisabled(true)
-                .autocapitalization(.none)
-                .padding(5)
-                .border(Color.black, width: 1)
-                .padding()
+            .disabled(reveal)
+            .multilineTextAlignment(.center)
+            .font(.largeTitle)
+            .onAppear {
+                self.focused.wrappedValue = true
+            }
+            .focused(focused)
+            .autocorrectionDisabled(true)
+            .autocapitalization(.none)
+            .padding(5)
+            .border(Color.black, width: 1)
+            .padding()
         }
     }
 }

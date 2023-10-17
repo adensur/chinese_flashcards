@@ -12,6 +12,7 @@ struct EditCardView: View {
     @ObservedObject var deck: Deck
     @Environment(\.dismiss) var dismiss
     @State private var frontText: String = ""
+    @State private var kana: String = ""
     @State private var wordType: EWordType = .unknown
     @State private var backText: String = ""
     @State private var enableTextInputExercise: Bool = false
@@ -29,6 +30,14 @@ struct EditCardView: View {
                     } label: {
                         Text("word type")
                             .foregroundColor(.secondary)
+                    }
+                }
+                if case .japanese(_) = card.cardState {
+                    Section {
+                        LanguageAwareTextField("Kana", text: $kana, language: deck.deckMetadata.frontLanguage) { }
+                            .autocapitalization(.none)
+                    } header: {
+                        Text("Kana")
                     }
                 }
                 Section(header: Text("Back Text")) {
@@ -56,6 +65,7 @@ struct EditCardView: View {
             }.onAppear {
                 self.frontText = card.frontText
                 self.wordType = card.type
+                self.kana = card.kana
                 self.backText = card.backText
                 self.audioData = card.audioData
             }
@@ -79,6 +89,7 @@ struct EditCardView: View {
                 Button("Save") {
                     // Perform save action here
                     card.frontText = frontText
+                    card.kana = kana
                     card.type = wordType
                     card.backText = backText
                     card.enableTextInputExercise = enableTextInputExercise

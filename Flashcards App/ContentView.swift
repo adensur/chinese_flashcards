@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import HanziWriter
 
 struct ContentView: View {
+    // tmp
+//    @ObservedObject var dataModel = QuizDataModel(character: characterHolder.data["田"]!) { }
+    
     @StateObject var decks: Decks = Decks.load()
     var body: some View {
+//        QuizCharacterView(dataModel: dataModel)
         NavigationStack {
             DecksView()
                 .padding()

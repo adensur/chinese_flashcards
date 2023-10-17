@@ -15,7 +15,7 @@ struct BackCardView: View {
             HStack {
                 // make extra horizontal spacers to make sure the area is tappable
                 Spacer()
-                Text(card.backText)
+                Text(card.currentBackText)
                     .font(.largeTitle)
                 Spacer()
             }

@@ -51,6 +51,12 @@ class Deck: Codable, ObservableObject {
             }
         }
     }
+    // Remembers last option for "card template" when creating a card and sets it as default
+    @Published var lastUsedCardTemplate: ECardTemplate = .twoWay
+    
+    // option to show outline
+    @Published var showOutline = true
+    
     // global counter used to generate unique id to every added card
     var maxId = 0
     // the card will not be repeated if it was repeated in the last maxLastCards repetitions
@@ -102,7 +108,7 @@ class Deck: Codable, ObservableObject {
     }
     
     enum CodingKeys: CodingKey {
-        case cards, currentIdx, shuffle, maxId, disableAllTextInputExercises, deckMetadata, showAdvancedDifficultyButtons
+        case cards, currentIdx, shuffle, maxId, disableAllTextInputExercises, deckMetadata, showAdvancedDifficultyButtons, lastUsedCardTemplate, showOutline
     }
     
     func encode(to encoder: Encoder) throws {
@@ -114,6 +120,8 @@ class Deck: Codable, ObservableObject {
         try container.encode(disableAllTextInputExercises, forKey: .disableAllTextInputExercises)
         try container.encode(deckMetadata, forKey: .deckMetadata)
         try container.encode(showAdvancedDifficultyButtons, forKey: .showAdvancedDifficultyButtons)
+        try container.encode(lastUsedCardTemplate, forKey: .lastUsedCardTemplate)
+        try container.encode(showOutline, forKey: .showOutline)
     }
     
     required init(from decoder: Decoder) throws {
@@ -132,10 +140,18 @@ class Deck: Codable, ObservableObject {
             disableAllTextInputExercises = val
         }
         showAdvancedDifficultyButtons = (try? container.decode(Bool.self, forKey: .showAdvancedDifficultyButtons)) ?? false
+        lastUsedCardTemplate = (try? container.decode(ECardTemplate.self, forKey: .lastUsedCardTemplate)) ?? .twoWay
+        showOutline = (try? container.decode(Bool.self, forKey: .showOutline)) ?? true
     }
     
-    func addCard(frontText: String, backText: String, audioData: Data? = nil, enableTextInputExercise: Bool = true, wordType: EWordType = .unknown) {
-        self.cards.append(Card(frontText: frontText, backText: backText, id: maxId, creationDate: Date(), audioData: audioData, enableTextInputExercise: enableTextInputExercise, type: wordType, deck: self))
+    func addCard(frontText: String, backText: String, kana: String = "", audioData: Data? = nil, enableTextInputExercise: Bool = true, wordType: EWordType = .unknown, cardTemplate: ECardTemplate) {
+        let cardState: ECardState = switch cardTemplate {
+        case .twoWay:
+                .simple(.frontSideUp)
+        case .threeWay:
+                .japanese(.kanjiToKana)
+        }
+        self.cards.append(Card(frontText: frontText, backText: backText, kana: kana, id: maxId, creationDate: Date(), audioData: audioData, enableTextInputExercise: enableTextInputExercise, type: wordType, deck: self, cardState: cardState))
         maxId += 1
         // we had no card before, but now we have a card. Need to trigger the repetition update
         if currentIdx == nil {
@@ -360,8 +376,8 @@ var previewDeck = simulatedLoad()
 
 func simulatedLoad() -> Deck {
     let deck = Deck(cards: [], deckMetadata: DeckMetadata.getPreviewDeckMetadata())
-    deck.addCard(frontText: "आगे", backText: "ahead")
-    deck.addCard(frontText: "पीछे", backText: "behind")
+    deck.addCard(frontText: "आगे", backText: "ahead", cardTemplate: .twoWay)
+    deck.addCard(frontText: "पीछे", backText: "behind", cardTemplate: .twoWay)
     deck.nextCard()
     return deck
 }

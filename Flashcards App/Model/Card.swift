@@ -13,9 +13,29 @@ let repeatingAfterMistakeLevels = ["1m", "6m", "12m", "16m", "20m", "30m", "1h",
 
 // simple exercise. Front and back text, no value checking - just turning the card over
 
-enum EExerciseType {
-    case frontToBack, backToFront, writing
+enum EExerciseType: Codable {
+    case frontToBack, backToFront, writing, scribbling
 }
+
+enum ESimpleCardState: Codable {
+    case frontSideUp, backSideUp
+}
+
+enum EJapaneseCardState: Codable {
+    case kanjiToKana
+    case kanjiToTranslation
+    case kanaToKanji
+    case translationToKanji
+}
+
+// encodes the card type and state: simple 2-way front-to-back or japanese 3-way kanji - kana - translation
+enum ECardState: Codable {
+    // back to front, front to back exercises
+    case simple(ESimpleCardState)
+    // 3-way kanji, kana, translation exercises
+    case japanese(EJapaneseCardState)
+}
+
 
 class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     var id: Int
@@ -37,7 +57,15 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
             }
         }
     }
-    @Published var isFrontSideUp: Bool = true
+    @Published var kana: String {
+        didSet {
+            let normalisedText = kana.precomposedStringWithCanonicalMapping
+            // avoid infinite recursion here!
+            if normalisedText != kana {
+                self.kana = kana.precomposedStringWithCanonicalMapping
+            }
+        }
+    }
     // Option. Whether or not to show text input exercises sometimes when enabled in deck and when it is backSideUp currently
     @Published var enableTextInputExercise: Bool = true
     var creationDate: Date
@@ -45,19 +73,23 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     var learningStage: LearningStage = .New
     var audioData: Data? = nil
     var type: EWordType = .unknown
+    @Published var cardState: ECardState
     weak var deck: Deck?
     
-    init(frontText: String, backText: String, id: Int, creationDate: Date, audioData: Data? = nil, enableTextInputExercise: Bool, type: EWordType = .unknown, deck: Deck) {
+    init(frontText: String, backText: String, kana: String, id: Int, creationDate: Date, audioData: Data? = nil, enableTextInputExercise: Bool, type: EWordType = .unknown, deck: Deck, cardState: ECardState) {
         self.frontText = frontText
         self.backText = backText
+        self.kana = kana
         self.id = id
         self.creationDate = creationDate
         self.audioData = audioData
         self.enableTextInputExercise = enableTextInputExercise
         self.type = type
+        self.cardState = cardState
+        self.deck = deck
     }
     enum CodingKeys: CodingKey {
-        case id, frontText, backText, creationDate, lastRepetition, learningStage, audioData, isFrontSideUp, enableTextInputExercise, type
+        case id, frontText, backText, kana, creationDate, lastRepetition, learningStage, audioData, cardState, enableTextInputExercise, type
     }
     
     func encode(to encoder: Encoder) throws {
@@ -65,11 +97,12 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         try container.encode(id, forKey: .id)
         try container.encode(frontText, forKey: .frontText)
         try container.encode(backText, forKey: .backText)
+        try container.encode(kana, forKey: .kana)
         try container.encode(creationDate, forKey: .creationDate)
         try container.encode(lastRepetition, forKey: .lastRepetition)
         try container.encode(learningStage, forKey: .learningStage)
         try container.encode(audioData, forKey: .audioData)
-        try container.encode(isFrontSideUp, forKey: .isFrontSideUp)
+        try container.encode(cardState, forKey: .cardState)
         try container.encode(enableTextInputExercise, forKey: .enableTextInputExercise)
         try container.encode(type.rawValue, forKey: .type)
     }
@@ -79,6 +112,7 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         id = try container.decode(Int.self, forKey: .id)
         frontText = try container.decode(String.self, forKey: .frontText).precomposedStringWithCanonicalMapping
         backText = try container.decode(String.self, forKey: .backText).precomposedStringWithCanonicalMapping
+        kana = (try? container.decode(String.self, forKey: .kana).precomposedStringWithCanonicalMapping) ?? ""
         creationDate = try container.decode(Date.self, forKey: .creationDate)
         lastRepetition = try container.decode(Date.self, forKey: .lastRepetition)
         learningStage = try container.decode(LearningStage.self, forKey: .learningStage)
@@ -96,7 +130,7 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
             ()
         }
         audioData = try container.decode(Data?.self, forKey: .audioData)
-        isFrontSideUp = try container.decode(Bool.self, forKey: .isFrontSideUp)
+        self.cardState = (try? container.decode(ECardState.self, forKey: .cardState)) ?? .simple(.frontSideUp)
         if let val = try? container.decode(Bool.self, forKey: .enableTextInputExercise) {
             enableTextInputExercise = val
         }
@@ -116,10 +150,33 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         hasher.combine(id)
     }
     
+    func nextCardSide() {
+        switch cardState {
+        case .simple(let eSimpleCardState):
+            switch eSimpleCardState {
+            case .frontSideUp:
+                cardState = .simple(.backSideUp)
+            case .backSideUp:
+                cardState = .simple(.frontSideUp)
+            }
+        case .japanese(let eJapaneseCardState):
+            switch eJapaneseCardState {
+            case .kanjiToKana:
+                cardState = .japanese(.kanaToKanji)
+            case .kanjiToTranslation:
+                cardState = .japanese(.translationToKanji)
+            case .kanaToKanji:
+                cardState = .japanese(.kanjiToTranslation)
+            case .translationToKanji:
+                cardState = .japanese(.kanjiToKana)
+            }
+        }
+    }
+    
     func consumeAnswer(difficulty: Difficulty) {
         // when "nah" is answered, level goes down by 1, but repetiton date stays the same
         if difficulty == .Easy || difficulty == .Good {
-            self.isFrontSideUp.toggle()
+            self.nextCardSide()
             if getNextRepetition().addingTimeInterval(-Deck.minTimeInterval) > Date() || (difficulty == .Hard || difficulty == .Again) {
                 // card was repeated out of order - do not progress it!
                 self.lastRepetition = Date()
@@ -153,6 +210,100 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         let formattedDate = dateFormatter.string(from: creationDate)
 
         return formattedDate
+    }
+    
+    func shouldPlaySoundOnAppear() -> Bool {
+        return switch cardState {
+        case .simple(let eSimpleCardState):
+            switch eSimpleCardState {
+            case .frontSideUp:
+                true
+            case .backSideUp:
+                false
+            }
+        case .japanese(let eJapaneseCardState):
+            switch eJapaneseCardState {
+            case .kanjiToKana:
+                false
+            case .kanjiToTranslation:
+                true
+            case .kanaToKanji:
+                true
+            case .translationToKanji:
+                true
+            }
+        }
+    }
+    
+    // wrappers for front text, back text, scribble text dependable on current state
+    var currentFrontText: String {
+        return switch cardState {
+        case .simple(let _):
+                frontText
+        case .japanese(let eJapaneseCardState):
+            switch eJapaneseCardState {
+            case .kanjiToKana:
+                kana
+            case .kanjiToTranslation:
+                backText
+            case .kanaToKanji:
+                frontText
+            case .translationToKanji:
+                frontText
+            }
+        }
+    }
+    
+    var currentBackText: String {
+        return switch cardState {
+        case .simple(let _):
+            backText
+        case .japanese(let eJapaneseCardState):
+            switch eJapaneseCardState {
+            case .kanjiToKana:
+                frontText
+            case .kanjiToTranslation:
+                frontText
+            case .kanaToKanji:
+                frontText
+            case .translationToKanji:
+                frontText
+            }
+        }
+    }
+    
+    var currentWritingPrompt: String {
+        return switch cardState {
+        case .simple(_):
+            "Enter translation"
+        case .japanese(let eJapaneseCardState):
+            switch eJapaneseCardState {
+            case .kanjiToKana:
+                "Enter kana"
+            case .kanjiToTranslation:
+                "Enter translation"
+            default:
+                ""
+            }
+        }
+    }
+    
+    var scribblePrompt: String {
+        return switch cardState {
+        case .simple(_):
+            backText
+        case .japanese(let eJapaneseCardState):
+            switch eJapaneseCardState {
+            case .kanjiToKana:
+                frontText
+            case .kanjiToTranslation:
+                frontText
+            case .kanaToKanji:
+                kana
+            case .translationToKanji:
+                backText
+            }
+        }
     }
 }
 
