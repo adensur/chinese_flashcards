@@ -10,24 +10,26 @@ import SwiftUI
 struct WordTranslationLookupView: View {
     var word: String
     var translations: [Detail]
-    var callback: (Detail) -> Void
+    var callback: ([Detail]) -> Void
     @Environment(\.dismiss) var dismiss
+    @State var selection = Set<String>()
     var body: some View {
         if !translations.isEmpty {
             List {
                 Section {
-                    ForEach(translations, id: \.self.word) {detail in
+                    ForEach(translations) {detail in
                         HStack {
                             Text("\(detail.word)")
                             WordTypeView(type: detail.type)
                             Spacer()
+                            if selection.contains(detail.word) {
+                                Image(systemName: "checkmark")
+                            }
                             FreqView(freq: detail.freq)
                         }
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            print("WordTranslationLookupView onTapGesture!")
-                            dismiss()
-                            callback(detail)
+                            selection.insert(detail.word)
                         }
                     }
                 } header: {
@@ -38,6 +40,16 @@ struct WordTranslationLookupView: View {
                     }
                 }
             }
+            .navigationBarItems(
+                trailing: Button("Done") {
+                    let details = translations.filter {detail in
+                        selection.contains(detail.word)
+                    }
+                    dismiss()
+                    callback(details)
+                }
+                    .disabled(selection.isEmpty)
+            )
         } else {
             VStack {
                 Text("Sorry, no entries found for \(word)")

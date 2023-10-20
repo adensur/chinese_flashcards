@@ -15,7 +15,7 @@ struct BackWritingCardView: View {
     var focused: FocusState<Bool>.Binding
     var body: some View {
         VStack {
-            VStack{
+            VStack {
                 Text(card.currentBackText)
                     .font(.largeTitle)
                 WordTypeView(type: card.type)

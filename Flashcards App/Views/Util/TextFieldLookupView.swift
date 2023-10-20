@@ -27,9 +27,11 @@ struct TextFieldLookupView: View {
             // we use deprecated NavigationLink(isActive: ...) api
             // because of the .destination bug that causes weird navigation stack behaviour
             NavigationLink("this should not be seen", isActive: $detailsPresented) {
-                WordTranslationLookupView(word: lookupText, translations: translations) {detail in
-                    text = detail.word
-                    wordType = detail.type
+                WordTranslationLookupView(word: lookupText, translations: translations) {details in
+                    if let detail = details.first {
+                        wordType = detail.type
+                    }
+                    text = details.map {String($0.word)}.joined(separator: "; ")
                 }
             }.opacity(0)
             HStack {

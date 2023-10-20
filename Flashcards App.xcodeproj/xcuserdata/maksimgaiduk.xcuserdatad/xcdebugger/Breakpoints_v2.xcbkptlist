@@ -16,8 +16,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "18"
             endingLineNumber = "18"
-            landmarkName = "nextCard()"
-            landmarkType = "7">
+            landmarkName = "Deck"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -30,9 +30,486 @@
             filePath = "Flashcards App/Views/ExerciseView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "init(deck:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "404FA007-AF0D-4CF3-9356-A20E4106EBF3"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Flashcards App/Views/Util/PlaySoundButton.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "playSound(data:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A1DE9BAB-F6D0-4B45-9379-07099A749EAF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Flashcards App/Views/Util/PlaySoundButton.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "playSound()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A1DE9BAB-F6D0-4B45-9379-07099A749EAF - a8c2e812dd2a2f0d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Flashcards_App.Card.playSound() -&gt; ()"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Views/Util/PlaySoundButton.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "A1DE9BAB-F6D0-4B45-9379-07099A749EAF - a8c2e812dd2a2f0d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Flashcards_App.Card.playSound() -&gt; ()"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Views/Util/PlaySoundButton.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "33"
+                  endingLineNumber = "33"
+                  offsetFromSymbolStart = "176">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "48213F1D-8F57-4988-8821-F2681156C0F6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Flashcards App/Views/EditCardView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
             landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "48213F1D-8F57-4988-8821-F2681156C0F6 - 91db52bc4d24ccf7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.Text, SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.autocapitalization(__C.UITextAutocapitalizationType) -&gt; some&gt;&gt;.0, SwiftUI.Picker&lt;SwiftUI.Text, Flashcards_App.EWordType, SwiftUI.ForEach&lt;Swift.Array&lt;Flashcards_App.EWordType&gt;, Flashcards_App.EWordType, Flashcards_App.WordTypeView&gt;&gt;)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.Text, Flashcards_App.TextFieldLookupView, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.Text, Flashcards_App.SoundLookupView, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.Text, &lt;&lt;opaque return type of SwiftUI.View.onAppear(perform: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.onAppear(perform: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; some&gt;&gt;.0, SwiftUI.Spacer, SwiftUI.Button&lt;SwiftUI.Text&gt;)&gt; in Flashcards_App.EditCardView.body.getter : some"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Views/EditCardView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "42"
+                  endingLineNumber = "42"
+                  offsetFromSymbolStart = "1320">
+               </Location>
+               <Location
+                  uuid = "48213F1D-8F57-4988-8821-F2681156C0F6 - 686fa12e18d8fa96"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #5 () -&gt; &lt;&lt;opaque return type of SwiftUI.View.onAppear(perform: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; some&gt;&gt;.0 in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.Text, SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.autocapitalization(__C.UITextAutocapitalizationType) -&gt; some&gt;&gt;.0, SwiftUI.Picker&lt;SwiftUI.Text, Flashcards_App.EWordType, SwiftUI.ForEach&lt;Swift.Array&lt;Flashcards_App.EWordType&gt;, Flashcards_App.EWordType, Flashcards_App.WordTypeView&gt;&gt;)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.Text, Flashcards_App.TextFieldLookupView, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.Text, Flashcards_App.SoundLookupView, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.Text, &lt;&lt;opaque return type of SwiftUI.View.onAppear(perform: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.onAppear(perform: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; some&gt;&gt;.0, SwiftUI.Spacer, SwiftUI.Button&lt;SwiftUI.Text&gt;)&gt; in Flashcards_App.EditCardView.body.getter : some"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Views/EditCardView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "42"
+                  endingLineNumber = "42"
+                  offsetFromSymbolStart = "268">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C8BFD2BB-458C-41DC-8EA2-BAC1D6392D17"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Flashcards App/Views/CardMoveView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "C8BFD2BB-458C-41DC-8EA2-BAC1D6392D17 - ff40eb15f2ece1b4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Flashcards_App.DeckMetadata) -&gt; Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -&gt; ()) -&gt; some&gt;&gt;.0&gt; in closure #1 () -&gt; SwiftUI.ForEach&lt;Swift.Array&lt;Flashcards_App.DeckMetadata&gt;, Swift.String, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -&gt; ()) -&gt; some&gt;&gt;.0&gt;&gt; in Flashcards_App.CardMoveView.body.getter : some"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Views/CardMoveView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "25"
+                  endingLineNumber = "25"
+                  offsetFromSymbolStart = "1268">
+               </Location>
+               <Location
+                  uuid = "C8BFD2BB-458C-41DC-8EA2-BAC1D6392D17 - e30623e3b9252f98"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in closure #1 (Flashcards_App.DeckMetadata) -&gt; Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -&gt; ()) -&gt; some&gt;&gt;.0&gt; in closure #1 () -&gt; SwiftUI.ForEach&lt;Swift.Array&lt;Flashcards_App.DeckMetadata&gt;, Swift.String, Swift.Optional&lt;&lt;&lt;opaque return type of SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -&gt; ()) -&gt; some&gt;&gt;.0&gt;&gt; in Flashcards_App.CardMoveView.body.getter : some"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Views/CardMoveView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "25"
+                  endingLineNumber = "25"
+                  offsetFromSymbolStart = "168">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6999D987-51D0-45CB-B04B-94B370CE6946"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Flashcards App/Views/EditCardView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "6999D987-51D0-45CB-B04B-94B370CE6946 - fe360abc9a8d2c2e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #7 () -&gt; Flashcards_App.CardMoveView in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.Text, SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.autocapitalization(__C.UITextAutocapitalizationType) -&gt; some&gt;&gt;.0, SwiftUI.Picker&lt;SwiftUI.Text, Flashcards_App.EWordType, SwiftUI.ForEach&lt;Swift.Array&lt;Flashcards_App.EWordType&gt;, Flashcards_App.EWordType, Flashcards_App.WordTypeView&gt;&gt;)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.Text, Flashcards_App.TextFieldLookupView, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.Text, Flashcards_App.SoundLookupView, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.Text, &lt;&lt;opaque return type of SwiftUI.View.onAppear(perform: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;, SwiftUI.NavigationLink&lt;SwiftUI.Text, Flashcards_App.CardMoveView&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.onAppear(perform: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; some&gt;&gt;.0, SwiftUI.Spacer, SwiftUI.Button&lt;SwiftUI.Text&gt;)&gt; in Flashcards_App.EditCardView.body.getter : some"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Views/EditCardView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "400">
+               </Location>
+               <Location
+                  uuid = "6999D987-51D0-45CB-B04B-94B370CE6946 - 1635884fcc6927ea"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #7 () -&gt; Flashcards_App.CardMoveView in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Section&lt;SwiftUI.Text, SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.autocapitalization(__C.UITextAutocapitalizationType) -&gt; some&gt;&gt;.0, SwiftUI.Picker&lt;SwiftUI.Text, Flashcards_App.EWordType, SwiftUI.ForEach&lt;Swift.Array&lt;Flashcards_App.EWordType&gt;, Flashcards_App.EWordType, Flashcards_App.WordTypeView&gt;&gt;)&gt;, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.Text, Flashcards_App.TextFieldLookupView, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.Text, Flashcards_App.SoundLookupView, SwiftUI.EmptyView&gt;, SwiftUI.Section&lt;SwiftUI.Text, &lt;&lt;opaque return type of SwiftUI.View.onAppear(perform: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; some&gt;&gt;.0, SwiftUI.EmptyView&gt;, SwiftUI.NavigationLink&lt;SwiftUI.Text, Flashcards_App.CardMoveView&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.onAppear(perform: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; some&gt;&gt;.0, SwiftUI.Spacer, SwiftUI.Button&lt;SwiftUI.Text&gt;)&gt; in Flashcards_App.EditCardView.body.getter : some"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Views/EditCardView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "164">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E663672F-4D8C-414A-8B4B-95831CFD564B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Flashcards App/Views/Util/TextFieldLookupView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "E663672F-4D8C-414A-8B4B-95831CFD564B - 24b32f9f5d40cbe9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in closure #2 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.autocapitalization(__C.UITextAutocapitalizationType) -&gt; some&gt;&gt;.0, SwiftUI.Spacer, SwiftUI._ConditionalContent&lt;SwiftUI.ProgressView&lt;SwiftUI.EmptyView, SwiftUI.EmptyView&gt;, &lt;&lt;opaque return type of SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -&gt; ()) -&gt; some&gt;&gt;.0&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.opacity(Swift.Double) -&gt; some&gt;&gt;.0, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.autocapitalization(__C.UITextAutocapitalizationType) -&gt; some&gt;&gt;.0, SwiftUI.Spacer, SwiftUI._ConditionalContent&lt;SwiftUI.ProgressView&lt;SwiftUI.EmptyView, SwiftUI.EmptyView&gt;, &lt;&lt;opaque return type of SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -&gt; ()) -&gt; some&gt;&gt;.0&gt;)&gt;&gt;)&gt; in Flashcards_App.TextFieldLookupView.body.getter : some"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Views/Util/TextFieldLookupView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "156">
+               </Location>
+               <Location
+                  uuid = "E663672F-4D8C-414A-8B4B-95831CFD564B - 24b32f9f5d40cbe9"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in closure #2 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.autocapitalization(__C.UITextAutocapitalizationType) -&gt; some&gt;&gt;.0, SwiftUI.Spacer, SwiftUI._ConditionalContent&lt;SwiftUI.ProgressView&lt;SwiftUI.EmptyView, SwiftUI.EmptyView&gt;, &lt;&lt;opaque return type of SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -&gt; ()) -&gt; some&gt;&gt;.0&gt;)&gt; in closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.opacity(Swift.Double) -&gt; some&gt;&gt;.0, SwiftUI.HStack&lt;SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.autocapitalization(__C.UITextAutocapitalizationType) -&gt; some&gt;&gt;.0, SwiftUI.Spacer, SwiftUI._ConditionalContent&lt;SwiftUI.ProgressView&lt;SwiftUI.EmptyView, SwiftUI.EmptyView&gt;, &lt;&lt;opaque return type of SwiftUI.View.onTapGesture(count: Swift.Int, perform: () -&gt; ()) -&gt; some&gt;&gt;.0&gt;)&gt;&gt;)&gt; in Flashcards_App.TextFieldLookupView.body.getter : some"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Views/Util/TextFieldLookupView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "49"
+                  endingLineNumber = "49"
+                  offsetFromSymbolStart = "120">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1A4A1661-F1ED-44BD-8AA0-099B607BEE04"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Flashcards App/Views/Util/SpotlightView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "SpotlightHelperView(screenSize:rect:show:currentSpot:properties:onTap:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "08EDE67D-2ABA-41F0-9FB6-83231E09AEDC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Flashcards App/Views/Util/SpotlightView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "SpotlightHelperView(screenSize:rect:show:currentSpot:properties:onTap:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D822FC70-D92F-4944-AE91-05BCDA174012"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Flashcards App/Views/Util/LanguageAwareTextField.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "textInputMode"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E86C071E-A168-48C7-B381-D8E3B7BED08C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Flashcards App/Views/ExerciseView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "currentExercise"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3F6E234E-7AB7-4BFB-8141-8FA85A1D6A08"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Flashcards App/Model/Deck.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "addCard(frontText:backText:kana:audioData:enableTextInputExercise:wordType:cardTemplate:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3F6E234E-7AB7-4BFB-8141-8FA85A1D6A08 - c7fb1ec1e0fe3d09"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "default argument 2 of Flashcards_App.Deck.addCard(frontText: Swift.String, backText: Swift.String, kana: Swift.String, audioData: Swift.Optional&lt;Foundation.Data&gt;, enableTextInputExercise: Swift.Bool, wordType: Flashcards_App.EWordType, cardTemplate: Flashcards_App.ECardTemplate) -&gt; ()"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Model/Deck.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  uuid = "3F6E234E-7AB7-4BFB-8141-8FA85A1D6A08 - 8801d3208f70a10f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "default argument 4 of Flashcards_App.Deck.addCard(frontText: Swift.String, backText: Swift.String, kana: Swift.String, audioData: Swift.Optional&lt;Foundation.Data&gt;, enableTextInputExercise: Swift.Bool, wordType: Flashcards_App.EWordType, cardTemplate: Flashcards_App.ECardTemplate) -&gt; ()"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Model/Deck.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  uuid = "3F6E234E-7AB7-4BFB-8141-8FA85A1D6A08 - 2942f677e72c570c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "default argument 5 of Flashcards_App.Deck.addCard(frontText: Swift.String, backText: Swift.String, kana: Swift.String, audioData: Swift.Optional&lt;Foundation.Data&gt;, enableTextInputExercise: Swift.Bool, wordType: Flashcards_App.EWordType, cardTemplate: Flashcards_App.ECardTemplate) -&gt; ()"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Model/Deck.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  uuid = "3F6E234E-7AB7-4BFB-8141-8FA85A1D6A08 - 4a8fe9863feb050d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "default argument 6 of Flashcards_App.Deck.addCard(frontText: Swift.String, backText: Swift.String, kana: Swift.String, audioData: Swift.Optional&lt;Foundation.Data&gt;, enableTextInputExercise: Swift.Bool, wordType: Flashcards_App.EWordType, cardTemplate: Flashcards_App.ECardTemplate) -&gt; ()"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Model/Deck.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  uuid = "3F6E234E-7AB7-4BFB-8141-8FA85A1D6A08 - 41774dad4a6fc114"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Flashcards_App.Deck.addCard(frontText: Swift.String, backText: Swift.String, kana: Swift.String, audioData: Swift.Optional&lt;Foundation.Data&gt;, enableTextInputExercise: Swift.Bool, wordType: Flashcards_App.EWordType, cardTemplate: Flashcards_App.ECardTemplate) -&gt; ()"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Model/Deck.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "137"
+                  endingLineNumber = "137"
+                  offsetFromSymbolStart = "392">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F6B5CE5E-D468-4971-8BF8-83D27B05001A"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Flashcards App/Views/CardViews/ScribblingExerciseView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "F6B5CE5E-D468-4971-8BF8-83D27B05001A - d4a2b274bb00abc7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI._ConditionalContent&lt;HanziWriter.QuizCharacterView, SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Button&lt;SwiftUI.Text&gt;)&gt;&gt;)&gt; in Flashcards_App.ScribblingExerciseView.body.getter : some"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Views/CardViews/ScribblingExerciseView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "55"
+                  endingLineNumber = "55"
+                  offsetFromSymbolStart = "2268">
+               </Location>
+               <Location
+                  uuid = "F6B5CE5E-D468-4971-8BF8-83D27B05001A - 56a5dc4504074107"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in closure #1 () -&gt; SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI._ConditionalContent&lt;HanziWriter.QuizCharacterView, SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Button&lt;SwiftUI.Text&gt;)&gt;&gt;)&gt; in Flashcards_App.ScribblingExerciseView.body.getter : some"
+                  moduleName = "Flashcards App"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maksimgaiduk/repos/chinese_flashcards/Flashcards%20App/Views/CardViews/ScribblingExerciseView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "55"
+                  endingLineNumber = "55"
+                  offsetFromSymbolStart = "36">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DCB341E0-16E5-4ABE-BF19-1041E00FEEC1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Flashcards App/Model/Card.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "275"
+            endingLineNumber = "275"
+            landmarkName = "currentWritingPrompt"
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>

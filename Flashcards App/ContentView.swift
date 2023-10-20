@@ -8,13 +8,21 @@
 import SwiftUI
 import HanziWriter
 
+let char = "ー"
+
 struct ContentView: View {
     // tmp
-//    @ObservedObject var dataModel = QuizDataModel(character: characterHolder.data["田"]!) { }
+    @ObservedObject var dataModel = QuizDataModel(character: characterHolder.data[char]!) { }
     
     @StateObject var decks: Decks = Decks.load()
     var body: some View {
-//        QuizCharacterView(dataModel: dataModel)
+//        VStack {
+//            AnimatableCharacterView(character: characterHolder.data[char]!, showOutline: true)
+//            QuizCharacterView(dataModel: dataModel)
+//            Button("reset!") {
+//                dataModel.resetProgress()
+//            }
+//        }
         NavigationStack {
             DecksView()
                 .padding()

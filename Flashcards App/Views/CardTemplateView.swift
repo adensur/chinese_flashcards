@@ -23,9 +23,9 @@ struct CardTemplateView: View {
     var body: some View {
         switch cardTemplate {
         case .twoWay:
-            Text("two way: front text to back text")
+            Text("2-way: front to back text")
         case .threeWay:
-            Text("three way: kanji - kana - translation")
+            Text("3-way: kanji - kana - translation")
         }
     }
 }

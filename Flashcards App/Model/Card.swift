@@ -238,7 +238,7 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     // wrappers for front text, back text, scribble text dependable on current state
     var currentFrontText: String {
         return switch cardState {
-        case .simple(let _):
+        case .simple(_):
                 frontText
         case .japanese(let eJapaneseCardState):
             switch eJapaneseCardState {
@@ -256,7 +256,7 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     
     var currentBackText: String {
         return switch cardState {
-        case .simple(let _):
+        case .simple(_):
             backText
         case .japanese(let eJapaneseCardState):
             switch eJapaneseCardState {

@@ -40,10 +40,14 @@ func getSound(for word: String, lang: String) async -> Data?  {
     }
 }
 
-struct Detail {
+struct Detail: Identifiable {
     let word: String
     let freq: Int
     let type: EWordType
+    
+    var id: String {
+        return word
+    }
 }
 
 enum EWordType: Int {
