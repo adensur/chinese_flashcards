@@ -112,6 +112,8 @@ class Vocab {
         switch languageFrom {
         case "hi":
             return HindiMatcher.findMatches(vocabCards: cards, inputText: inputText)
+        case "zh-CN":
+            return ChineseMatcher.findMatches(vocabCards: cards, inputText: inputText)
         default:
             let filteredTexts = cards.keys.filter {vocabString in
                 // we need

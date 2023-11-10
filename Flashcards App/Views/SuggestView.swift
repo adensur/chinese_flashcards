@@ -74,9 +74,7 @@ struct SuggestView: View {
         }
         .onAppear {
             print("Initialising filtered texts!")
-            filteredTexts = vocab.cards.keys.filter {vocabString in
-                vocabString.hasUnicodePrefx(inputText.precomposedStringWithCanonicalMapping)
-            }
+            filteredTexts = vocab.findMatches(inputText)
         }
 //        .background(Color.white)
 //        .cornerRadius(15)
