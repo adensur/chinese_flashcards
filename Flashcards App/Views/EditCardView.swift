@@ -13,6 +13,7 @@ struct EditCardView: View {
     @Environment(\.dismiss) var dismiss
     @State private var frontText: String = ""
     @State private var kana: String = ""
+    @State private var extra: String = ""
     @State private var wordType: EWordType = .unknown
     @State private var backText: String = ""
     @State private var enableTextInputExercise: Bool = false
@@ -41,12 +42,19 @@ struct EditCardView: View {
                     }
                 }
                 Section(header: Text("Back Text")) {
-                    TextFieldLookupView(text: $backText, wordType: $wordType, kana: $kana, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
+                    TextFieldLookupView(text: $backText, wordType: $wordType, kana: $kana, extra: $extra, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
                 }
                 Section {
                     SoundLookupView(lookupText: frontText, audioData: $audioData, languageToGetSoundFor: deck.deckMetadata.frontLanguage)
                 } header: {
                     Text("Sound")
+                }
+                if deck.deckMetadata.frontLanguage == .SimplifiedChinese {
+                    Section {
+                        TextField("Extra", text: $extra)
+                    } header: {
+                        Text("Extra")
+                    }
                 }
                 Section {
                     Toggle(isOn: $enableTextInputExercise) {
@@ -90,6 +98,7 @@ struct EditCardView: View {
                     // Perform save action here
                     card.frontText = frontText
                     card.kana = kana
+                    card.extra = extra
                     card.type = wordType
                     card.backText = backText
                     card.enableTextInputExercise = enableTextInputExercise

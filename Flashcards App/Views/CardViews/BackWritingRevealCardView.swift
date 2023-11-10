@@ -32,6 +32,8 @@ struct BackWritingRevealCardView: View {
                         .imageScale(.large)
                 }
             }
+            Text(card.extra)
+                .fixedSize(horizontal: false, vertical: true)
         }.onAppear {
             if let currentCard = deck.currentCard {
                 currentCard.playSound()

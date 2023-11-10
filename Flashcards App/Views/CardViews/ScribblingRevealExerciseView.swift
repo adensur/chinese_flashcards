@@ -29,6 +29,8 @@ struct ScribblingRevealExerciseView: View {
                 }
                 Spacer()
             }
+            Text(card.extra)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 }

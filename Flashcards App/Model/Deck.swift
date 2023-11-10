@@ -144,14 +144,14 @@ class Deck: Codable, ObservableObject {
         showOutline = (try? container.decode(Bool.self, forKey: .showOutline)) ?? true
     }
     
-    func addCard(frontText: String, backText: String, kana: String = "", audioData: Data? = nil, enableTextInputExercise: Bool = true, wordType: EWordType = .unknown, cardTemplate: ECardTemplate) {
+    func addCard(frontText: String, backText: String, kana: String = "", audioData: Data? = nil, enableTextInputExercise: Bool = true, wordType: EWordType = .unknown, cardTemplate: ECardTemplate, extra: String) {
         let cardState: ECardState = switch cardTemplate {
         case .twoWay:
                 .simple(.frontSideUp)
         case .threeWay:
                 .japanese(.kanjiToKana)
         }
-        self.cards.append(Card(frontText: frontText, backText: backText, kana: kana, id: maxId, creationDate: Date(), audioData: audioData, enableTextInputExercise: enableTextInputExercise, type: wordType, deck: self, cardState: cardState))
+        self.cards.append(Card(frontText: frontText, backText: backText, kana: kana, id: maxId, creationDate: Date(), audioData: audioData, enableTextInputExercise: enableTextInputExercise, type: wordType, deck: self, cardState: cardState, extra: extra))
         maxId += 1
         // we had no card before, but now we have a card. Need to trigger the repetition update
         if currentIdx == nil {
@@ -376,8 +376,8 @@ var previewDeck = simulatedLoad()
 
 func simulatedLoad() -> Deck {
     let deck = Deck(cards: [], deckMetadata: DeckMetadata.getPreviewDeckMetadata())
-    deck.addCard(frontText: "आगे", backText: "ahead", cardTemplate: .twoWay)
-    deck.addCard(frontText: "पीछे", backText: "behind", cardTemplate: .twoWay)
+    deck.addCard(frontText: "आगे", backText: "ahead", cardTemplate: .twoWay, extra: "")
+    deck.addCard(frontText: "पीछे", backText: "behind", cardTemplate: .twoWay, extra: "")
     deck.nextCard()
     return deck
 }

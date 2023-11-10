@@ -13,6 +13,7 @@ struct AddCardView: View {
     @State private var frontText: String = ""
     @State private var backText: String = ""
     @State private var kana: String = ""
+    @State private var extra: String = ""
     @State private var wordType: EWordType = .unknown
     @State private var enableTextInputExercise: Bool = true
     @State private var audioData: Data? = nil
@@ -75,6 +76,7 @@ struct AddCardView: View {
                             if let pinyin = vocabCard.pinyin {
                                 kana = pinyin
                             }
+                            extra = extraFromEtymology(etymology: vocabCard.etymology, decomposition: vocabCard.decomposition)
                             print("Setting editing to false", Date())
                             showSuggestionsSemafor = -1
                             print("Done setting editing to false", Date())
@@ -93,7 +95,7 @@ struct AddCardView: View {
                 Text(LanguageAwareTexts.frontText(language: deck.deckMetadata.frontLanguage))
             }
             Section {
-                TextFieldLookupView(text: $backText, wordType: $wordType, kana: $kana, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
+                TextFieldLookupView(text: $backText, wordType: $wordType, kana: $kana, extra: $extra, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
             } header: {
                 Text("Back Text")
             }
@@ -111,16 +113,19 @@ struct AddCardView: View {
                 Text("Sound")
             }
             Section {
-                Toggle(isOn: $enableTextInputExercise) {
-                    Text("Enable text input exercise")
-                }
+                TextField("Extra", text: $extra)
             } header: {
-                Text("Exercise options")
+                Text("Extra")
             }
-            //            .onTapGesture {
-            //                print("OnTapGesture! Disabling focus. Was: ", isFocused)
-            //                isFocused = false
-            //            }
+            if deck.deckMetadata.frontLanguage == .SimplifiedChinese {
+                Section {
+                    Toggle(isOn: $enableTextInputExercise) {
+                        Text("Enable text input exercise")
+                    }
+                } header: {
+                    Text("Exercise options")
+                }
+            }
         }
         .onAppear() {
             if deck.deckMetadata.frontLanguage == .SimplifiedChinese {
@@ -135,7 +140,7 @@ struct AddCardView: View {
                 presentationMode.wrappedValue.dismiss()
             },
             trailing: Button("Save") {
-                deck.addCard(frontText: frontText, backText: backText, kana: kana, audioData: audioData, enableTextInputExercise: enableTextInputExercise, wordType: wordType, cardTemplate: deck.lastUsedCardTemplate)
+                deck.addCard(frontText: frontText, backText: backText, kana: kana, audioData: audioData, enableTextInputExercise: enableTextInputExercise, wordType: wordType, cardTemplate: deck.lastUsedCardTemplate, extra: extra)
                 presentationMode.wrappedValue.dismiss()
             }
                 .disabled(saveDisabled)

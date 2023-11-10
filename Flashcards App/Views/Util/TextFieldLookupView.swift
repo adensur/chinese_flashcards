@@ -11,6 +11,7 @@ struct TextFieldLookupView: View {
     @Binding var text: String
     @Binding var wordType: EWordType
     @Binding var kana: String
+    @Binding var extra: String
     var lookupText: String
     var lookupAvailable: Bool {
         get {
@@ -36,6 +37,7 @@ struct TextFieldLookupView: View {
                         if let pinyin = detail.pinyin {
                             kana = pinyin
                         }
+                        extra = extraFromEtymology(etymology: detail.etymology, decomposition: detail.decomposition)
                     }
                     text = details.map {String($0.word)}.joined(separator: "; ")
                 }
@@ -87,6 +89,6 @@ struct TextFieldLookupView: View {
 
 struct TextFieldLookupView_Previews: PreviewProvider {
     static var previews: some View {
-        TextFieldLookupView(text: .constant(""), wordType: .constant(.noun), kana: .constant("bo"), lookupText: "मछली", translateFromLanguage: .Hindi, translateToLanguage: .English)
+        TextFieldLookupView(text: .constant(""), wordType: .constant(.noun), kana: .constant("bo"), extra: .constant(""), lookupText: "मछली", translateFromLanguage: .Hindi, translateToLanguage: .English)
     }
 }

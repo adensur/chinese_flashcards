@@ -75,8 +75,10 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     var type: EWordType = .unknown
     @Published var cardState: ECardState
     weak var deck: Deck?
+    // extra information shown when reveal = true. Sentence examples, etymology etc
+    var extra: String
     
-    init(frontText: String, backText: String, kana: String, id: Int, creationDate: Date, audioData: Data? = nil, enableTextInputExercise: Bool, type: EWordType = .unknown, deck: Deck, cardState: ECardState) {
+    init(frontText: String, backText: String, kana: String, id: Int, creationDate: Date, audioData: Data? = nil, enableTextInputExercise: Bool, type: EWordType = .unknown, deck: Deck, cardState: ECardState, extra: String) {
         self.frontText = frontText
         self.backText = backText
         self.kana = kana
@@ -87,9 +89,10 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         self.type = type
         self.cardState = cardState
         self.deck = deck
+        self.extra = extra
     }
     enum CodingKeys: CodingKey {
-        case id, frontText, backText, kana, creationDate, lastRepetition, learningStage, audioData, cardState, enableTextInputExercise, type
+        case id, frontText, backText, kana, creationDate, lastRepetition, learningStage, audioData, cardState, enableTextInputExercise, type, extra
     }
     
     func encode(to encoder: Encoder) throws {
@@ -105,6 +108,7 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         try container.encode(cardState, forKey: .cardState)
         try container.encode(enableTextInputExercise, forKey: .enableTextInputExercise)
         try container.encode(type.rawValue, forKey: .type)
+        try container.encode(extra, forKey: .extra)
     }
     
     required init(from decoder: Decoder) throws {
@@ -139,6 +143,7 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
                 type = t
             }
         }
+        self.extra = (try? container.decode(String.self, forKey: .extra)) ?? ""
     }
     
     static func ==(lhs: Card, rhs: Card) -> Bool {

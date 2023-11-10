@@ -18,6 +18,8 @@ struct RevealCardView: View {
                     .font(.largeTitle)
                 WordTypeView(type: card.type)
             }
+            Text(card.extra)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 }

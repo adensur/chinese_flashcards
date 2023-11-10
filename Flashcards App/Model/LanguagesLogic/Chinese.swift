@@ -32,3 +32,26 @@ class ChineseMatcher {
         }
     }
 }
+
+func extraFromEtymology(etymology: Etymology?, decomposition: String?) -> String {
+    var result: [String] = []
+    if let decomp = decomposition {
+        result.append("Decomposition: " + decomp)
+    }
+    if let etymology = etymology {
+        result.append("Etymology:")
+        if let t = etymology.type {
+            result.append("Type: " + t)
+        }
+        if let p = etymology.phonetic {
+            result.append("Phonetic: " + p)
+        }
+        if let s = etymology.semantic {
+            result.append("Semantic: " + s)
+        }
+        if let h = etymology.hint {
+            result.append("Hint: " + h)
+        }
+    }
+    return result.joined(separator: "\n")
+}

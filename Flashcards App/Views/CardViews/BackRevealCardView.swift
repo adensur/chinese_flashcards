@@ -26,6 +26,8 @@ struct BackRevealCardView: View {
                         .imageScale(.large)
                 }
             }
+            Text(card.extra)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 }
