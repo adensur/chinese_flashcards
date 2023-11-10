@@ -45,7 +45,7 @@ class SpecificLanguageTextField: UITextField {
     override var textInputMode: UITextInputMode? {
         if let language = self.language {
             for inputMode in UITextInputMode.activeInputModes {
-                if let inputModeLanguage = inputMode.primaryLanguage, inputModeLanguage.prefix(2) == language {
+                if let inputModeLanguage = inputMode.primaryLanguage, inputModeLanguage.prefix(2) == language.prefix(2) {
                     return inputMode
                 }
             }

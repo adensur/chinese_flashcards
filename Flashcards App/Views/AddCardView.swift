@@ -26,7 +26,7 @@ struct AddCardView: View {
     
     var body: some View {
         Form {
-            if deck.deckMetadata.frontLanguage.isHieroglyphLanguage() {
+            if deck.deckMetadata.frontLanguage == .Japanese {
                 Section {
                     Picker(selection: $deck.lastUsedCardTemplate) {
                         ForEach(ECardTemplate.allValues(), id: \.self) {cardTemplate in
@@ -36,12 +36,11 @@ struct AddCardView: View {
                         Text("card template")
                             .foregroundColor(.secondary)
                     }
-
                 }
             }
             Section {
                 HStack {
-                    LanguageAwareTextField("Front Text", text: $frontText, language: deck.deckMetadata.frontLanguage) {
+                    LanguageAwareTextField(LanguageAwareTexts.frontText(language: deck.deckMetadata.frontLanguage), text: $frontText, language: deck.deckMetadata.frontLanguage) {
                     }
                         .autocapitalization(.none)
                         .focused($isFocused)
@@ -86,15 +85,14 @@ struct AddCardView: View {
                         .foregroundColor(.secondary)
                 }
             } header: {
-                Text("Front Text")
+                Text(LanguageAwareTexts.frontText(language: deck.deckMetadata.frontLanguage))
             }
-            
             if deck.lastUsedCardTemplate == .threeWay {
                 Section {
-                    LanguageAwareTextField("Kana", text: $kana, language: deck.deckMetadata.frontLanguage) { }
+                    LanguageAwareTextField(LanguageAwareTexts.kana(language: deck.deckMetadata.frontLanguage), text: $kana, language: deck.deckMetadata.frontLanguage) { }
                         .autocapitalization(.none)
                 } header: {
-                    Text("Kana")
+                    Text(LanguageAwareTexts.kana(language: deck.deckMetadata.frontLanguage))
                 }
             }
             Section {
@@ -118,6 +116,12 @@ struct AddCardView: View {
             //                print("OnTapGesture! Disabling focus. Was: ", isFocused)
             //                isFocused = false
             //            }
+        }
+        .onAppear() {
+            if deck.deckMetadata.frontLanguage == .SimplifiedChinese {
+                // always 3-way for chinese
+                deck.lastUsedCardTemplate = .threeWay
+            }
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Adding Flashcard to \(deck.deckMetadata.name)")

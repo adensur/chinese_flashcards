@@ -43,7 +43,7 @@ struct ExerciseView: View {
                 if deck.disableAllTextInputExercises || !card.enableTextInputExercise {
                     return .backToFront
                 } else {
-                    return .writing
+                    return .kanaWriting
                 }
             case .kanjiToTranslation:
                 return .backToFront
@@ -58,7 +58,9 @@ struct ExerciseView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack {
-                ExerciseHeaderView(deck: deck){ // deck delete callback
+                ExerciseHeaderView(deck: deck){
+                    // this is deck delete callback
+                    // dismisses parent view (of the deleted deck)
                     dismiss()
                 }
                 if let currentCard = deck.currentCard {
@@ -72,6 +74,8 @@ struct ExerciseView: View {
                                 BackCardView(card: currentCard, deck: deck)
                             case .writing:
                                 BackWritingCardView(reveal: $reveal, textInput: $textInput, card: currentCard, deck: deck, focused: $textInputFocus)
+                            case .kanaWriting:
+                                KanaWritingCardView(reveal: $reveal, textInput: $textInput, card: currentCard, deck: deck, focused: $textInputFocus)
                             case .scribbling:
                                 if !reveal {
                                     ScribblingExerciseView(card: currentCard) {
@@ -86,6 +90,8 @@ struct ExerciseView: View {
                                 case .backToFront:
                                     BackRevealCardView(card: currentCard, deck: deck)
                                 case .writing:
+                                    BackWritingRevealCardView(card: currentCard, deck: deck, textInput: textInput)
+                                case .kanaWriting:
                                     BackWritingRevealCardView(card: currentCard, deck: deck, textInput: textInput)
                                 case .scribbling:
                                     ScribblingRevealExerciseView(card: currentCard)
