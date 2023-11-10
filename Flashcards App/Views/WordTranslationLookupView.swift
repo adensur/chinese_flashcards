@@ -20,12 +20,19 @@ struct WordTranslationLookupView: View {
                     ForEach(translations) {detail in
                         HStack {
                             Text("\(detail.word)")
-                            WordTypeView(type: detail.type)
+                            if let type = detail.type {
+                                WordTypeView(type: type)
+                            }
+                            if let pinyin = detail.pinyin {
+                                Text(pinyin)
+                            }
                             Spacer()
                             if selection.contains(detail.word) {
                                 Image(systemName: "checkmark")
                             }
-                            FreqView(freq: detail.freq)
+                            if let freq = detail.freq {
+                                FreqView(freq: freq)
+                            }
                         }
                         .contentShape(Rectangle())
                         .onTapGesture {

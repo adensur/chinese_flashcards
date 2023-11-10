@@ -43,9 +43,14 @@ struct SuggestView: View {
                 ForEach(filteredTexts, id: \.self) { textSearched in
                     HStack {
                         Text(textSearched)
+                        if let pinyin = vocab.cards[textSearched]!.pinyin {
+                            Text(pinyin)
+                        }
                         Spacer()
                         Text(vocab.cards[textSearched]!.backText)
-                        FreqView(freq: vocab.cards[textSearched]!.frequency)
+                        if let freq = vocab.cards[textSearched]!.frequency {
+                            FreqView(freq: freq)
+                        }
                     }
                         .padding(.vertical, 20)
                         .frame(minWidth: 0,

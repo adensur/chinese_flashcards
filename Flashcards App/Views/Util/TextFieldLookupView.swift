@@ -10,6 +10,7 @@ import SwiftUI
 struct TextFieldLookupView: View {
     @Binding var text: String
     @Binding var wordType: EWordType
+    @Binding var kana: String
     var lookupText: String
     var lookupAvailable: Bool {
         get {
@@ -29,7 +30,12 @@ struct TextFieldLookupView: View {
             NavigationLink("this should not be seen", isActive: $detailsPresented) {
                 WordTranslationLookupView(word: lookupText, translations: translations) {details in
                     if let detail = details.first {
-                        wordType = detail.type
+                        if let type = detail.type {
+                            wordType = type
+                        }
+                        if let pinyin = detail.pinyin {
+                            kana = pinyin
+                        }
                     }
                     text = details.map {String($0.word)}.joined(separator: "; ")
                 }
@@ -81,6 +87,6 @@ struct TextFieldLookupView: View {
 
 struct TextFieldLookupView_Previews: PreviewProvider {
     static var previews: some View {
-        TextFieldLookupView(text: .constant(""), wordType: .constant(.noun), lookupText: "मछली", translateFromLanguage: .Hindi, translateToLanguage: .English)
+        TextFieldLookupView(text: .constant(""), wordType: .constant(.noun), kana: .constant("bo"), lookupText: "मछली", translateFromLanguage: .Hindi, translateToLanguage: .English)
     }
 }

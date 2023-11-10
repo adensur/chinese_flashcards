@@ -41,7 +41,7 @@ struct EditCardView: View {
                     }
                 }
                 Section(header: Text("Back Text")) {
-                    TextFieldLookupView(text: $backText, wordType: $wordType, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
+                    TextFieldLookupView(text: $backText, wordType: $wordType, kana: $kana, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
                 }
                 Section {
                     SoundLookupView(lookupText: frontText, audioData: $audioData, languageToGetSoundFor: deck.deckMetadata.frontLanguage)

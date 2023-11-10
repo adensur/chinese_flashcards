@@ -69,7 +69,12 @@ struct AddCardView: View {
                         ) {vocabCard in
                             backText = vocabCard.backText
                             audioData = vocabCard.audioData
-                            wordType = vocabCard.wordType
+                            if let type = vocabCard.wordType {
+                                wordType = type
+                            }
+                            if let pinyin = vocabCard.pinyin {
+                                kana = pinyin
+                            }
                             print("Setting editing to false", Date())
                             showSuggestionsSemafor = -1
                             print("Done setting editing to false", Date())
@@ -96,7 +101,7 @@ struct AddCardView: View {
                 }
             }
             Section {
-                TextFieldLookupView(text: $backText, wordType: $wordType, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
+                TextFieldLookupView(text: $backText, wordType: $wordType, kana: $kana, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
             } header: {
                 Text("Back Text")
             }

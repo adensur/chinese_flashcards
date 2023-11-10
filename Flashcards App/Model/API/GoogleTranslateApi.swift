@@ -40,10 +40,22 @@ func getSound(for word: String, lang: String) async -> Data?  {
     }
 }
 
-struct Detail: Identifiable, Equatable {
+struct Detail: Identifiable {
     let word: String
-    let freq: Int
-    let type: EWordType
+    let freq: Int?
+    let type: EWordType?
+    let pinyin: String?
+    let decomposition: String?
+    let etymology: Etymology?
+    
+    init(word: String, freq: Int?, type: EWordType?, pinyin: String? = nil, decomposition: String? = nil, etymology: Etymology? = nil) {
+        self.word = word
+        self.freq = freq
+        self.type = type
+        self.pinyin = pinyin
+        self.decomposition = decomposition
+        self.etymology = etymology
+    }
     
     var id: String {
         return word

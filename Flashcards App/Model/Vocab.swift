@@ -14,38 +14,61 @@ func getVocabPath(languageFrom: String, languageTo: String) -> URL{
     return documentsDirectory.appendingPathComponent("vocabs/\(languageFrom)_\(languageTo).json")
 }
 
+struct Etymology: Codable {
+    let type: String?
+    let hint: String?
+    let phonetic: String?
+    let semantic: String?
+}
+
 class VocabCard {
     let frontText: String
-    let wordType: EWordType
+    let wordType: EWordType?
     let backText: String
-    let frequency: Int
+    let frequency: Int?
     let audioData: Data?
     let translations: [Detail]
+    let pinyin: String?
+    let decomposition: String?
+    let etymology: Etymology?
 //    let translations: [Translation]
-    init(frontText: String, wordType: EWordType, backText: String, frequency: Int, audioData: Data?, translations: [Detail]) {
+    init(frontText: String, wordType: EWordType?, backText: String, frequency: Int?, audioData: Data?, translations: [Detail], pinyin: String?, decomposition: String?,
+         etymology: Etymology?) {
         self.frontText = frontText
         self.wordType = wordType
         self.backText = backText
         self.audioData = audioData
         self.frequency = frequency
         self.translations = translations
+        self.pinyin = pinyin
+        self.decomposition = decomposition
+        self.etymology = etymology
     }
 }
 
 struct Translation: Codable {
     var translation: String
-    var frequency: Int
-    var type: String
+    var frequency: Int?
+    var type: String?
 }
 
 struct Translations: Codable {
-    var word: String
-    var translations: [Translation]
+    let word: String
+    let translations: [Translation]
+    let pinyin: String?
+    let decomposition: String?
+    let etymology: Etymology?
 }
 
-func parseDetails(_ translations: [Translation]) -> [Detail] {
-    return translations.map {translation in
-        return Detail(word: translation.translation, freq: translation.frequency, type: EWordType.fromString(translation.type))
+func parseDetails(_ translations: Translations) -> [Detail] {
+    return translations.translations.map {translation in
+        let wordType: EWordType?
+        if let typeStr = translation.type {
+            wordType = EWordType.fromString(typeStr)
+        } else {
+            wordType = nil
+        }
+        return Detail(word: translation.translation, freq: translation.frequency, type: wordType, pinyin: translations.pinyin, decomposition: translations.decomposition, etymology: translations.etymology)
     }
 }
 
@@ -69,8 +92,13 @@ class Vocab {
                 let decoder = JSONDecoder()
                 if let translations = try? decoder.decode(Translations.self, from: Data(line.utf8)) {
                     if let translation = translations.translations.first {
-                        let wordType = EWordType.fromString(translation.type)
-                        cards.append(.init(frontText: translations.word, wordType: wordType, backText: translation.translation, frequency: translation.frequency, audioData: nil, translations: parseDetails(translations.translations)))
+                        let wordType: EWordType?
+                        if let typeStr = translation.type {
+                            wordType = EWordType.fromString(typeStr)
+                        } else {
+                            wordType = nil
+                        }
+                        cards.append(.init(frontText: translations.word, wordType: wordType, backText: translation.translation, frequency: translation.frequency, audioData: nil, translations: parseDetails(translations), pinyin: translations.pinyin, decomposition: translations.decomposition, etymology: translations.etymology))
                     }
                 }
             }
