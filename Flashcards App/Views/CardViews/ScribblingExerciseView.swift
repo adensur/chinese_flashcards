@@ -11,7 +11,7 @@ import HanziWriter
 func loadAll() throws -> CharacterHolder {
     let result = CharacterHolder()
 //    for source in ["chi", "hi", "kana", "kanji"] {
-    for source in ["kana", "kanji"] {
+    for source in ["kana", "kanji", "chi"] {
         let url = if source == "chi" {
             Bundle.main.url(forResource: "chi", withExtension: "txt")!
         } else if source == "kana" {

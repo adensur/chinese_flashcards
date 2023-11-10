@@ -26,7 +26,7 @@ struct AddCardView: View {
     
     var body: some View {
         Form {
-            if deck.deckMetadata.frontLanguage == .Japanese {
+            if deck.deckMetadata.frontLanguage.isHieroglyphLanguage() {
                 Section {
                     Picker(selection: $deck.lastUsedCardTemplate) {
                         ForEach(ECardTemplate.allValues(), id: \.self) {cardTemplate in

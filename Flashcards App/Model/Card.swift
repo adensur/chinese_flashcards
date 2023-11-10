@@ -7,9 +7,9 @@
 
 import Foundation
 
-let learningLevels = ["1m", "6m", "9m", "12m", "14m", "16m", "20m", "30m", "1h", "2h", "3h", "4h"]
+let learningLevels = ["0m", "0m", "0m", "1m", "2m", "5m", "20m", "30m", "1h", "2h", "3h", "4h"]
 let repeatingLevels = ["1d", "2d", "3d", "4d", "6d", "8d", "12d", "18d", "24d", "30d", "45d", "60d", "90d", "120d", "180d", "360d"]
-let repeatingAfterMistakeLevels = ["1m", "6m", "12m", "16m", "20m", "30m", "1h", "2h", "3h", "4h"]
+let repeatingAfterMistakeLevels = ["0m", "0m", "12m", "16m", "20m", "30m", "1h", "2h", "3h", "4h"]
 
 // simple exercise. Front and back text, no value checking - just turning the card over
 

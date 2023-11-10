@@ -66,7 +66,7 @@ class Deck: Codable, ObservableObject {
     // number of repeating cards to add to every batch
     static let learnedCardsInBatch = 4
     // instantly make cards with up to this time interval "trainable"
-    static let minTimeInterval = TimeInterval(20 * 60) // 20 minutes
+    static let minTimeInterval = TimeInterval(1 * 60) // 1 minute
     // non-persistent data
     // contains up to maxLastCards last cards, to do advanced shuffling to avoid repetitions
     var lastCards: Deque<Card> = []

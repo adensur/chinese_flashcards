@@ -40,7 +40,7 @@ struct DeckSettingsView: View {
                     Toggle("Disable all writing exercises", isOn: $deck.disableAllTextInputExercises)
                     Toggle("Enable advanced difficulty options", isOn: $deck.showAdvancedDifficultyButtons)
                 }
-                if deck.deckMetadata.frontLanguage == .Japanese {
+                if deck.deckMetadata.frontLanguage.isHieroglyphLanguage() {
                     Section {
                         Toggle("Show outline", isOn: $deck.showOutline)
                     } header: {
