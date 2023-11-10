@@ -40,7 +40,7 @@ func getSound(for word: String, lang: String) async -> Data?  {
     }
 }
 
-struct Detail: Identifiable {
+struct Detail: Identifiable, Equatable {
     let word: String
     let freq: Int
     let type: EWordType
@@ -307,7 +307,11 @@ func getTranslation(for word: String, langFrom: String, langTo: String) async ->
                             return result
                         }
                         let detail = Detail(word: translation, freq: freq, type: wType)
-                        result.append(detail)
+                        if !result.contains(where: { existingDetail in
+                            existingDetail.word == detail.word
+                        }) {
+                            result.append(detail)
+                        }
                     }
                     
                 }

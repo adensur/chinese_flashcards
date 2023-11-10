@@ -30,6 +30,10 @@ struct WordTranslationLookupView: View {
                         .contentShape(Rectangle())
                         .onTapGesture {
                             selection.insert(detail.word)
+                            if translations.count == 1 {
+                                // why bother user with another click in this case?
+                                done()
+                            }
                         }
                     }
                 } header: {
@@ -42,11 +46,7 @@ struct WordTranslationLookupView: View {
             }
             .navigationBarItems(
                 trailing: Button("Done") {
-                    let details = translations.filter {detail in
-                        selection.contains(detail.word)
-                    }
-                    dismiss()
-                    callback(details)
+                    done()
                 }
                     .disabled(selection.isEmpty)
             )
@@ -56,6 +56,14 @@ struct WordTranslationLookupView: View {
                 Spacer()
             }
         }
+    }
+    
+    func done() {
+        let details = translations.filter {detail in
+            selection.contains(detail.word)
+        }
+        dismiss()
+        callback(details)
     }
 }
 
