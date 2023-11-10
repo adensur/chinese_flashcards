@@ -92,6 +92,11 @@ struct AddCardView: View {
             } header: {
                 Text(LanguageAwareTexts.frontText(language: deck.deckMetadata.frontLanguage))
             }
+            Section {
+                TextFieldLookupView(text: $backText, wordType: $wordType, kana: $kana, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
+            } header: {
+                Text("Back Text")
+            }
             if deck.lastUsedCardTemplate == .threeWay {
                 Section {
                     LanguageAwareTextField(LanguageAwareTexts.kana(language: deck.deckMetadata.frontLanguage), text: $kana, language: deck.deckMetadata.frontLanguage) { }
@@ -99,11 +104,6 @@ struct AddCardView: View {
                 } header: {
                     Text(LanguageAwareTexts.kana(language: deck.deckMetadata.frontLanguage))
                 }
-            }
-            Section {
-                TextFieldLookupView(text: $backText, wordType: $wordType, kana: $kana, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)
-            } header: {
-                Text("Back Text")
             }
             Section {
                 SoundLookupView(lookupText: frontText, audioData: $audioData, languageToGetSoundFor: deck.deckMetadata.frontLanguage)
