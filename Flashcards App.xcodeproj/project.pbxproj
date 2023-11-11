@@ -76,6 +76,7 @@
 		09D193402AFF7A530008A0FA /* LanguageAwareTexts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D1933F2AFF7A530008A0FA /* LanguageAwareTexts.swift */; };
 		09D193422AFF7A670008A0FA /* Chinese.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D193412AFF7A670008A0FA /* Chinese.swift */; };
 		09D193442AFF7A780008A0FA /* KanaWritingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D193432AFF7A780008A0FA /* KanaWritingCardView.swift */; };
+		09D193462AFF7B160008A0FA /* chi.txt in Resources */ = {isa = PBXBuildFile; fileRef = 09D193452AFF7B160008A0FA /* chi.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +155,7 @@
 		09D1933F2AFF7A530008A0FA /* LanguageAwareTexts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageAwareTexts.swift; sourceTree = "<group>"; };
 		09D193412AFF7A670008A0FA /* Chinese.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chinese.swift; sourceTree = "<group>"; };
 		09D193432AFF7A780008A0FA /* KanaWritingCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KanaWritingCardView.swift; sourceTree = "<group>"; };
+		09D193452AFF7B160008A0FA /* chi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chi.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -308,6 +310,7 @@
 			children = (
 				097366832ADD5AD200A8A6FA /* kana.json */,
 				097366852ADD620100A8A6FA /* kanji.json */,
+				09D193452AFF7B160008A0FA /* chi.txt */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -466,6 +469,7 @@
 				097366842ADD5AD200A8A6FA /* kana.json in Resources */,
 				097366862ADD620100A8A6FA /* kanji.json in Resources */,
 				098FDF172A98AA32009AD700 /* GoogleService-Info.plist in Resources */,
+				09D193462AFF7B160008A0FA /* chi.txt in Resources */,
 				09156D612A31C3B200BA2D89 /* Preview Assets.xcassets in Resources */,
 				09156D5E2A31C3B200BA2D89 /* Assets.xcassets in Resources */,
 			);
