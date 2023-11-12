@@ -78,7 +78,7 @@ struct ExerciseView: View {
                                 KanaWritingCardView(reveal: $reveal, textInput: $textInput, card: currentCard, deck: deck, focused: $textInputFocus)
                             case .scribbling:
                                 if !reveal {
-                                    ScribblingExerciseView(card: currentCard) {
+                                    ScribblingExerciseView(language: deck.deckMetadata.frontLanguage, card: currentCard) {
                                         reveal = true
                                     }
                                 }
@@ -94,7 +94,7 @@ struct ExerciseView: View {
                                 case .kanaWriting:
                                     BackWritingRevealCardView(card: currentCard, deck: deck, textInput: textInput)
                                 case .scribbling:
-                                    ScribblingRevealExerciseView(card: currentCard)
+                                    ScribblingRevealExerciseView(language: deck.deckMetadata.frontLanguage, card: currentCard)
                                 }
                             }
                         }

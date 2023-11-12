@@ -9,6 +9,7 @@ import SwiftUI
 import HanziWriter
 
 struct ScribblingRevealExerciseView: View {
+    let language: ELanguage
     @ObservedObject var card: Card
     var characters: [String] {
         return charactersFromString(card.currentFrontText)
@@ -40,12 +41,12 @@ struct ScribblingRevealExerciseView: View {
         }
         .onAppear {
             Task {
-                characterHolder = await characterHolderSingleton.get()
+                characterHolder = await characterHolderSingleton.get(language: language)
             }
         }
     }
 }
 
 #Preview {
-    ScribblingRevealExerciseView(card: previewDeck.cards[0])
+    ScribblingRevealExerciseView(language: .SimplifiedChinese, card: previewDeck.cards[0])
 }

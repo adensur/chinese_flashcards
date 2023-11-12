@@ -50,7 +50,9 @@ struct DecksView: View {
             }
              Task {
 //            Task.detached(priority: .medium) {
-                 let _ = await characterHolderSingleton.get().data["ー"]
+                 for deck in decks.decks {
+                     let _ = await characterHolderSingleton.get(language: deck.frontLanguage).data["ー"]
+                 }
             }
         }
     }
