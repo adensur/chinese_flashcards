@@ -41,11 +41,16 @@ struct DecksView: View {
             }
         }
         .onAppear {
-            // async preload all saved decks from disk
+            
             Task {
+                // async preload all saved decks from disk
                 for deck in decks.decks {
                     let _ = Deck.load(deckMetadata: deck)
                 }
+            }
+             Task {
+//            Task.detached(priority: .medium) {
+                 let _ = await characterHolderSingleton.get().data["ー"]
             }
         }
     }

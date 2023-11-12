@@ -8,7 +8,43 @@
 import SwiftUI
 import HanziWriter
 
-func loadAll() throws -> CharacterHolder {
+let characterHolderSingleton = CharacterHolderSingleton()
+
+class CharacterHolderSingleton {
+    private var characterHolder: CharacterHolder?
+    private let semaphore = DispatchSemaphore(value: 1)
+
+    func get() async -> CharacterHolder {
+        if let characterHolder = characterHolder {
+            return characterHolder
+        }
+
+        return await loadCharacterHolder()
+    }
+
+    private func loadCharacterHolder() async -> CharacterHolder {
+        print("loadCharacterHolder")
+        semaphore.wait()
+        print("loadCharacterHolder after semaphor")
+        // Check again if another thread has already initialized characterHolder
+        if let existingHolder = characterHolder {
+            semaphore.signal()
+            return existingHolder
+        }
+
+        let holder = try! await loadAll()
+
+        // Update characterHolder on the main queue
+        self.characterHolder = holder
+        self.semaphore.signal()
+
+        return holder
+    }
+}
+
+func loadAll() async throws -> CharacterHolder {
+    print("CharacterHolder.loadAll()")
+    let start = Date()
     let result = CharacterHolder()
 //    for source in ["chi", "hi", "kana", "kanji"] {
     for source in ["kana", "kanji", "chi"] {
@@ -22,13 +58,12 @@ func loadAll() throws -> CharacterHolder {
             Bundle.main.url(forResource: "hi", withExtension: "json")!
         }
         let chiHack = ["chi"].contains(source) ? true : false
-        let holder = try! CharacterHolder.load(url: url, chiHack: chiHack)
+        let holder = try! await CharacterHolder.load(url: url, chiHack: chiHack)
         result.merge(from: holder)
     }
+    print("CharacterHolder.loadAll() finished in ", start.timeIntervalSinceNow)
     return result
 }
-
-let characterHolder = try! loadAll()
 
 func charactersFromString(_ str: String) -> [String] {
     var result: [String] = []
@@ -46,20 +81,30 @@ struct ScribblingExerciseView: View {
     var characters: [String] {
         return charactersFromString(card.currentFrontText)
     }
+    @State private var characterHolder: CharacterHolder?
     
     var body: some View {
         VStack {
             Text(card.scribblePrompt)
                 .font(.largeTitle)
-            if let characterData = getCharacter() {
-                QuizCharacterView(dataModel: .init(character: characterData, showOutline: card.deck?.showOutline ?? true, canvasEnabled: true) {
-                    next()
-                })
-            } else {
-                Text("Couldn't display \(characters[currentIdx])")
-                Button("skip") {
-                    next()
+            if let holder = characterHolder {
+                if let characterData = getCharacter(holder) {
+                    QuizCharacterView(dataModel: .init(character: characterData, showOutline: card.deck?.showOutline ?? true, canvasEnabled: true) {
+                        next()
+                    })
+                } else {
+                    Text("Couldn't display \(characters[currentIdx])")
+                    Button("skip") {
+                        next()
+                    }
                 }
+            } else {
+                ProgressView()
+            }
+        }
+        .onAppear() {
+            Task {
+                characterHolder = await CharacterHolderSingleton().get()
             }
         }
     }
@@ -73,8 +118,8 @@ struct ScribblingExerciseView: View {
         currentIdx += 1
     }
     
-    func getCharacter() -> TCharacter? {
-        return characterHolder.data[characters[currentIdx]]
+    func getCharacter(_ holder: CharacterHolder) -> TCharacter? {
+        return holder.data[characters[currentIdx]]
     }
 }
 

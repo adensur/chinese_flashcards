@@ -14,6 +14,8 @@ struct ScribblingRevealExerciseView: View {
         return charactersFromString(card.currentFrontText)
     }
     
+    @State private var characterHolder: CharacterHolder? = nil
+    
     var body: some View {
         VStack {
             Text(card.scribblePrompt)
@@ -21,16 +23,25 @@ struct ScribblingRevealExerciseView: View {
             HStack {
                 Spacer()
                 ForEach(characters, id: \.self) {character in
-                    if let characterData = characterHolder.data[character] {
-                        CharacterView(character: characterHolder.data[character]!)
+                    if let holder = characterHolder {
+                        if let characterData = holder.data[character] {
+                            CharacterView(character: holder.data[character]!)
+                        } else {
+                            Text("Couldn't display \(character)")
+                        }
                     } else {
-                        Text("Couldn't display \(character)")
+                        ProgressView()
                     }
                 }
                 Spacer()
             }
             Text(card.extra)
                 .fixedSize(horizontal: false, vertical: true)
+        }
+        .onAppear {
+            Task {
+                characterHolder = await characterHolderSingleton.get()
+            }
         }
     }
 }

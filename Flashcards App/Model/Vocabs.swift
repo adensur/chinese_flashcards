@@ -27,16 +27,19 @@ class Vocabs {
                 return vocab
             }
         }
-        let vocab = Vocab.loadV2(languageFrom: languageFrom, languageTo: languageTo)
-        if vocabs[languageFrom] == nil {
-            vocabs[languageFrom] = [:]
+        let vocab = Vocab.load(languageFrom: languageFrom, languageTo: languageTo)
+        let serialQueue = DispatchQueue(label: "Vocabs")
+        serialQueue.sync {
+            if vocabs[languageFrom] == nil {
+                vocabs[languageFrom] = [:]
+            }
+            vocabs[languageFrom]![languageTo] = vocab
         }
-        vocabs[languageFrom]![languageTo] = vocab
         return vocab
     }
     
     func updateVocab(languageFrom: String, languageTo: String) {
-        let vocab = Vocab.loadV2(languageFrom: languageFrom, languageTo: languageTo)
+        let vocab = Vocab.load(languageFrom: languageFrom, languageTo: languageTo)
         if vocabs[languageFrom] == nil {
             vocabs[languageFrom] = [:]
         }
