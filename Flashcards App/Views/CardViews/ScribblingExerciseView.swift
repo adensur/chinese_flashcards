@@ -15,17 +15,15 @@ class CharacterHolderSingleton {
     private let semaphore = DispatchSemaphore(value: 1)
 
     func get() async -> CharacterHolder {
+        let start = Date()
         if let characterHolder = characterHolder {
             return characterHolder
         }
-
         return await loadCharacterHolder()
     }
 
     private func loadCharacterHolder() async -> CharacterHolder {
-        print("loadCharacterHolder")
         semaphore.wait()
-        print("loadCharacterHolder after semaphor")
         // Check again if another thread has already initialized characterHolder
         if let existingHolder = characterHolder {
             semaphore.signal()
@@ -45,9 +43,10 @@ class CharacterHolderSingleton {
 func loadAll() async throws -> CharacterHolder {
     print("CharacterHolder.loadAll()")
     let start = Date()
-    let result = CharacterHolder()
+    let result = CharacterHolder(chiHack: true)
 //    for source in ["chi", "hi", "kana", "kanji"] {
-    for source in ["kana", "kanji", "chi"] {
+    // for source in ["kana", "kanji", "chi"] {
+    for source in ["chi"] {
         let url = if source == "chi" {
             Bundle.main.url(forResource: "chi", withExtension: "txt")!
         } else if source == "kana" {
@@ -104,7 +103,10 @@ struct ScribblingExerciseView: View {
         }
         .onAppear() {
             Task {
-                characterHolder = await CharacterHolderSingleton().get()
+                print("loading holder")
+                let start = Date()
+                characterHolder = await characterHolderSingleton.get()
+                print("finished loading holder in ", Date().timeIntervalSince(start))
             }
         }
     }
@@ -119,7 +121,7 @@ struct ScribblingExerciseView: View {
     }
     
     func getCharacter(_ holder: CharacterHolder) -> TCharacter? {
-        return holder.data[characters[currentIdx]]
+        return holder.get(characters[currentIdx])
     }
 }
 

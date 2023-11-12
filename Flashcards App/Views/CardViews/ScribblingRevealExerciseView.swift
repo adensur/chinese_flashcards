@@ -24,8 +24,8 @@ struct ScribblingRevealExerciseView: View {
                 Spacer()
                 ForEach(characters, id: \.self) {character in
                     if let holder = characterHolder {
-                        if let characterData = holder.data[character] {
-                            CharacterView(character: holder.data[character]!)
+                        if let characterData = holder.get(character) {
+                            CharacterView(character: characterData)
                         } else {
                             Text("Couldn't display \(character)")
                         }
