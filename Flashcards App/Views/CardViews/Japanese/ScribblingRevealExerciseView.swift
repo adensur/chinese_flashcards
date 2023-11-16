@@ -19,8 +19,13 @@ struct ScribblingRevealExerciseView: View {
     
     var body: some View {
         VStack {
-            Text(card.scribblePrompt)
+            Text(card.frontText)
                 .font(.largeTitle)
+            Text(card.backText)
+                .font(.largeTitle)
+            Text(card.kana)
+                .font(.largeTitle)
+                .foregroundStyle(.secondary)
             HStack {
                 Spacer()
                 ForEach(characters, id: \.self) {character in

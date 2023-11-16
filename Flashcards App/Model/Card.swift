@@ -14,7 +14,7 @@ let repeatingAfterMistakeLevels = ["0m", "0m", "12m", "16m", "20m", "30m", "1h",
 // simple exercise. Front and back text, no value checking - just turning the card over
 
 enum EExerciseType: Codable {
-    case frontToBack, backToFront, writing, kanaWriting, scribbling
+    case frontToBack, backToFront, writing, kanaWriting, scribbling, kanjiToTranslation
 }
 
 enum ESimpleCardState: Codable {

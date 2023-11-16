@@ -46,7 +46,7 @@ struct ExerciseView: View {
                     return .kanaWriting
                 }
             case .kanjiToTranslation:
-                return .backToFront
+                return .kanjiToTranslation
             case .kanaToKanji:
                 return .scribbling
             case .translationToKanji:
@@ -82,6 +82,8 @@ struct ExerciseView: View {
                                         reveal = true
                                     }
                                 }
+                            case .kanjiToTranslation:
+                                KanjiToTranslationView(card: currentCard, deck: deck)
                             }
                             if reveal {
                                 switch currentExercise! {
@@ -92,9 +94,11 @@ struct ExerciseView: View {
                                 case .writing:
                                     BackWritingRevealCardView(card: currentCard, deck: deck, textInput: textInput)
                                 case .kanaWriting:
-                                    BackWritingRevealCardView(card: currentCard, deck: deck, textInput: textInput)
+                                    KanaWritingRevealCardView(card: currentCard, deck: deck, textInput: textInput)
                                 case .scribbling:
                                     ScribblingRevealExerciseView(language: deck.deckMetadata.frontLanguage, card: currentCard)
+                                case .kanjiToTranslation:
+                                    KanjiToTranslationRevealView(card: currentCard, deck: deck)
                                 }
                             }
                         }
