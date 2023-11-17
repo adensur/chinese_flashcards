@@ -263,6 +263,12 @@ func getTranslation(for word: String, langFrom: String, langTo: String) async ->
                     print("transient error in parsing translate details response #2")
                     return nil
                 }
+                var pinyin: String? = nil
+                if subobj2.count > 6 {
+                    if let p = subobj2[6] as? String {
+                        pinyin = p.lowercased()
+                    }
+                }
                 guard let subobj3 = subobj2[5] as? [Any] else {
                     print("non-transient error in parsing translate details response #6")
                     return result
@@ -318,7 +324,7 @@ func getTranslation(for word: String, langFrom: String, langTo: String) async ->
                             print("non-transient error in parsing translate details response #18")
                             return result
                         }
-                        let detail = Detail(word: translation, freq: freq, type: wType)
+                        let detail = Detail(word: translation, freq: freq, type: wType, pinyin: pinyin)
                         if !result.contains(where: { existingDetail in
                             existingDetail.word == detail.word
                         }) {
