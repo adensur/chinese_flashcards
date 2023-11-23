@@ -36,7 +36,11 @@ struct WordTranslationLookupView: View {
                         }
                         .contentShape(Rectangle())
                         .onTapGesture {
-                            selection.insert(detail.word)
+                            if selection.contains(detail.word) {
+                                selection.remove(detail.word)
+                            } else {
+                                selection.insert(detail.word)
+                            }
                             if translations.count == 1 {
                                 // why bother user with another click in this case?
                                 done()
