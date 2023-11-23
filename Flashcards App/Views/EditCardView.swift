@@ -18,6 +18,8 @@ struct EditCardView: View {
     @State private var backText: String = ""
     @State private var enableTextInputExercise: Bool = false
     @State private var audioData: Data? = nil
+    @State private var markAsLearnedAlertPresented: Bool = false
+    @State private var resetProgressAlertPresented: Bool = false
     var body: some View {
         VStack {
             Form {
@@ -49,13 +51,6 @@ struct EditCardView: View {
                 } header: {
                     Text("Sound")
                 }
-                if deck.deckMetadata.frontLanguage == .SimplifiedChinese {
-                    Section {
-                        TextField("Extra", text: $extra)
-                    } header: {
-                        Text("Extra")
-                    }
-                }
                 Section {
                     Toggle(isOn: $enableTextInputExercise) {
                         Text("Enable text input exercise")
@@ -69,6 +64,17 @@ struct EditCardView: View {
                     CardMoveView(decks: deck.deckMetadata.decks!, currentDeck: deck, card: card) {
                         dismiss()
                     }
+                }
+                Section {
+                    Text("Next repetition: \(card.encodedNextRepetition())")
+                    Button("Mark as learned") {
+                        markAsLearnedAlertPresented = true
+                    }
+                    Button("Reset progress") {
+                        resetProgressAlertPresented = true
+                    }
+                } header: {
+                    Text("Stats")
                 }
             }.onAppear {
                 self.frontText = card.frontText
@@ -85,6 +91,24 @@ struct EditCardView: View {
                 Text("Delete")
                     .padding()
                     .foregroundColor(.red)
+            }
+        }
+        .alert("This will remove the card from exercise rotation, but you can still find it in your deck", isPresented: $markAsLearnedAlertPresented) {
+            HStack {
+                Button("OK") {
+                    card.learningStage = .Learned
+                    deck.save()
+                }
+                Button("Cancel") { }
+            }
+        }
+        .alert("Are you sure?", isPresented: $resetProgressAlertPresented) {
+            HStack {
+                Button("OK") {
+                    card.learningStage = .New
+                    deck.save()
+                }
+                Button("Cancel") { }
             }
         }
         .navigationTitle("Edit Flashcard")

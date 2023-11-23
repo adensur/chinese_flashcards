@@ -44,7 +44,7 @@ class Deck: Codable, ObservableObject {
         }
     }
     @Published var deckMetadata: DeckMetadata
-    @Published var showAdvancedDifficultyButtons: Bool = false {
+    @Published var showAdvancedDifficultyButtons: Bool {
         didSet {
             if showAdvancedDifficultyButtons != oldValue {
                 save()
@@ -105,6 +105,7 @@ class Deck: Codable, ObservableObject {
     init(cards: [Card], deckMetadata: DeckMetadata) {
         self.cards = cards
         self.deckMetadata = deckMetadata
+        self.showAdvancedDifficultyButtons = false
     }
     
     enum CodingKeys: CodingKey {
@@ -130,11 +131,6 @@ class Deck: Codable, ObservableObject {
         maxId = try container.decode(Int.self, forKey: .maxId)
         currentIdx = try? container.decode((Int?).self, forKey: .currentIdx)
         deckMetadata = try container.decode(DeckMetadata.self, forKey: .deckMetadata)
-        if let idx = currentIdx {
-            nextRepetitionDate = cards[idx].getNextRepetition()
-        } else {
-            nextCard()
-        }
         shuffle = try container.decode(Bool.self, forKey: .shuffle)
         if let val = try? container.decode(Bool.self, forKey: .disableAllTextInputExercises) {
             disableAllTextInputExercises = val
@@ -142,6 +138,11 @@ class Deck: Codable, ObservableObject {
         showAdvancedDifficultyButtons = (try? container.decode(Bool.self, forKey: .showAdvancedDifficultyButtons)) ?? false
         lastUsedCardTemplate = (try? container.decode(ECardTemplate.self, forKey: .lastUsedCardTemplate)) ?? .twoWay
         showOutline = (try? container.decode(Bool.self, forKey: .showOutline)) ?? true
+        if let idx = currentIdx {
+            nextRepetitionDate = cards[idx].getNextRepetition()
+        } else {
+            nextCard()
+        }
     }
     
     func addCard(frontText: String, backText: String, kana: String = "", audioData: Data? = nil, enableTextInputExercise: Bool = true, wordType: EWordType = .unknown, cardTemplate: ECardTemplate, extra: String) {
@@ -367,6 +368,7 @@ class Deck: Codable, ObservableObject {
             deck.deckMetadata = deckMetadata
             return deck
         } else {
+            print("Deck decode failed, loading empty deck")
             return Deck(cards: [], deckMetadata: deckMetadata)
         }
     }

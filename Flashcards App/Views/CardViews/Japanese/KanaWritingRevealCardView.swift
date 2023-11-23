@@ -20,13 +20,13 @@ struct KanaWritingRevealCardView: View {
                 Text(card.currentFrontText)
                     .font(.largeTitle)
                     .background(Color.green)
-                Text(card.backText)
-                    .font(.largeTitle)
             } else {
                 Text("Incorrect")
                     .font(.largeTitle)
                 CorrectedTextView(text: textInput, correctText: card.currentFrontText)
             }
+            Text(card.backText)
+                .font(.largeTitle)
             if let data = card.audioData {
                 PlaySoundButton(audioData: data) {
                     Image(systemName: "speaker.wave.3.fill")

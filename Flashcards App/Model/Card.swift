@@ -194,9 +194,14 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     }
     
     // when would the next repetition be if we press a button with certain difficulty
-    func getNextRepetitionTooltip(difficulty: Difficulty) -> String{
+    func getNextRepetitionTooltip(difficulty: Difficulty) -> String {
         let nextStage = getNextStage(learningStage: self.learningStage, difficulty: difficulty)
-        return encodeTimeInterval(timeInterval: getRepetitionInterval(learningStage: nextStage))
+        switch nextStage {
+        case .Learned:
+            return "Learned!"
+        default:
+            return encodeTimeInterval(timeInterval: getRepetitionInterval(learningStage: nextStage))
+        }
     }
     
     // when will the next repetition be for current card level
@@ -310,6 +315,17 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
             }
         }
     }
+    
+    func encodedNextRepetition() -> String {
+        switch learningStage {
+        case .Learned:
+            return "Never"
+        case .New:
+            return "Now"
+        default:
+            return encodeTimeInterval(timeInterval: getNextRepetition().timeIntervalSinceNow)
+        }
+    }
 }
 
 // New - the card was just added, with no repetitions yet
@@ -413,12 +429,15 @@ func getRepetitionInterval(learningStage: LearningStage) -> TimeInterval {
         let level = min(repeatingAfterMistakeLevels.count, level)
         return parseTimeInterval(timeInterval: repeatingAfterMistakeLevels[level])
     case .Learned:
-        return TimeInterval(0)
+        return TimeInterval(Double.greatestFiniteMagnitude)
     }
 }
 
 
 func encodeTimeInterval(timeInterval: TimeInterval) -> String {
+    if timeInterval < 0 {
+        return "Now"
+    }
     if timeInterval < 60.0 {
         return "\(Int(timeInterval))s"
     }
