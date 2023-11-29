@@ -63,19 +63,37 @@ struct TextFieldLookupView: View {
                         if let vocab = vocabs.getVocab(languageFrom: translateFromLanguage.rawValue, languageTo: translateToLanguage.rawValue) {
                             if let vocabCard = vocab.cards[lookupText] {
                                 self.translations = vocabCard.translations
-                                detailsPresented = true
-                                errorPresented = false
-                                return
+                                // continue requesting from google api as well
                             }
                         }
                         loading = true
                         Task {
                             let translations = await getTranslation(for: lookupText, langFrom: translateFromLanguage.rawValue, langTo: translateToLanguage.rawValue)
-                            if let translations = translations {
+                            if var translations = translations {
+                                for translation in self.translations {
+                                    if !translations.contains(where: {detail in
+                                        detail.word == translation.word
+                                    }) {
+                                        translations.append(translation)
+                                    }
+                                }
+                                // remove possible dups and sort
+                                translations.sort {
+                                    if let freq1 = $0.freq {
+                                        if let freq2 = $1.freq {
+                                            return freq1 < freq2
+                                        }
+                                        return true
+                                    }
+                                    return false
+                                }
                                 self.translations = translations
                                 detailsPresented = true
                                 errorPresented = false
                             } else {
+                                if !self.translations.isEmpty {
+                                    detailsPresented = true
+                                }
                                 errorPresented = true
                             }
                             loading = false

@@ -15,7 +15,6 @@ class CharacterHolderSingleton {
     private let semaphore = DispatchSemaphore(value: 1)
 
     func get(language: ELanguage) async -> CharacterHolder {
-        let start = Date()
         if let characterHolder = data[language] {
             return characterHolder
         }
