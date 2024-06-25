@@ -53,6 +53,8 @@
 		0978584D2A8FD822000A4908 /* WordTranslationLookupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0978584C2A8FD822000A4908 /* WordTranslationLookupView.swift */; };
 		097858892A912264000A4908 /* TextFieldLookupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097858882A912264000A4908 /* TextFieldLookupView.swift */; };
 		0980AF752C2AF07D00583270 /* HanziWriter in Frameworks */ = {isa = PBXBuildFile; productRef = 0980AF742C2AF07D00583270 /* HanziWriter */; };
+		0980AF772C2B014C00583270 /* KanaToTranslationRevealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980AF762C2B014B00583270 /* KanaToTranslationRevealView.swift */; };
+		0980AF792C2B01CD00583270 /* KanaToTranslationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0980AF782C2B01CD00583270 /* KanaToTranslationView.swift */; };
 		098A160E2A7263FA00D3CA84 /* MyForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098A160D2A7263FA00D3CA84 /* MyForm.swift */; };
 		098FDEFF2A966C01009AD700 /* CardCountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098FDEFE2A966C01009AD700 /* CardCountsView.swift */; };
 		098FDF062A97AC4C009AD700 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 098FDF052A97AC4C009AD700 /* FirebaseAnalytics */; };
@@ -147,6 +149,8 @@
 		097366782ADD4D1200A8A6FA /* CardTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTemplateView.swift; sourceTree = "<group>"; };
 		0978584C2A8FD822000A4908 /* WordTranslationLookupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTranslationLookupView.swift; sourceTree = "<group>"; };
 		097858882A912264000A4908 /* TextFieldLookupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLookupView.swift; sourceTree = "<group>"; };
+		0980AF762C2B014B00583270 /* KanaToTranslationRevealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanaToTranslationRevealView.swift; sourceTree = "<group>"; };
+		0980AF782C2B01CD00583270 /* KanaToTranslationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanaToTranslationView.swift; sourceTree = "<group>"; };
 		098A160D2A7263FA00D3CA84 /* MyForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyForm.swift; sourceTree = "<group>"; };
 		098FDEFE2A966C01009AD700 /* CardCountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCountsView.swift; sourceTree = "<group>"; };
 		098FDF122A98A0AF009AD700 /* Vocabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vocabs.swift; sourceTree = "<group>"; };
@@ -205,6 +209,8 @@
 				0912C8822C29FE8800400F94 /* KanjiToTranslationView.swift */,
 				0912C8832C29FE8800400F94 /* ScribblingExerciseView.swift */,
 				0912C8842C29FE8800400F94 /* ScribblingRevealExerciseView.swift */,
+				0980AF762C2B014B00583270 /* KanaToTranslationRevealView.swift */,
+				0980AF782C2B01CD00583270 /* KanaToTranslationView.swift */,
 			);
 			path = Japanese;
 			sourceTree = "<group>";
@@ -520,6 +526,7 @@
 			files = (
 				098FDEFF2A966C01009AD700 /* CardCountsView.swift in Sources */,
 				0912C87B2C29EF0700400F94 /* ScribbleCharacterHolder.swift in Sources */,
+				0980AF792C2B01CD00583270 /* KanaToTranslationView.swift in Sources */,
 				09D13DB82AADCBBD004E2A59 /* CardMoveView.swift in Sources */,
 				0973666F2ADD437D00A8A6FA /* FrontCardView.swift in Sources */,
 				097366732ADD439500A8A6FA /* BackCardView.swift in Sources */,
@@ -554,6 +561,7 @@
 				098FDF132A98A0AF009AD700 /* Vocabs.swift in Sources */,
 				097366712ADD438E00A8A6FA /* RevealCardView.swift in Sources */,
 				096D8FDF2A3724F800E402B5 /* AddCardView.swift in Sources */,
+				0980AF772C2B014C00583270 /* KanaToTranslationRevealView.swift in Sources */,
 				098A160E2A7263FA00D3CA84 /* MyForm.swift in Sources */,
 				0942079C2A83BD38009EAE2F /* DeckSettingsView.swift in Sources */,
 				097366752ADD439A00A8A6FA /* BackRevealCardView.swift in Sources */,

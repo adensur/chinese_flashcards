@@ -151,6 +151,8 @@ class Deck: Codable, ObservableObject {
                 .simple(.frontSideUp)
         case .threeWay:
                 .japanese(.kanjiToKana)
+        case .twoWayKana:
+                .japanese(.kanaToTranslation)
         }
         self.cards.append(Card(frontText: frontText, backText: backText, kana: kana, id: maxId, creationDate: Date(), audioData: audioData, enableTextInputExercise: enableTextInputExercise, type: wordType, deck: self, cardState: cardState, extra: extra))
         maxId += 1

@@ -51,6 +51,10 @@ struct ExerciseView: View {
                 return .scribbling
             case .translationToKanji:
                 return .scribbling
+            case .kanaToTranslation:
+                return .kanaToTranslation
+            case .translationToKana:
+                return .translationToKana
             }
         }
     }
@@ -84,6 +88,14 @@ struct ExerciseView: View {
                                 }
                             case .kanjiToTranslation:
                                 KanjiToTranslationView(card: currentCard, deck: deck)
+                            case .kanaToTranslation:
+                                KanaToTranslationView(card: currentCard, deck: deck)
+                            case .translationToKana:
+                                if !reveal {
+                                    ScribblingExerciseView(language: deck.deckMetadata.frontLanguage, card: currentCard) {
+                                        reveal = true
+                                    }
+                                }
                             }
                             if reveal {
                                 switch currentExercise! {
@@ -99,6 +111,10 @@ struct ExerciseView: View {
                                     ScribblingRevealExerciseView(language: deck.deckMetadata.frontLanguage, card: currentCard)
                                 case .kanjiToTranslation:
                                     KanjiToTranslationRevealView(card: currentCard, deck: deck)
+                                case .kanaToTranslation:
+                                    KanaToTranslationRevealView(card: currentCard, deck: deck)
+                                case .translationToKana:
+                                    ScribblingRevealExerciseView(language: deck.deckMetadata.frontLanguage, card: currentCard)
                                 }
                             }
                         }

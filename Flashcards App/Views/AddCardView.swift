@@ -41,7 +41,7 @@ struct AddCardView: View {
             }
             Section {
                 HStack {
-                    LanguageAwareTextField(LanguageAwareTexts.frontText(language: deck.deckMetadata.frontLanguage), text: $frontText, language: deck.deckMetadata.frontLanguage) {
+                    LanguageAwareTextField(LanguageAwareTexts.frontPlaceholder(language: deck.deckMetadata.frontLanguage, template: deck.lastUsedCardTemplate), text: $frontText, language: deck.deckMetadata.frontLanguage) {
                     }
                         .autocapitalization(.none)
                         .focused($isFocused)
@@ -92,7 +92,7 @@ struct AddCardView: View {
                         .foregroundColor(.secondary)
                 }
             } header: {
-                Text(LanguageAwareTexts.frontText(language: deck.deckMetadata.frontLanguage))
+                Text(LanguageAwareTexts.frontText(language: deck.deckMetadata.frontLanguage, template: deck.lastUsedCardTemplate))
             }
             Section {
                 TextFieldLookupView(text: $backText, wordType: $wordType, kana: $kana, extra: $extra, lookupText: frontText, translateFromLanguage: deck.deckMetadata.frontLanguage, translateToLanguage: deck.deckMetadata.backLanguage)

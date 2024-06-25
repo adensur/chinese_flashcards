@@ -10,10 +10,12 @@ import SwiftUI
 enum ECardTemplate: Codable {
     case twoWay
     case threeWay
+    case twoWayKana
     static func allValues() -> [ECardTemplate] {
         return [
             .twoWay,
-            .threeWay
+            .threeWay,
+            .twoWayKana,
         ]
     }
 }
@@ -26,6 +28,8 @@ struct CardTemplateView: View {
             Text("2-way: front to back text")
         case .threeWay:
             Text("3-way: kanji - kana - translation")
+        case .twoWayKana:
+            Text("2-way: kana scribbling - romanization")
         }
     }
 }

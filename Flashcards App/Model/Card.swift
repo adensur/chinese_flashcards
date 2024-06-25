@@ -14,7 +14,7 @@ let repeatingAfterMistakeLevels = ["0m", "0m", "12m", "16m", "20m", "30m", "1h",
 // simple exercise. Front and back text, no value checking - just turning the card over
 
 enum EExerciseType: Codable {
-    case frontToBack, backToFront, writing, kanaWriting, scribbling, kanjiToTranslation
+    case frontToBack, backToFront, writing, kanaWriting, scribbling, kanjiToTranslation, kanaToTranslation, translationToKana
 }
 
 enum ESimpleCardState: Codable {
@@ -26,6 +26,8 @@ enum EJapaneseCardState: Codable {
     case kanjiToTranslation
     case kanaToKanji
     case translationToKanji
+    case kanaToTranslation
+    case translationToKana
 }
 
 // encodes the card type and state: simple 2-way front-to-back or japanese 3-way kanji - kana - translation
@@ -174,6 +176,10 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
                 cardState = .japanese(.kanjiToTranslation)
             case .translationToKanji:
                 cardState = .japanese(.kanjiToKana)
+            case .kanaToTranslation:
+                cardState = .japanese(.translationToKana)
+            case .translationToKana:
+                cardState = .japanese(.kanaToTranslation)
             }
         }
     }
@@ -241,6 +247,10 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
                 true
             case .translationToKanji:
                 true
+            case .kanaToTranslation:
+                false
+            case .translationToKana:
+                true
             }
         }
     }
@@ -260,6 +270,10 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
                 frontText
             case .translationToKanji:
                 frontText
+            case .kanaToTranslation:
+                frontText
+            case .translationToKana:
+                frontText
             }
         }
     }
@@ -278,6 +292,10 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
                 frontText
             case .translationToKanji:
                 frontText
+            case .kanaToTranslation:
+                backText
+            case .translationToKana:
+                backText
             }
         }
     }
@@ -311,6 +329,10 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
             case .kanaToKanji:
                 kana
             case .translationToKanji:
+                backText
+            case .kanaToTranslation:
+                backText
+            case .translationToKana:
                 backText
             }
         }
