@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0912C87B2C29EF0700400F94 /* ScribbleCharacterHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0912C87A2C29EF0700400F94 /* ScribbleCharacterHolder.swift */; };
+		0912C8862C29FE8800400F94 /* KanaWritingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0912C87F2C29FE8800400F94 /* KanaWritingCardView.swift */; };
+		0912C8872C29FE8800400F94 /* KanaWritingRevealCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0912C8802C29FE8800400F94 /* KanaWritingRevealCardView.swift */; };
+		0912C8882C29FE8800400F94 /* KanjiToTranslationRevealView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0912C8812C29FE8800400F94 /* KanjiToTranslationRevealView.swift */; };
+		0912C8892C29FE8800400F94 /* KanjiToTranslationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0912C8822C29FE8800400F94 /* KanjiToTranslationView.swift */; };
+		0912C88A2C29FE8800400F94 /* ScribblingExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0912C8832C29FE8800400F94 /* ScribblingExerciseView.swift */; };
+		0912C88B2C29FE8800400F94 /* ScribblingRevealExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0912C8842C29FE8800400F94 /* ScribblingRevealExerciseView.swift */; };
+		0912C8912C2AE55000400F94 /* kanji.json in Resources */ = {isa = PBXBuildFile; fileRef = 0912C8902C2AE55000400F94 /* kanji.json */; };
+		0912C8932C2AE59500400F94 /* kana.json in Resources */ = {isa = PBXBuildFile; fileRef = 0912C8922C2AE59500400F94 /* kana.json */; };
 		09156D5A2A31C3AF00BA2D89 /* Flashcards_AppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09156D592A31C3AF00BA2D89 /* Flashcards_AppApp.swift */; };
 		09156D5C2A31C3AF00BA2D89 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09156D5B2A31C3AF00BA2D89 /* ContentView.swift */; };
 		09156D5E2A31C3B200BA2D89 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09156D5D2A31C3B200BA2D89 /* Assets.xcassets */; };
@@ -36,16 +45,12 @@
 		096D4F712A65E19F004C4C30 /* SuggestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D4F702A65E19F004C4C30 /* SuggestView.swift */; };
 		096D8FDF2A3724F800E402B5 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D8FDE2A3724F800E402B5 /* AddCardView.swift */; };
 		096D8FE32A37335800E402B5 /* EditCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096D8FE22A37335800E402B5 /* EditCardView.swift */; };
-		0973666A2ADA668800A8A6FA /* ScribblingExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097366692ADA668800A8A6FA /* ScribblingExerciseView.swift */; };
 		0973666D2ADA670F00A8A6FA /* HanziWriter in Frameworks */ = {isa = PBXBuildFile; productRef = 0973666C2ADA670F00A8A6FA /* HanziWriter */; };
 		0973666F2ADD437D00A8A6FA /* FrontCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0973666E2ADD437D00A8A6FA /* FrontCardView.swift */; };
 		097366712ADD438E00A8A6FA /* RevealCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097366702ADD438E00A8A6FA /* RevealCardView.swift */; };
 		097366732ADD439500A8A6FA /* BackCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097366722ADD439500A8A6FA /* BackCardView.swift */; };
 		097366752ADD439A00A8A6FA /* BackRevealCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097366742ADD439A00A8A6FA /* BackRevealCardView.swift */; };
-		097366772ADD461900A8A6FA /* ScribblingRevealExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097366762ADD461900A8A6FA /* ScribblingRevealExerciseView.swift */; };
 		097366792ADD4D1200A8A6FA /* CardTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097366782ADD4D1200A8A6FA /* CardTemplateView.swift */; };
-		097366842ADD5AD200A8A6FA /* kana.json in Resources */ = {isa = PBXBuildFile; fileRef = 097366832ADD5AD200A8A6FA /* kana.json */; };
-		097366862ADD620100A8A6FA /* kanji.json in Resources */ = {isa = PBXBuildFile; fileRef = 097366852ADD620100A8A6FA /* kanji.json */; };
 		0978584D2A8FD822000A4908 /* WordTranslationLookupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0978584C2A8FD822000A4908 /* WordTranslationLookupView.swift */; };
 		097858892A912264000A4908 /* TextFieldLookupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097858882A912264000A4908 /* TextFieldLookupView.swift */; };
 		098A160E2A7263FA00D3CA84 /* MyForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098A160D2A7263FA00D3CA84 /* MyForm.swift */; };
@@ -75,7 +80,6 @@
 		09D13DBA2AADCC01004E2A59 /* DifficultyButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D13DB92AADCC01004E2A59 /* DifficultyButtonsView.swift */; };
 		09D193402AFF7A530008A0FA /* LanguageAwareTexts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D1933F2AFF7A530008A0FA /* LanguageAwareTexts.swift */; };
 		09D193422AFF7A670008A0FA /* Chinese.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D193412AFF7A670008A0FA /* Chinese.swift */; };
-		09D193442AFF7A780008A0FA /* KanaWritingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D193432AFF7A780008A0FA /* KanaWritingCardView.swift */; };
 		09D193462AFF7B160008A0FA /* chi.txt in Resources */ = {isa = PBXBuildFile; fileRef = 09D193452AFF7B160008A0FA /* chi.txt */; };
 /* End PBXBuildFile section */
 
@@ -97,6 +101,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0912C87A2C29EF0700400F94 /* ScribbleCharacterHolder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScribbleCharacterHolder.swift; sourceTree = "<group>"; };
+		0912C87F2C29FE8800400F94 /* KanaWritingCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KanaWritingCardView.swift; sourceTree = "<group>"; };
+		0912C8802C29FE8800400F94 /* KanaWritingRevealCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KanaWritingRevealCardView.swift; sourceTree = "<group>"; };
+		0912C8812C29FE8800400F94 /* KanjiToTranslationRevealView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KanjiToTranslationRevealView.swift; sourceTree = "<group>"; };
+		0912C8822C29FE8800400F94 /* KanjiToTranslationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KanjiToTranslationView.swift; sourceTree = "<group>"; };
+		0912C8832C29FE8800400F94 /* ScribblingExerciseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScribblingExerciseView.swift; sourceTree = "<group>"; };
+		0912C8842C29FE8800400F94 /* ScribblingRevealExerciseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScribblingRevealExerciseView.swift; sourceTree = "<group>"; };
+		0912C8902C2AE55000400F94 /* kanji.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = kanji.json; sourceTree = "<group>"; };
+		0912C8922C2AE59500400F94 /* kana.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = kana.json; sourceTree = "<group>"; };
 		09156D562A31C3AF00BA2D89 /* Flashcards App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flashcards App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		09156D592A31C3AF00BA2D89 /* Flashcards_AppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flashcards_AppApp.swift; sourceTree = "<group>"; };
 		09156D5B2A31C3AF00BA2D89 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -127,15 +140,11 @@
 		096D4F702A65E19F004C4C30 /* SuggestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestView.swift; sourceTree = "<group>"; };
 		096D8FDE2A3724F800E402B5 /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
 		096D8FE22A37335800E402B5 /* EditCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardView.swift; sourceTree = "<group>"; };
-		097366692ADA668800A8A6FA /* ScribblingExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScribblingExerciseView.swift; sourceTree = "<group>"; };
 		0973666E2ADD437D00A8A6FA /* FrontCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrontCardView.swift; sourceTree = "<group>"; };
 		097366702ADD438E00A8A6FA /* RevealCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevealCardView.swift; sourceTree = "<group>"; };
 		097366722ADD439500A8A6FA /* BackCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackCardView.swift; sourceTree = "<group>"; };
 		097366742ADD439A00A8A6FA /* BackRevealCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackRevealCardView.swift; sourceTree = "<group>"; };
-		097366762ADD461900A8A6FA /* ScribblingRevealExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScribblingRevealExerciseView.swift; sourceTree = "<group>"; };
 		097366782ADD4D1200A8A6FA /* CardTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTemplateView.swift; sourceTree = "<group>"; };
-		097366832ADD5AD200A8A6FA /* kana.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = kana.json; path = ../../../tongue_scribbler/data/japanese/kana.json; sourceTree = "<group>"; };
-		097366852ADD620100A8A6FA /* kanji.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = kanji.json; path = ../../../tongue_scribbler/data/japanese/kanji.json; sourceTree = "<group>"; };
 		0978584C2A8FD822000A4908 /* WordTranslationLookupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTranslationLookupView.swift; sourceTree = "<group>"; };
 		097858882A912264000A4908 /* TextFieldLookupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldLookupView.swift; sourceTree = "<group>"; };
 		098A160D2A7263FA00D3CA84 /* MyForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyForm.swift; sourceTree = "<group>"; };
@@ -154,7 +163,6 @@
 		09D13DB92AADCC01004E2A59 /* DifficultyButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DifficultyButtonsView.swift; sourceTree = "<group>"; };
 		09D1933F2AFF7A530008A0FA /* LanguageAwareTexts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageAwareTexts.swift; sourceTree = "<group>"; };
 		09D193412AFF7A670008A0FA /* Chinese.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chinese.swift; sourceTree = "<group>"; };
-		09D193432AFF7A780008A0FA /* KanaWritingCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KanaWritingCardView.swift; sourceTree = "<group>"; };
 		09D193452AFF7B160008A0FA /* chi.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chi.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -188,6 +196,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0912C8852C29FE8800400F94 /* Japanese */ = {
+			isa = PBXGroup;
+			children = (
+				0912C87F2C29FE8800400F94 /* KanaWritingCardView.swift */,
+				0912C8802C29FE8800400F94 /* KanaWritingRevealCardView.swift */,
+				0912C8812C29FE8800400F94 /* KanjiToTranslationRevealView.swift */,
+				0912C8822C29FE8800400F94 /* KanjiToTranslationView.swift */,
+				0912C8832C29FE8800400F94 /* ScribblingExerciseView.swift */,
+				0912C8842C29FE8800400F94 /* ScribblingRevealExerciseView.swift */,
+			);
+			path = Japanese;
+			sourceTree = "<group>";
+		};
 		09156D4D2A31C3AF00BA2D89 = {
 			isa = PBXGroup;
 			children = (
@@ -285,6 +306,7 @@
 				0933712C2A92516700D0DC50 /* Language.swift */,
 				09D1933F2AFF7A530008A0FA /* LanguageAwareTexts.swift */,
 				098FDF122A98A0AF009AD700 /* Vocabs.swift */,
+				0912C87A2C29EF0700400F94 /* ScribbleCharacterHolder.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -292,15 +314,13 @@
 		093455602A85120B0009ED8E /* CardViews */ = {
 			isa = PBXGroup;
 			children = (
+				0912C8852C29FE8800400F94 /* Japanese */,
 				0973666E2ADD437D00A8A6FA /* FrontCardView.swift */,
 				097366702ADD438E00A8A6FA /* RevealCardView.swift */,
 				097366722ADD439500A8A6FA /* BackCardView.swift */,
 				097366742ADD439A00A8A6FA /* BackRevealCardView.swift */,
 				093455612A8515B70009ED8E /* BackWritingCardView.swift */,
 				093455632A8516790009ED8E /* BackWritingRevealCardView.swift */,
-				097366692ADA668800A8A6FA /* ScribblingExerciseView.swift */,
-				097366762ADD461900A8A6FA /* ScribblingRevealExerciseView.swift */,
-				09D193432AFF7A780008A0FA /* KanaWritingCardView.swift */,
 			);
 			path = CardViews;
 			sourceTree = "<group>";
@@ -308,8 +328,8 @@
 		0973667A2ADD557E00A8A6FA /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				097366832ADD5AD200A8A6FA /* kana.json */,
-				097366852ADD620100A8A6FA /* kanji.json */,
+				0912C8922C2AE59500400F94 /* kana.json */,
+				0912C8902C2AE55000400F94 /* kanji.json */,
 				09D193452AFF7B160008A0FA /* chi.txt */,
 			);
 			path = Data;
@@ -466,11 +486,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				097366842ADD5AD200A8A6FA /* kana.json in Resources */,
-				097366862ADD620100A8A6FA /* kanji.json in Resources */,
 				098FDF172A98AA32009AD700 /* GoogleService-Info.plist in Resources */,
 				09D193462AFF7B160008A0FA /* chi.txt in Resources */,
+				0912C8912C2AE55000400F94 /* kanji.json in Resources */,
 				09156D612A31C3B200BA2D89 /* Preview Assets.xcassets in Resources */,
+				0912C8932C2AE59500400F94 /* kana.json in Resources */,
 				09156D5E2A31C3B200BA2D89 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -499,27 +519,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				098FDEFF2A966C01009AD700 /* CardCountsView.swift in Sources */,
+				0912C87B2C29EF0700400F94 /* ScribbleCharacterHolder.swift in Sources */,
 				09D13DB82AADCBBD004E2A59 /* CardMoveView.swift in Sources */,
 				0973666F2ADD437D00A8A6FA /* FrontCardView.swift in Sources */,
 				097366732ADD439500A8A6FA /* BackCardView.swift in Sources */,
 				0933712B2A92510A00D0DC50 /* Decks.swift in Sources */,
 				098FDF1C2A98B409009AD700 /* Hindi.swift in Sources */,
+				0912C8862C29FE8800400F94 /* KanaWritingCardView.swift in Sources */,
 				09B171C52A93B2B400B30162 /* LazyVIew.swift in Sources */,
 				09D193402AFF7A530008A0FA /* LanguageAwareTexts.swift in Sources */,
 				093455642A8516790009ED8E /* BackWritingRevealCardView.swift in Sources */,
 				0934557C2A86A7A40009ED8E /* GoogleTranslateApi.swift in Sources */,
 				0933712D2A92516700D0DC50 /* Language.swift in Sources */,
 				094B22642A9241C900A0C578 /* DecksView.swift in Sources */,
+				0912C88B2C29FE8800400F94 /* ScribblingRevealExerciseView.swift in Sources */,
 				09156D842A31C43B00BA2D89 /* ExerciseView.swift in Sources */,
 				097366792ADD4D1200A8A6FA /* CardTemplateView.swift in Sources */,
-				09D193442AFF7A780008A0FA /* KanaWritingCardView.swift in Sources */,
 				09D13DBA2AADCC01004E2A59 /* DifficultyButtonsView.swift in Sources */,
+				0912C88A2C29FE8800400F94 /* ScribblingExerciseView.swift in Sources */,
+				0912C8892C29FE8800400F94 /* KanjiToTranslationView.swift in Sources */,
 				098FDF242A9A0512009AD700 /* WordTypeView.swift in Sources */,
 				093455622A8515B70009ED8E /* BackWritingCardView.swift in Sources */,
 				09156D872A31C46100BA2D89 /* Card.swift in Sources */,
 				093455662A851CC10009ED8E /* CorrectedTextView.swift in Sources */,
 				096D4F6B2A5DD8EE004C4C30 /* ExerciseHeaderView.swift in Sources */,
-				097366772ADD461900A8A6FA /* ScribblingRevealExerciseView.swift in Sources */,
 				096D8FE32A37335800E402B5 /* EditCardView.swift in Sources */,
 				09D0C2162A92257D00FE36D1 /* SoundLookupView.swift in Sources */,
 				097858892A912264000A4908 /* TextFieldLookupView.swift in Sources */,
@@ -533,13 +556,14 @@
 				096D8FDF2A3724F800E402B5 /* AddCardView.swift in Sources */,
 				098A160E2A7263FA00D3CA84 /* MyForm.swift in Sources */,
 				0942079C2A83BD38009EAE2F /* DeckSettingsView.swift in Sources */,
-				0973666A2ADA668800A8A6FA /* ScribblingExerciseView.swift in Sources */,
 				097366752ADD439A00A8A6FA /* BackRevealCardView.swift in Sources */,
 				096D4F6D2A6345E4004C4C30 /* BrowseDeckView.swift in Sources */,
+				0912C8882C29FE8800400F94 /* KanjiToTranslationRevealView.swift in Sources */,
 				09C87D152AB4BBC30012064E /* SpotlightView.swift in Sources */,
 				094207802A7D45BF009EAE2F /* PlaySoundButton.swift in Sources */,
 				0978584D2A8FD822000A4908 /* WordTranslationLookupView.swift in Sources */,
 				09C87CDA2AB05C400012064E /* LanguageAwareTextField.swift in Sources */,
+				0912C8872C29FE8800400F94 /* KanaWritingRevealCardView.swift in Sources */,
 				09156D8A2A31C86800BA2D89 /* Deck.swift in Sources */,
 				09156D5C2A31C3AF00BA2D89 /* ContentView.swift in Sources */,
 				09156D5A2A31C3AF00BA2D89 /* Flashcards_AppApp.swift in Sources */,
