@@ -20,7 +20,7 @@ struct BackWritingCardView: View {
                     .font(.largeTitle)
                 WordTypeView(type: card.type)
             }
-            LanguageAwareTextField(card.currentWritingPrompt, text: $textInput, language: deck.deckMetadata.frontLanguage) {
+            LanguageAwareTextField(card.currentWritingPrompt, text: $textInput, language: deck.deckMetadata.frontLanguage, autocorrectionDisabled: true) {
                 reveal = true
             }
             .disabled(reveal)

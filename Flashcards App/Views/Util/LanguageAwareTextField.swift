@@ -13,22 +13,25 @@ struct LanguageAwareTextField: View {
     var titleKey: String
     var text: Binding<String>
     var language: ELanguage
+    var autocorrectionDisabled = false
     var onSubmit: () -> Void
     var body: some View {
 //        TextField(titleKey, text: text)
-        SpecificLanguageTextFieldView(placeHolder: titleKey, text: text, language: language.bcp47Code) {
+        SpecificLanguageTextFieldView(placeHolder: titleKey, text: text, language: language.bcp47Code, autocorrectionDisabled: autocorrectionDisabled) {
             onSubmit()
         }
             .environment(\.layoutDirection, language.isRtl ? .rightToLeft : .leftToRight)
             .flipsForRightToLeftLayoutDirection(true)
             .keyboardType(.default)
+            .autocorrectionDisabled()
     }
     
-    init(_ titleKey: String, text: Binding<String>, language: ELanguage, onSubmit: @escaping () -> Void) {
+    init(_ titleKey: String, text: Binding<String>, language: ELanguage, autocorrectionDisabled: Bool = false, onSubmit: @escaping () -> Void) {
         self.titleKey = titleKey
         self.text = text
         self.language = language
         self.onSubmit = onSubmit
+        self.autocorrectionDisabled = autocorrectionDisabled
     }
 }
 
@@ -75,6 +78,7 @@ struct SpecificLanguageTextFieldView: UIViewRepresentable {
     let placeHolder: String
     @Binding var text: String
     var language: String = "en-US"
+    var autocorrectionDisabled = false
     var onSubmit: (() -> Void)
     func makeUIView(context: Context) -> UITextField{
         let textField = SpecificLanguageTextField(frame: .zero)
@@ -83,6 +87,9 @@ struct SpecificLanguageTextFieldView: UIViewRepresentable {
         textField.language = self.language
         textField.delegate = context.coordinator
         textField.autocapitalizationType = .none
+        if autocorrectionDisabled {
+            textField.autocorrectionType = .no
+        }
         return textField
     }
     
