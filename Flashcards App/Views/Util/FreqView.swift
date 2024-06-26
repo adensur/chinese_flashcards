@@ -10,10 +10,18 @@ import SwiftUI
 struct FreqView: View {
     var freq: Int
     var body: some View {
-        HStack(spacing: 0) {
-            ForEach(0..<3) {i in
-                Image(systemName: "square.fill")
-                    .foregroundColor(3 - i >= freq ? .accentColor : .secondary)
+        if freq > 0 {
+            HStack(spacing: 0) {
+                ForEach(0..<3) {i in
+                    Image(systemName: "square.fill")
+                        .foregroundColor(3 - i >= freq ? .accentColor : .secondary)
+                        .imageScale(.small)
+                }
+            }
+        } else {
+            HStack {
+                Image(systemName: "crown.fill")
+                    .foregroundColor(.accentColor)
                     .imageScale(.small)
             }
         }
