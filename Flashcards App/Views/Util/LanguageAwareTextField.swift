@@ -35,6 +35,17 @@ struct LanguageAwareTextField: View {
     }
 }
 
+let enCompatibleEngs = Set(["fr", "de", "it"])
+
+func isCompatible(availableInputMode: String, targetLang: String) -> Bool {
+    if (availableInputMode == "en") {
+        if enCompatibleEngs.contains(targetLang) {
+            return true
+        }
+    }
+    return false
+}
+
 class SpecificLanguageTextField: UITextField {
     var language: String? {
         didSet {
@@ -47,8 +58,16 @@ class SpecificLanguageTextField: UITextField {
     
     override var textInputMode: UITextInputMode? {
         if let language = self.language {
+            // first try to find exact match
             for inputMode in UITextInputMode.activeInputModes {
                 if let inputModeLanguage = inputMode.primaryLanguage, inputModeLanguage.prefix(2) == language.prefix(2) {
+                    return inputMode
+                }
+            }
+            // if no exact match found, look for the next best match based on compatibility matrix
+            // i.e., "en" is also good for "fr"
+            for inputMode in UITextInputMode.activeInputModes {
+                if let inputModeLanguage = inputMode.primaryLanguage, isCompatible(availableInputMode: String(inputModeLanguage.prefix(2)), targetLang: String(language.prefix(2))) {
                     return inputMode
                 }
             }
