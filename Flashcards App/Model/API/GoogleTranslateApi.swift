@@ -185,12 +185,18 @@ enum EWordType: Int {
 }
 
 func getTranslation(for word: String, langFrom: String, langTo: String) async -> [Detail]? {
-    let vocabTranslations = await getVocabTranslations(for: word, langFrom: langFrom, langTo: langTo)
-    var translateTranslations = await getTranslationTranslations(for: word, langFrom: langFrom, langTo: langTo)
-    let translateTranslations2 = await getTranslationTranslations2(for: word, langFrom: langFrom, langTo: langTo)
-    translateTranslations?.append(contentsOf: translateTranslations2 ?? [])
-    translateTranslations?.append(contentsOf: vocabTranslations ?? [])
-    return translateTranslations
+    async let vocabTranslations = getVocabTranslations(for: word, langFrom: langFrom, langTo: langTo)
+    async let translateTranslations = getTranslationTranslations(for: word, langFrom: langFrom, langTo: langTo)
+    async let translateTranslations2 = getTranslationTranslations2(for: word, langFrom: langFrom, langTo: langTo)
+
+    let vocabResult = await vocabTranslations
+    var translateResult = await translateTranslations
+    let translateResult2 = await translateTranslations2
+
+    translateResult?.append(contentsOf: translateResult2 ?? [])
+    translateResult?.append(contentsOf: vocabResult ?? [])
+    
+    return translateResult
 }
 
 func getTranslationTranslations2(for word: String, langFrom: String, langTo: String) async -> [Detail]? {
