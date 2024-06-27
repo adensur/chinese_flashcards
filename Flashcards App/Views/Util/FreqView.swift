@@ -18,6 +18,12 @@ struct FreqView: View {
                         .imageScale(.small)
                 }
             }
+        } else if freq == -1 {
+            HStack {
+                Image(systemName: "crown")
+                    .foregroundColor(.accentColor)
+                    .imageScale(.small)
+            }
         } else {
             HStack {
                 Image(systemName: "crown.fill")

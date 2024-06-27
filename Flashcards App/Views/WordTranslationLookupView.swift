@@ -27,7 +27,7 @@ struct WordTranslationLookupView: View {
                                 Text(pinyin)
                             }
                             Spacer()
-                            if selection.contains(detail.word) {
+                            if selection.contains(detail.id) {
                                 Image(systemName: "checkmark")
                             }
                             if let freq = detail.freq {
@@ -37,9 +37,9 @@ struct WordTranslationLookupView: View {
                         .contentShape(Rectangle())
                         .onTapGesture {
                             if selection.contains(detail.word) {
-                                selection.remove(detail.word)
+                                selection.remove(detail.id)
                             } else {
-                                selection.insert(detail.word)
+                                selection.insert(detail.id)
                             }
                             if translations.count == 1 {
                                 // why bother user with another click in this case?
@@ -71,7 +71,7 @@ struct WordTranslationLookupView: View {
     
     func done() {
         let details = translations.filter {detail in
-            selection.contains(detail.word)
+            selection.contains(detail.id)
         }
         dismiss()
         callback(details)
