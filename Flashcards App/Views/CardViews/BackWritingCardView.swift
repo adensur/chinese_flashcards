@@ -27,7 +27,11 @@ struct BackWritingCardView: View {
             .multilineTextAlignment(.center)
             .font(.largeTitle)
             .onAppear {
-                print("KanaWriting onAppear")
+                print("BackWritingCardView onAppear for ex: ", card.frontText)
+                self.focused.wrappedValue = true
+            }
+            .onChange(of: reveal) {
+                print("BackWritingCardView onChange(of: reveal) for ex: ", card.frontText)
                 self.focused.wrappedValue = true
             }
             .focused(focused)

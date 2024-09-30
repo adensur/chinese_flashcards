@@ -27,6 +27,11 @@ struct KanaWritingCardView: View {
             .multilineTextAlignment(.center)
             .font(.largeTitle)
             .onAppear {
+                print("KanaWritingCardView onAppear for ex: ", card.frontText)
+                self.focused.wrappedValue = true
+            }
+            .onChange(of: reveal) {
+                print("KanaWritingCardView onChange for ex: ", card.frontText)
                 self.focused.wrappedValue = true
             }
             .focused(focused)

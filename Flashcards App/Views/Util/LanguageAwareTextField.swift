@@ -16,8 +16,8 @@ struct LanguageAwareTextField: View {
     var autocorrectionDisabled = false
     var onSubmit: () -> Void
     var body: some View {
-//        TextField(titleKey, text: text)
-        SpecificLanguageTextFieldView(placeHolder: titleKey, text: text, language: language.bcp47Code, autocorrectionDisabled: autocorrectionDisabled) {
+        //SpecificLanguageTextFieldView(placeHolder: titleKey, text: text, language: language.bcp47Code, autocorrectionDisabled: autocorrectionDisabled)
+        TextField(titleKey, text: text) {
             onSubmit()
         }
             .environment(\.layoutDirection, language.isRtl ? .rightToLeft : .leftToRight)
