@@ -21,6 +21,7 @@ enum ELanguage: String {
     case Hindi = "hi"
     case Arabic = "ar"
     case Hebrew = "iw"
+    case Korean = "ko"
     
     // https://appmakers.dev/bcp-47-language-codes-list/
     var bcp47Code: String {
@@ -66,6 +67,8 @@ enum ELanguage: String {
             return "Arabic"
         case .Hebrew:
             return "Hebrew"
+        case .Korean:
+            return "Korean"
         }
     }
     
@@ -80,7 +83,8 @@ enum ELanguage: String {
             .SimplifiedChinese,
             .Hindi,
             .Arabic,
-            .Hebrew
+            .Hebrew,
+            .Korean
         ]
     }
     
