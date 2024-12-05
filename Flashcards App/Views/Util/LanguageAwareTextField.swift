@@ -16,8 +16,8 @@ struct LanguageAwareTextField: View {
     var autocorrectionDisabled = false
     var onSubmit: () -> Void
     var body: some View {
-        //SpecificLanguageTextFieldView(placeHolder: titleKey, text: text, language: language.bcp47Code, autocorrectionDisabled: autocorrectionDisabled)
-        TextField(titleKey, text: text) {
+        SpecificLanguageTextFieldView(placeHolder: titleKey, text: text, language: language.bcp47Code, autocorrectionDisabled: autocorrectionDisabled) {
+        //TextField(titleKey, text: text) {
             onSubmit()
         }
             .environment(\.layoutDirection, language.isRtl ? .rightToLeft : .leftToRight)
@@ -83,11 +83,16 @@ struct SpecificLanguageTextFieldView: UIViewRepresentable {
             self.parent = parent
         }
         
+        // Moved to textFieldShouldReturn
+        // UB, breaks Japanese autocomplete on ios 18
+        // ???
+        /*
         func textFieldDidChangeSelection(_ textField: UITextField) {
             parent.text = textField.text ?? ""
-        }
+        }*/
         
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            parent.text = textField.text ?? ""
             parent.onSubmit()
             textField.resignFirstResponder() // Dismiss the keyboard
             return true
