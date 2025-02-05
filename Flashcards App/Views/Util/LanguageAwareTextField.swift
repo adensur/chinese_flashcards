@@ -83,16 +83,12 @@ struct SpecificLanguageTextFieldView: UIViewRepresentable {
             self.parent = parent
         }
         
-        // Moved to textFieldShouldReturn
-        // UB, breaks Japanese autocomplete on ios 18
-        // ???
-        /*
+
         func textFieldDidChangeSelection(_ textField: UITextField) {
             parent.text = textField.text ?? ""
-        }*/
+        }
         
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            parent.text = textField.text ?? ""
             parent.onSubmit()
             textField.resignFirstResponder() // Dismiss the keyboard
             return true
