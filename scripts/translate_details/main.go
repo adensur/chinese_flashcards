@@ -71,31 +71,40 @@ func parseWordType(wordType int, word string) string {
 
 func getDetails(word, langFrom, langTo string) (*Output, error) {
 	encodedWord := url.QueryEscape(word)
-	url := "https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=rPsWke%2CHGRyXb%2CV11VDb&source-path=%2Fdetails&f.sid=94628587805217822&bl=boq_translate-webserver_20230813.08_p0&hl=&soc-app=1&soc-platform=1&soc-device=1&_reqid=1262696&rt=c"
+	url := "https://translate.google.com/_/TranslateWebserverUi/data/batchexecute?rpcids=rPsWke&source-path=%2F&f.sid=5317742920953228612&bl=boq_translate-webserver_20250204.08_p0&hl=en&soc-app=1&soc-platform=1&soc-device=1&_reqid=737481&rt=c"
 	payload := "f.req=%5B%5B%5B%22rPsWke%22%2C%22%5B%5B%5C%22" + encodedWord + "%5C%22%2C%5C%22" + langFrom +
-		"%5C%22%2C%5C%22" + langTo + "%5C%22%5D%2C1%5D%22%2Cnull%2C%221%22%5D%2C%5B%22HGRyXb%22%2C%22%5B%5C%22" + langFrom +
-		"%5C%22%2C%5C%22" + langTo + "%5C%22%5D%22%2Cnull%2C%229%22%5D%2C%5B%22V11VDb%22%2C%22%5B%5C%22" + langFrom +
-		"%5C%22%2C%5C%22" + langTo + "%5C%22%5D%22%2Cnull%2C%2212%22%5D%5D%5D&at=AFS6QyhTMeUWg72pSEGCg2YaZYOw%3A1692203095521&"
+		"%5C%22%2C%5C%22" + langTo + "%5C%22%5D%2C1%5D%22%2Cnull%2C%22generic%22%5D%5D%5D&at=AKt-4RDM5y2oHLQTEVPIf_3OScO2%3A1738837480713&"
+
+	fmt.Println("Payload:", payload)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(payload)))
 	if err != nil {
 		panic(err)
 	}
 
-	req.Header.Add("sec-ch-ua", `"Not/A)Brand";v="99", "Google Chrome";v="115", "Chromium";v="115"`)
-	req.Header.Add("X-Same-Domain", "1")
-	req.Header.Add("sec-ch-ua-mobile", "?0")
-	req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36")
+	req.Header.Add("accept", "*/*")
+	req.Header.Add("accept-language", "en-US,en;q=0.9")
+	req.Header.Add("content-type", "application/x-www-form-urlencoded;charset=UTF-8")
+	req.Header.Add("origin", "https://translate.google.com")
+	req.Header.Add("priority", "u=1, i")
+	req.Header.Add("referer", "https://translate.google.com/")
+	req.Header.Add("sec-ch-ua", `"Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"`)
 	req.Header.Add("sec-ch-ua-arch", `"arm"`)
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8")
-	req.Header.Add("sec-ch-ua-full-version", `"115.0.5790.170"`)
-	req.Header.Add("X-Goog-BatchExecute-Bgr", `[";Vki4SBXQAAZiAW6_QgFfSVI0DapWBfwmADkAIwj8RrOLzrt4bCMldZXoxUquFKB-XAEGEL-RzfCskTGh7LP1S03dxmk6LhNMLSHQDGqkg7CvFDwfAAAAPU8AAAAFdQEHhALmL8GPnO1zsDgBGpUU66A5zBIK5Om-4UOSipzifYxX9GHqfC5LvGrEe_Cxz3-y0PqBRN_mCfLNmW_ULuZfNTG4KnGyGQ67mvTh7eyCttJpxsIloU7M4hMNQ2N_600sNLh8gKkxUjEBViOEL4g1oYfNzRKmUBhVv1r9PzzItly8wxGQj_PaxhD8cnfJNv44A5EzNIbUjii4OtihNOWnktEcC2udTIRnVUv_UYJuLECwCKyoliakFAIgINk3yMSLW4ft9pBW9Aa4CgTlwfNGfeymPOHEvfX4jLt3fS6jkrPvevnesQ6jvVK50-tZxXEMd5i4u5ArgvCFc4A_CnQCgRL9FIL_pnXWa4WhblG7jgSy-3JvnxIBo2ZAu1sWVuaNF-7j9cO_t4Wz8PiCZOOdGR6tSOOidaGNQxjSjjWgsZPoindkpQKCL3PkMa6OYZ8TVMfIv2G7dEQpbYxrnJglhuQwNOT_vqeiQdpV_G2Vnka6UbYWJ01y9z44tx7IhYTpNh5mF6KiHPk_4nkBB70VghY82bUQ_C6EyrjljH_qwglN_fdxph-zw1y6zeIIlu8HlTceNut08T8eCxrNDVfK2g1K5dqdP44-PuLAsdN3uVbnZlEzoLCyT4i3Qv70YS29I7Z9MmjPe2oezsjIZh0xXNnfwa6DkaAwyo9RXIQKNrQcz0MkCd-Oz1IQOEgGJvmN2R2dXDH9M1NYKaQtkWiPBbcSD6uC2Ra58k8IK-qYZaKrwEOwTGaSl5UEOivX_LdMv6sXbCfBIIptVpvxEmqCrivQMKcZS0bA4UgVlMNL_z6fC7L-ny51KC29wMIjIFRiS7-17jdLUgSsFiu-4U-0piA2HBob4UjLjb6_85EzbOccAK54WHGc-ttJnFm_-r4XVUBxonFc8I6ePYt_yppd4menBdG-sR83c0ziUgH3PiLuRmXlCBvM6NUix52E1LAMpo-bzVSvh9vppVsE8oUSBCV9h1tYgIOtRg",null,null,17,null,null,null,0,"2"`)
-	req.Header.Add("sec-ch-ua-platform-version", `"13.4.1"`)
-	req.Header.Add("Referer", "https://translate.google.com/")
-	req.Header.Add("sec-ch-ua-full-version-list", `"Not/A)Brand";v="99.0.0.0", "Google Chrome";v="115.0.5790.170", "Chromium";v="115.0.5790.170"`)
 	req.Header.Add("sec-ch-ua-bitness", `"64"`)
+	req.Header.Add("sec-ch-ua-form-factors", `"Desktop"`)
+	req.Header.Add("sec-ch-ua-full-version", `"131.0.6778.1038"`)
+	req.Header.Add("sec-ch-ua-full-version-list", `"Chrome";v="131.0.6778.1038", "Chromium";v="131.0.6778.1038", "Not_A Brand";v="24.0.0.0"`)
+	req.Header.Add("sec-ch-ua-mobile", "?0")
 	req.Header.Add("sec-ch-ua-model", `""`)
-	req.Header.Add("sec-ch-ua-wow64", "?0")
 	req.Header.Add("sec-ch-ua-platform", `"macOS"`)
+	req.Header.Add("sec-ch-ua-platform-version", `"15.3.0"`)
+	req.Header.Add("sec-ch-ua-wow64", "?0")
+	req.Header.Add("sec-fetch-dest", "empty")
+	req.Header.Add("sec-fetch-mode", "cors")
+	req.Header.Add("sec-fetch-site", "same-origin")
+	req.Header.Add("user-agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
+	req.Header.Add("x-client-data", "CJySywE=")
+	req.Header.Add("x-goog-batchexecute-bgr", `[";kI64jtbQAAYSKdMVMilf80pKWMTjqRcmADQBEArZ1LjhAtJnB7JSRGRJrbWfEHGVYJsrk_W6Y2WC61ueTq6GehqjNJ1SkSHs1L6m_UDcHwAAACFPAAAAAXUBB2MAQfLc3EBO7USDUj3khjN4H01VjfxrC5o9mhgfNguui1y0_aRdRbx3hQPTL4As6l2aIoDReYeBl2byAFg8BwgdrMBPhAM0-JoWL0GGkcU5HvSS9hOqsJ_klX6__9eXB5KVDSWxHMmLV1awk-28YU6ncC-V0FwNM3xuVTRIPa1y0yyjXDEskpdH-2awYuJrb2hyrCyXTAMCfIbIzKJYa1Xw7owRmYEM1g0GP--nW3_hGOK0sq4tKFuoYXXc3Sxfrzq_4VhsYDniY4RRTk2yXQZI78Y44IP9NB25U0WH5PNEj7Zv9kfBM1-FMShW0fE2woE5FrmKdtdYEEC6B9z0Zu5gTgrlaNAwmSR_2NGvicIRWy-J_mpX6l6yapqlyZmfzNBUrf50Q3qb7I0d_wJMexuKNq8AenEJ96stYHred071V5fy4Jp3A75MaIgte-Fv7Xc9JCTpXdNr_g21zojrxoK30BXWbe0PwcZfttmf_RHjb-MDOpDVWcH9PDfKPhoV8ZXRduOwJ5fgUcovVa9DsNER0j5aX39lr72mgxo-DdCZkXjQabzoNo2v7QeI87wt78CC--4e6MF1xBaX-9ZDTwwl02XYsi0A7DuOHF9YiSRnrc2PTHqD8zK_k6_oMMjGXqr6u1Ftxf57mglnEZyFa7RV600nD1hq_aYOoWsPI9SbmZPNrrhvQS7_niGNJDMTOyShnyBWquUD0QVgv2OYE5X9YiwxUZYcE-9W3FJaqMYII2de0NMtrOBVQtctXm52Ai5pYYGS5iKY-fjJviYkllTmPMVNuaB-j-ty_EnpFXeVXzr15io8smaYPtMFVoyaXijThMO_1WGIKtlfy1j7IBzhF-zsoRPdH3q8PouXhPJ7J-iRcNr4TbG5ZjqZ9VEo9uC_hNxvhz7ALXQ-v2tHoQV4p9tAowhujSJftm0FtStHu8fz5rFmhMRSMNiDlchShJi5OuXwVucILhWBPyJBCsA5widdgpFaVHlryTtYuhASRgMFFMMt4SOA_KsdelaaTNMUlFG1Nc-9ool-a8g2aTcMdi1ptcMRWpS6916tOhpLqrfbrBZdgWekouLJH-UL_wroapkZM5jBvjPGkT_Cu3sXVA7zww-jZDEFYXD9XzokNnMS1U8tBD99NJEBtEx3XqXi5aCqU0QtFaKiCZHdoDnFqXsPVItcHr3vzQ",null,null,11,null,null,null,0,"2"]`)
+	req.Header.Add("x-same-domain", "1")
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
@@ -113,7 +122,7 @@ func getDetails(word, langFrom, langTo string) (*Output, error) {
 	if err != nil {
 		panic(err)
 	}
-	// fmt.Println("Response Body:")
+	fmt.Println("Response Body:", string(body))
 	result := Output{
 		Word:         word,
 		Translations: make([]Detail, 0),
