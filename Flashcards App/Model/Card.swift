@@ -13,15 +13,15 @@ let repeatingAfterMistakeLevels = ["0m", "0m", "12m", "16m", "20m", "30m", "1h",
 
 // simple exercise. Front and back text, no value checking - just turning the card over
 
-enum EExerciseType: Codable {
+enum EExerciseType: Codable, Equatable {
     case frontToBack, backToFront, writing, kanaWriting, scribbling, kanjiToTranslation, kanaToTranslation, translationToKana
 }
 
-enum ESimpleCardState: Codable {
+enum ESimpleCardState: Codable, Equatable {
     case frontSideUp, backSideUp
 }
 
-enum EJapaneseCardState: Codable {
+enum EJapaneseCardState: Codable, Equatable {
     case kanjiToKana
     case kanjiToTranslation
     case kanaToKanji
@@ -31,7 +31,7 @@ enum EJapaneseCardState: Codable {
 }
 
 // encodes the card type and state: simple 2-way front-to-back or japanese 3-way kanji - kana - translation
-enum ECardState: Codable {
+enum ECardState: Codable, Equatable {
     // back to front, front to back exercises
     case simple(ESimpleCardState)
     // 3-way kanji, kana, translation exercises
@@ -70,6 +70,9 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     }
     // Option. Whether or not to show text input exercises sometimes when enabled in deck and when it is backSideUp currently
     @Published var enableTextInputExercise: Bool = true
+    @Published var enableScribblingExercise: Bool = true
+    @Published var enableHearingExercise: Bool = true
+    @Published var enableTranslateExercise: Bool = true
     var creationDate: Date
     var lastRepetition: Date = Date(timeIntervalSince1970: 0)
     var learningStage: LearningStage = .New
@@ -80,7 +83,7 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
     // extra information shown when reveal = true. Sentence examples, etymology etc
     var extra: String
     
-    init(frontText: String, backText: String, kana: String, id: Int, creationDate: Date, audioData: Data? = nil, enableTextInputExercise: Bool, type: EWordType = .unknown, deck: Deck, cardState: ECardState, extra: String) {
+    init(frontText: String, backText: String, kana: String, id: Int, creationDate: Date, audioData: Data? = nil, enableTextInputExercise: Bool, enableScribblingExercise: Bool, enableHearingExercise: Bool, enableTranslateExercise: Bool, type: EWordType = .unknown, deck: Deck, cardState: ECardState, extra: String) {
         self.frontText = frontText
         self.backText = backText
         self.kana = kana
@@ -88,13 +91,16 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         self.creationDate = creationDate
         self.audioData = audioData
         self.enableTextInputExercise = enableTextInputExercise
+        self.enableScribblingExercise = enableScribblingExercise
+        self.enableHearingExercise = enableHearingExercise
+        self.enableTranslateExercise = enableTranslateExercise
         self.type = type
         self.cardState = cardState
         self.deck = deck
         self.extra = extra
     }
     enum CodingKeys: CodingKey {
-        case id, frontText, backText, kana, creationDate, lastRepetition, learningStage, audioData, cardState, enableTextInputExercise, type, extra
+        case id, frontText, backText, kana, creationDate, lastRepetition, learningStage, audioData, cardState, enableTextInputExercise, enableScribblingExercise, enableHearingExercise, enableTranslateExercise, type, extra
     }
     
     func encode(to encoder: Encoder) throws {
@@ -109,6 +115,9 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         try container.encode(audioData, forKey: .audioData)
         try container.encode(cardState, forKey: .cardState)
         try container.encode(enableTextInputExercise, forKey: .enableTextInputExercise)
+        try container.encode(enableScribblingExercise, forKey: .enableScribblingExercise)
+        try container.encode(enableHearingExercise, forKey: .enableHearingExercise)
+        try container.encode(enableTranslateExercise, forKey: .enableTranslateExercise)
         try container.encode(type.rawValue, forKey: .type)
         try container.encode(extra, forKey: .extra)
     }
@@ -139,6 +148,15 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
         self.cardState = (try? container.decode(ECardState.self, forKey: .cardState)) ?? .simple(.frontSideUp)
         if let val = try? container.decode(Bool.self, forKey: .enableTextInputExercise) {
             enableTextInputExercise = val
+        }
+        if let val = try? container.decode(Bool.self, forKey: .enableScribblingExercise) {
+            enableScribblingExercise = val
+        }
+        if let val = try? container.decode(Bool.self, forKey: .enableHearingExercise) {
+            enableHearingExercise = val
+        }
+        if let val = try? container.decode(Bool.self, forKey: .enableTranslateExercise) {
+            enableTranslateExercise = val
         }
         if let i = try? container.decode(Int.self, forKey: .type) {
             if let t = EWordType(rawValue: i) {
@@ -180,6 +198,24 @@ class Card: Codable, ObservableObject, Identifiable, Equatable, Hashable {
                 cardState = .japanese(.translationToKana)
             case .translationToKana:
                 cardState = .japanese(.kanaToTranslation)
+            }
+            // should not execute via UI guardrails
+            // prvetns from looping
+            if !self.enableTextInputExercise && !self.enableHearingExercise && !self.enableTranslateExercise && !self.enableTranslateExercise {
+                return
+            }
+            // skip exercise login
+            if !self.enableTextInputExercise && (cardState == .japanese(.kanjiToKana) || cardState == .japanese(.translationToKana))  {
+                nextCardSide()
+            }
+            if !self.enableTranslateExercise && (cardState == .japanese(.kanjiToTranslation))  {
+                nextCardSide()
+            }
+            if !self.enableHearingExercise && (cardState == .japanese(.kanaToTranslation)) {
+                nextCardSide()
+            }
+            if !self.enableScribblingExercise && (cardState == .japanese(.translationToKanji) || cardState == .japanese(.kanaToKanji)) {
+                nextCardSide()
             }
         }
     }

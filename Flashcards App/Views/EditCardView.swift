@@ -17,9 +17,22 @@ struct EditCardView: View {
     @State private var wordType: EWordType = .unknown
     @State private var backText: String = ""
     @State private var enableTextInputExercise: Bool = false
+    @State private var enableScribblingExercise: Bool = true
+    @State private var enableHearingExercise: Bool = true
+    @State private var enableTranslateExercise: Bool = true
     @State private var audioData: Data? = nil
     @State private var markAsLearnedAlertPresented: Bool = false
     @State private var resetProgressAlertPresented: Bool = false
+    
+    var saveDisabled: Bool {
+        return frontText.isEmpty || backText.isEmpty || !(
+            enableTextInputExercise ||
+            enableScribblingExercise ||
+            enableHearingExercise ||
+            enableTranslateExercise
+        )
+    }
+    
     var body: some View {
         VStack {
             Form {
@@ -56,6 +69,21 @@ struct EditCardView: View {
                         Text("Enable text input exercise")
                     }.onAppear {
                         enableTextInputExercise = card.enableTextInputExercise
+                    }
+                    Toggle(isOn: $enableScribblingExercise) {
+                        Text("Enable scribbling exercise")
+                    }.onAppear {
+                        enableScribblingExercise = card.enableScribblingExercise
+                    }
+                    Toggle(isOn: $enableHearingExercise) {
+                        Text("Enable hearing exercise")
+                    }.onAppear {
+                        enableHearingExercise = card.enableHearingExercise
+                    }
+                    Toggle(isOn: $enableTranslateExercise) {
+                        Text("Enable translate exercise")
+                    }.onAppear {
+                        enableTranslateExercise = card.enableTranslateExercise
                     }
                 } header: {
                     Text("Exercise Options")
@@ -126,9 +154,27 @@ struct EditCardView: View {
                     card.type = wordType
                     card.backText = backText
                     card.enableTextInputExercise = enableTextInputExercise
+                    card.enableScribblingExercise = enableScribblingExercise
+                    card.enableHearingExercise = enableHearingExercise
+                    card.enableTranslateExercise = enableTranslateExercise
                     card.audioData = audioData
+                    
+                    // turn the card if current mode was disabled
+                    if !card.enableTextInputExercise && (card.cardState == .japanese(.kanjiToKana) || card.cardState == .japanese(.translationToKana))  {
+                        card.nextCardSide()
+                    }
+                    if !card.enableTranslateExercise && (card.cardState == .japanese(.kanjiToTranslation))  {
+                        card.nextCardSide()
+                    }
+                    if !card.enableHearingExercise && (card.cardState == .japanese(.kanaToTranslation)) {
+                        card.nextCardSide()
+                    }
+                    if !card.enableScribblingExercise && (card.cardState == .japanese(.translationToKanji) || card.cardState == .japanese(.kanaToKanji)) {
+                        card.nextCardSide()
+                    }
+                    
                     dismiss()
-                }
+                }.disabled(saveDisabled)
         )
     }
 }

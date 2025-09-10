@@ -145,7 +145,7 @@ class Deck: Codable, ObservableObject {
         }
     }
     
-    func addCard(frontText: String, backText: String, kana: String = "", audioData: Data? = nil, enableTextInputExercise: Bool = true, wordType: EWordType = .unknown, cardTemplate: ECardTemplate, extra: String) {
+    func addCard(frontText: String, backText: String, kana: String = "", audioData: Data? = nil, enableTextInputExercise: Bool = true, enableScribblingExercise: Bool = true, enableHearingExercise: Bool = true, enableTranslateExercise: Bool = true, wordType: EWordType = .unknown, cardTemplate: ECardTemplate, extra: String) {
         let cardState: ECardState = switch cardTemplate {
         case .twoWay:
                 .simple(.frontSideUp)
@@ -154,7 +154,7 @@ class Deck: Codable, ObservableObject {
         case .twoWayKana:
                 .japanese(.kanaToTranslation)
         }
-        self.cards.append(Card(frontText: frontText, backText: backText, kana: kana, id: maxId, creationDate: Date(), audioData: audioData, enableTextInputExercise: enableTextInputExercise, type: wordType, deck: self, cardState: cardState, extra: extra))
+        self.cards.append(Card(frontText: frontText, backText: backText, kana: kana, id: maxId, creationDate: Date(), audioData: audioData, enableTextInputExercise: enableTextInputExercise, enableScribblingExercise: enableScribblingExercise, enableHearingExercise: enableHearingExercise, enableTranslateExercise: enableTranslateExercise, type: wordType, deck: self, cardState: cardState, extra: extra))
         maxId += 1
         // we had no card before, but now we have a card. Need to trigger the repetition update
         if currentIdx == nil {

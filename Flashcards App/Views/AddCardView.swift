@@ -16,13 +16,34 @@ struct AddCardView: View {
     @State private var extra: String = ""
     @State private var wordType: EWordType = .unknown
     @State private var enableTextInputExercise: Bool = true
+    @State private var enableScribblingExercise: Bool = true
+    @State private var enableHearingExercise: Bool = true
+    @State private var enableTranslateExercise: Bool = true
     @State private var audioData: Data? = nil
     @State var showSuggestionsSemafor = 0
     @State private var translations: [Detail] = []
     @FocusState private var isFocused: Bool
     
+    private func ensureAtLeastOneEnabled() {
+        let allStates = [
+            enableTextInputExercise,
+            enableScribblingExercise,
+            enableHearingExercise,
+            enableTranslateExercise
+        ]
+        if !allStates.contains(true) {
+            // Revert to a default enabled state (e.g., enable the first one)
+            enableTextInputExercise = true
+        }
+    }
+    
     var saveDisabled: Bool {
-        return frontText.isEmpty || backText.isEmpty
+        return frontText.isEmpty || backText.isEmpty || !(
+            enableTextInputExercise ||
+            enableScribblingExercise ||
+            enableHearingExercise ||
+            enableTranslateExercise
+        )
     }
     
     var body: some View {
@@ -122,6 +143,15 @@ struct AddCardView: View {
                     Toggle(isOn: $enableTextInputExercise) {
                         Text("Enable text input exercise")
                     }
+                    Toggle(isOn: $enableScribblingExercise) {
+                        Text("Enable scribbling exercise")
+                    }
+                    Toggle(isOn: $enableHearingExercise) {
+                        Text("Enable hearing exercise")
+                    }
+                    Toggle(isOn: $enableTranslateExercise) {
+                        Text("Enable translate exercise")
+                    }
                 } header: {
                     Text("Exercise options")
                 }
@@ -140,7 +170,7 @@ struct AddCardView: View {
                 presentationMode.wrappedValue.dismiss()
             },
             trailing: Button("Save") {
-                deck.addCard(frontText: frontText, backText: backText, kana: kana, audioData: audioData, enableTextInputExercise: enableTextInputExercise, wordType: wordType, cardTemplate: deck.lastUsedCardTemplate, extra: extra)
+                deck.addCard(frontText: frontText, backText: backText, kana: kana, audioData: audioData, enableTextInputExercise: enableTextInputExercise, enableScribblingExercise: enableScribblingExercise, enableHearingExercise: enableHearingExercise, enableTranslateExercise: enableTranslateExercise, wordType: wordType, cardTemplate: deck.lastUsedCardTemplate, extra: extra)
                 presentationMode.wrappedValue.dismiss()
             }
                 .disabled(saveDisabled)

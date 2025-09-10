@@ -40,11 +40,7 @@ struct ExerciseView: View {
         case .japanese(let eJapaneseCardState):
             switch eJapaneseCardState {
             case .kanjiToKana:
-                if deck.disableAllTextInputExercises || !card.enableTextInputExercise {
-                    return .backToFront
-                } else {
-                    return .kanaWriting
-                }
+                return .kanaWriting
             case .kanjiToTranslation:
                 return .kanjiToTranslation
             case .kanaToKanji:
